@@ -5,7 +5,7 @@
 Run:
 
 ```bash
-ansible-vault encrypt ansible/inventory/host_vars/light.yml
+ansible-vault encrypt ansible/inventory/host_vars/beacon.yml
 ```
 
 ## Running playbooks
@@ -13,5 +13,5 @@ ansible-vault encrypt ansible/inventory/host_vars/light.yml
 Run the playbook with:
 
 ```bash
-ansible-playbook ansible/playbook.yml --ask-vault-pass
+ansible-playbook ansible/playbook.yml --ask-become-pass --user jordan
 ```

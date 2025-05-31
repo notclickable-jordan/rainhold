@@ -1,5 +1,6 @@
 - name: Configure Rainhold virtual machines
   hosts: rainhold
+  become: true
   roles:
     - role: base
     - role: sudo
