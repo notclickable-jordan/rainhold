@@ -1,11 +1,31 @@
 # Ansible
 
-## Putting SSH key in authorized_keys
+## Put SSH key in authorized_keys
 
 Run:
 
 ```bash
 ssh-copy-id jordan@192.168.1.57
+```
+
+## Install sudo
+
+Run:
+
+```bash
+ssh jordan@ip
+su -
+apt update
+apt install sudo
+```
+
+## Add your user to sudoers
+
+Run:
+
+```bash
+su -
+addusers jordan sudo
 ```
 
 ## Encrypting variables
@@ -18,8 +38,8 @@ ansible-vault encrypt ansible/inventory/host_vars/beacon.yml
 
 ## Running playbooks
 
-Run the playbook with:
+Run the playbook:
 
 ```bash
-ansible-playbook ansible/playbook.yml --ask-become-pass --user jordan
+ansible-playbook ansible/playbook.yml --ask-become-pass --user jordan --inventory ansible/inventory/hosts.ini
 ```

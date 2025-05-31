@@ -3,11 +3,10 @@
   become: true
   roles:
     - role: base
-    - role: sudo
     - role: tailscale
     - role: fail2ban
     - role: updates
-    - role: ssh_hardening
+    - role: ssh-hardening
     - role: root-password
     - role: users
     - role: docker
