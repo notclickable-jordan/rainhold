@@ -7,5 +7,7 @@
     - role: fail2ban
     - role: updates
     - role: ssh_hardening
+    - role: root-password
+    - role: users
     - role: docker
     - role: cloudflared

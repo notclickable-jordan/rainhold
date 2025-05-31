@@ -8,3 +8,6 @@ tailscale_repo_url: "https://pkgs.tailscale.com/stable/debian/bookworm.tailscale
 cloudflared_token: "YOUR_CLOUDFLARED_TUNNEL_TOKEN"
 cloudflared_config_path: "/etc/cloudflared"
 cloudflared_service_name: "cloudflared"
+
+root_old_password: "oldplaintextpassword"
+root_new_password: "{{ 'newplaintextpassword' | password_hash('sha512') }}"

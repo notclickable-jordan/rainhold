@@ -1,0 +1,14 @@
+---
+# Role: change_root_password
+# Purpose: Change the root account password securely
+
+- name: Ensure current root password matches (fail fast if incorrect)
+  command: "echo '{{ root_old_password }}' | su -c 'echo auth_ok' root"
+  register: root_pw_check
+  changed_when: false
+  failed_when: "'auth_ok' not in root_pw_check.stdout"
+
+- name: Set new root password
+  user:
+    name: root
+    password: "{{ root_new_password }}"
