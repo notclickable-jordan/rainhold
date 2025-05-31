@@ -3,7 +3,6 @@ root_new_password: "{{ 'newplaintextpassword' | password_hash('sha512') }}"
 
 username: jordan
 user_password: "{{ 'password2' | password_hash('sha512') }}"
-user_password: "{{ 'securepassword' | password_hash('sha512') }}"
 user_ssh_pubkey: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBExampleKeyGoesHere jordan@rainhold-beacon"
 
 tailscale_keyring_url: "https://pkgs.tailscale.com/stable/debian/bookworm.noarmor.gpg"
