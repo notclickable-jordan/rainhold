@@ -1,1 +1,4 @@
 .DS_Store
+ansible/inventory/host_vars/beacon.yml
+ansible/inventory/host_vars/haven.yml
+ansible/inventory/host_vars/wilds.yml
