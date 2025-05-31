@@ -1,0 +1,15 @@
+---
+# Role: disable_root_ssh
+# Purpose: Prevent all direct SSH access to root
+
+- name: Fully disable root SSH login
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^#?PermitRootLogin\s+.*'
+    line: 'PermitRootLogin no'
+    state: present
+
+- name: Restart SSH service to apply changes
+  systemd:
+    name: ssh
+    state: restarted

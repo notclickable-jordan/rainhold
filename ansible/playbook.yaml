@@ -8,3 +8,4 @@
     - role: cloudflared
     - role: ssh_hardening
     - role: updates
+    - role: ssh-root-disable
