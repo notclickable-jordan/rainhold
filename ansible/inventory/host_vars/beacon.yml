@@ -1,6 +1,6 @@
 username: jordan
 user_password: "{{ 'password1' | password_hash('sha512') }}"
-user_ssh_pubkey: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBExampleKeyGoesHere jordan@rainhold-light"
+user_ssh_pubkey: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBExampleKeyGoesHere jordan@rainhold-beacon"
 
 tailscale_keyring_url: "https://pkgs.tailscale.com/stable/debian/bookworm.noarmor.gpg"
 tailscale_repo_url: "https://pkgs.tailscale.com/stable/debian/bookworm.tailscale-keyring.list"
