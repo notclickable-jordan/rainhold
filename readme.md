@@ -1,4 +1,4 @@
-# Ansible
+# Setup
 
 ## Put SSH key in authorized_keys
 
@@ -28,6 +28,17 @@ su -
 addusers jordan sudo
 ```
 
+## Install Python 3
+
+On your Mac, run:
+
+```bash
+brew install python
+pip3 install --user 'passlib[bcrypt]'
+```
+
+# Ansible
+
 ## Encrypting variables
 
 Run:
@@ -43,3 +54,9 @@ Run the playbook:
 ```bash
 ansible-playbook ansible/playbook.yml --ask-become-pass --user jordan --inventory ansible/inventory/hosts.ini
 ```
+
+# Troubleshooting
+
+## Tailscale
+
+If the Tailscale role fails, disable manual dvice approval in the Tailscale admin console.

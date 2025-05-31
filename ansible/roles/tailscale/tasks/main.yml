@@ -2,19 +2,23 @@
 # Role: tailscale
 # Purpose: Install and connect Tailscale with a pre-generated auth key
 
-- name: Add Tailscale signing key
-  get_url:
-    url: "{{ tailscale_keyring_url }}"
-    dest: /usr/share/keyrings/tailscale-archive-keyring.gpg
+- name: Fetch Tailscale archive signing key
+  ansible.builtin.get_url:
+    url: "https://pkgs.tailscale.com/stable/debian/bookworm.noarmor.gpg"
+    dest: "/usr/share/keyrings/tailscale-archive-keyring.gpg"
+    mode: "0644"
+    force: true
 
-- name: Add Tailscale repository
-  copy:
-    dest: /etc/apt/sources.list.d/tailscale.list
-    content: "deb [signed-by=/usr/share/keyrings/tailscale-archive-keyring.gpg] {{ tailscale_repo_url }} stable main\n"
+- name: Install Tailscale APT source list
+  ansible.builtin.get_url:
+    url: "https://pkgs.tailscale.com/stable/debian/bookworm.tailscale-keyring.list"
+    dest: "/etc/apt/sources.list.d/tailscale.list"
+    mode: "0644"
+    force: true
 
-- name: Update apt cache
-  apt:
-    update_cache: yes
+- name: Refresh APT cache to pick up the new repo
+  ansible.builtin.apt:
+    update_cache: true
 
 - name: Install Tailscale
   apt:
@@ -26,3 +30,4 @@
   register: tailscale_result
   changed_when: "'Logged in' in tailscale_result.stdout or 'Success' in tailscale_result.stdout"
   no_log: true  # Hide key in output
+  become: true

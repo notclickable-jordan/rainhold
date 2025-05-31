@@ -13,7 +13,7 @@
 - name: Change user password to secure password
   user:
     name: "{{ username }}"
-    password: "{{ user_secure_password }}"
+    password: "{{ user_password }}"
     update_password: always
 
 - name: Create .ssh directory for user
