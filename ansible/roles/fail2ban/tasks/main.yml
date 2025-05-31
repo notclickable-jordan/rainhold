@@ -1,0 +1,29 @@
+---
+# Role: fail2ban
+# Purpose: Install Fail2Ban and enable the SSH jail with the default configuration
+
+- name: Install fail2ban
+  apt:
+    name: fail2ban
+    state: present
+    update_cache: yes
+
+- name: Ensure correct SSHD backend is set (Debian fix)
+  lineinfile:
+    path: /etc/fail2ban/paths-debian.conf
+    line: 'sshd_backend = systemd'
+    insertafter: EOF
+    create: yes
+
+- name: Enable fail2ban service
+  systemd:
+    name: fail2ban
+    enabled: yes
+    state: started
+
+- name: Ensure sshd jail is enabled
+  command: fail2ban-client status sshd
+  register: sshd_jail_status
+  changed_when: false
+  failed_when: "'No jail' in sshd_jail_status.stdout or 'ERROR' in sshd_jail_status.stderr"
+  ignore_errors: false

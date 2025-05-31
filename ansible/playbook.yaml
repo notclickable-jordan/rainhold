@@ -3,9 +3,9 @@
   roles:
     - role: base
     - role: sudo
-    - role: docker
     - role: tailscale
-    - role: cloudflared
-    - role: ssh_hardening
+    - role: fail2ban
     - role: updates
-    - role: ssh-root-disable
+    - role: ssh_hardening
+    - role: docker
+    - role: cloudflared
