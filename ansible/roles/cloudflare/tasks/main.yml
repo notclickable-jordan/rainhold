@@ -2,14 +2,31 @@
 # Role: cloudflared
 # Purpose: Install Cloudflared and configure a tunnel
 
-- name: Download Cloudflared package
-  get_url:
-    url: https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb
-    dest: /tmp/cloudflared.deb
+- name: Ensure /usr/share/keyrings exists
+  file:
+    path: /usr/share/keyrings
+    state: directory
+    mode: '0755'
 
-- name: Install Cloudflared package
-  apt:
-    deb: /tmp/cloudflared.deb
+- name: Add Cloudflare GPG key
+  ansible.builtin.get_url:
+    url: https://pkg.cloudflare.com/cloudflare-main.gpg
+    dest: /usr/share/keyrings/cloudflare-main.gpg
+    mode: '0644'
+
+- name: Add Cloudflared apt repository
+  ansible.builtin.apt_repository:
+    repo: "deb [signed-by=/usr/share/keyrings/cloudflare-main.gpg] https://pkg.cloudflare.com/cloudflared any main"
+    filename: cloudflared
+    state: present
+
+- name: Update apt cache
+  ansible.builtin.apt:
+    update_cache: yes
+
+- name: Install cloudflared
+  ansible.builtin.apt:
+    name: cloudflared
     state: present
 
 - name: Create cloudflared config directory
