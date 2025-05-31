@@ -1,5 +1,13 @@
 # Ansible
 
+## Putting SSH key in authorized_keys
+
+Run:
+
+```bash
+ssh-copy-id jordan@192.168.1.57
+```
+
 ## Encrypting variables
 
 Run:
