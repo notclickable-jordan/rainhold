@@ -59,4 +59,4 @@ ansible-playbook ansible/playbook.yml --ask-become-pass --user jordan --inventor
 
 ## Tailscale
 
-If the Tailscale role fails, disable manual dvice approval in the Tailscale admin console.
+If the Tailscale role fails, disable manual device approval in the Tailscale admin console.
