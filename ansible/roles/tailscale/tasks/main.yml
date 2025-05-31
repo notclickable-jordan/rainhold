@@ -1,0 +1,28 @@
+---
+# Role: tailscale
+# Purpose: Install and connect Tailscale with a pre-generated auth key
+
+- name: Add Tailscale signing key
+  get_url:
+    url: "{{ tailscale_keyring_url }}"
+    dest: /usr/share/keyrings/tailscale-archive-keyring.gpg
+
+- name: Add Tailscale repository
+  copy:
+    dest: /etc/apt/sources.list.d/tailscale.list
+    content: "deb [signed-by=/usr/share/keyrings/tailscale-archive-keyring.gpg] {{ tailscale_repo_url }} stable main\n"
+
+- name: Update apt cache
+  apt:
+    update_cache: yes
+
+- name: Install Tailscale
+  apt:
+    name: tailscale
+    state: present
+
+- name: Connect to Tailscale using auth key
+  command: "tailscale up --authkey={{ tailscale_authkey }}"
+  register: tailscale_result
+  changed_when: "'Logged in' in tailscale_result.stdout or 'Success' in tailscale_result.stdout"
+  no_log: true  # Hide key in output

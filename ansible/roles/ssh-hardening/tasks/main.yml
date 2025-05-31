@@ -1,0 +1,20 @@
+---
+# Role: ssh_hardening
+# Purpose: Disable password login and root SSH access
+
+- name: Disable SSH password authentication
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^#?PasswordAuthentication\s+.*'
+    line: 'PasswordAuthentication no'
+
+- name: Prohibit root login with password
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^#?PermitRootLogin\s+.*'
+    line: 'PermitRootLogin prohibit-password'
+
+- name: Restart SSH daemon
+  service:
+    name: ssh
+    state: restarted

@@ -1,0 +1,20 @@
+---
+# Role: updates
+# Purpose: Set up automatic security updates
+
+- name: Install unattended-upgrades
+  apt:
+    name: unattended-upgrades
+    state: present
+
+- name: Enable unattended-upgrades
+  command: dpkg-reconfigure --priority=low unattended-upgrades
+  environment:
+    DEBIAN_FRONTEND: noninteractive
+
+- name: Set autoclean interval
+  lineinfile:
+    path: /etc/apt/apt.conf.d/20auto-upgrades
+    regexp: '^APT::Periodic::AutocleanInterval'
+    line: 'APT::Periodic::AutocleanInterval "21";'
+    create: yes

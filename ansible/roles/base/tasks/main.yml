@@ -1,0 +1,13 @@
+---
+# Role: base
+# Purpose: Ensures base environment is clean and usable
+
+- name: Remove DVD source from apt
+  lineinfile:
+    path: /etc/apt/sources.list
+    regexp: '^deb cdrom:'
+    state: absent
+
+- name: Update apt cache
+  apt:
+    update_cache: yes

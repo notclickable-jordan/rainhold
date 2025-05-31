@@ -1,0 +1,8 @@
+---
+# Role: sudo
+# Purpose: Install and configure sudo for your user
+
+- name: Install sudo
+  apt:
+    name: sudo
+    state: present

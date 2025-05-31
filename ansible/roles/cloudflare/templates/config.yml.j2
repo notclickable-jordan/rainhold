@@ -1,0 +1,8 @@
+# Cloudflared configuration
+tunnel: {{ cloudflared_token }}
+credentials-file: /etc/cloudflared/{{ cloudflared_token }}.json
+
+ingress:
+  - hostname: example.mydomain.com
+    service: http://localhost:8080
+  - service: http_status:404

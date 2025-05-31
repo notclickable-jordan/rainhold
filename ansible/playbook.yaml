@@ -1,0 +1,10 @@
+- name: Configure Debian VM
+  hosts: rainhold
+  roles:
+    - role: base
+    - role: sudo
+    - role: docker
+    - role: tailscale
+    - role: cloudflared
+    - role: ssh_hardening
+    - role: updates

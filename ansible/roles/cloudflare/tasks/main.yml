@@ -1,0 +1,38 @@
+---
+# Role: cloudflared
+# Purpose: Install Cloudflared and configure a tunnel
+
+- name: Download Cloudflared package
+  get_url:
+    url: https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb
+    dest: /tmp/cloudflared.deb
+
+- name: Install Cloudflared package
+  apt:
+    deb: /tmp/cloudflared.deb
+    state: present
+
+- name: Create cloudflared config directory
+  file:
+    path: "{{ cloudflared_config_path }}"
+    state: directory
+    mode: '0755'
+
+- name: Deploy cloudflared configuration file
+  template:
+    src: config.yml.j2
+    dest: "{{ cloudflared_config_path }}/config.yml"
+    mode: '0644'
+
+- name: Login to Cloudflare Tunnel (using token)
+  command: >
+    cloudflared service install {{ cloudflared_token }}
+  args:
+    creates: /etc/systemd/system/cloudflared.service
+
+- name: Enable and start cloudflared service
+  systemd:
+    name: cloudflared
+    enabled: yes
+    state: started
+    daemon_reload: yes
