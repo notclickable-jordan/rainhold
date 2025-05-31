@@ -1,4 +1,4 @@
-- name: Configure Debian VM
+- name: Configure Rainhold virtual machines
   hosts: rainhold
   roles:
     - role: base
