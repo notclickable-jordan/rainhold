@@ -9,7 +9,6 @@
     - role: ssh-hardening
     - role: root-password
     - role: users
-    - role: caddy
     - role: docker
     - role: cloudflared
     - role: clone-repo

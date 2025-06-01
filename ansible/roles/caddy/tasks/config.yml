@@ -7,13 +7,12 @@
 
 - name: Copy custom Caddyfile into place
   copy:
-    src: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/Caddyfile"
+    src: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/caddyfile"
     dest: /etc/caddy/Caddyfile
     remote_src: true
     owner: root
     group: root
     mode: '0644'
-  notify: Restart Caddy
 
 - name: Ensure caddy is enabled and started
   systemd:
