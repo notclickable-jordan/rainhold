@@ -2,7 +2,7 @@
 
 # Root domain: reverse proxy to not-clickable-redirect
 notclickable.com {
-    reverse_proxy not-clickable-redirect:80
+    reverse_proxy not-clickable-redirect:9002
 }
 
 # Authentik: reverse proxy to Authentik service
