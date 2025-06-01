@@ -1,3 +1,13 @@
+# Overview
+
+Ansible-based automation for provisioning, configuring, and managing Linux servers and application stacks.
+
+- Secure server setup
+- SSH hardening
+- Security roles (Fail2Ban, Tailscale)
+- Designed to spin up public, private, and off-grid servers (beacon, haven, wilds)
+- Docker containers with with backup/restore scripts
+
 # Setup
 
 ## Put SSH key in authorized_keys
