@@ -1,5 +1,5 @@
 services:
-  web:
+  not-clickable-redirect:
     image: nginx:alpine
     ports:
       - 9002:80
