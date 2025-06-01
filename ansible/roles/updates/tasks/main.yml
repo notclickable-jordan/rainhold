@@ -19,5 +19,19 @@
     line: 'APT::Periodic::AutocleanInterval "21";'
     create: yes
 
+- name: Ensure Update-Package-Lists is set
+  lineinfile:
+    path: /etc/apt/apt.conf.d/20auto-upgrades
+    regexp: '^APT::Periodic::Update-Package-Lists'
+    line: 'APT::Periodic::Update-Package-Lists "1";'
+    create: yes
+
+- name: Ensure Unattended-Upgrade is set
+  lineinfile:
+    path: /etc/apt/apt.conf.d/20auto-upgrades
+    regexp: '^APT::Periodic::Unattended-Upgrade'
+    line: 'APT::Periodic::Unattended-Upgrade "1";'
+    create: yes
+
 # TODO: configure msmtp for email notifications
 # TODO: configure unattended-upgrades to send email notifications

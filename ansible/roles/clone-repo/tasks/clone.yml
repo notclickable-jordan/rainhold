@@ -11,17 +11,3 @@
     dest: "{{ rainhold_dest }}"
     version: main
     force: yes
-
-- name: Get list of subdirectories under stacks/{{ rainhold_stack }}/docker
-  find:
-    paths: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker"
-    file_type: directory
-    depth: 1
-  register: rainhold_docker_dirs
-
-- name: Run docker compose in each subdirectory
-  shell: docker compose up -d
-  args:
-    chdir: "{{ item.path }}"
-  loop: "{{ rainhold_docker_dirs.files }}"
-  when: "'compose.yml' in lookup('fileglob', item.path + '/*', wantlist=True)"

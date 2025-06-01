@@ -4,3 +4,6 @@
 
 - name: Generate authentik passwords and secrets
   import_tasks: authentik.yml
+
+- name: Start docker containers
+  import_tasks: docker-up.yml

@@ -5,7 +5,7 @@
 Run (local):
 
 ```bash
-ssh-copy-id jordan@192.168.1.57
+ssh-copy-id jordan@ip.address
 ```
 
 ## Install sudo
@@ -13,7 +13,7 @@ ssh-copy-id jordan@192.168.1.57
 Run (local/remote):
 
 ```bash
-ssh jordan@ip
+ssh jordan@ip.address
 su -
 apt update
 apt install sudo
