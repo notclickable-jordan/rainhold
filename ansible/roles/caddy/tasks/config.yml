@@ -13,10 +13,17 @@
     owner: root
     group: root
     mode: '0644'
+  notify: Restart caddy
 
 - name: Ensure caddy is enabled and started
   systemd:
     name: caddy
     enabled: true
     state: started
+  become: true
+
+- name: Restart caddy
+  systemd:
+    name: caddy
+    state: restarted
   become: true
