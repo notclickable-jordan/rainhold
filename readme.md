@@ -23,7 +23,7 @@ pip3 install --user 'passlib[bcrypt]'
 Run:
 
 ```bash
-brew install ansible
+pip3.9 install ansible
 ```
 
 # Setup remote server
