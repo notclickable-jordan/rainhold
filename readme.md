@@ -2,7 +2,7 @@
 
 ## Put SSH key in authorized_keys
 
-Run:
+Run (local):
 
 ```bash
 ssh-copy-id jordan@192.168.1.57
@@ -10,7 +10,7 @@ ssh-copy-id jordan@192.168.1.57
 
 ## Install sudo
 
-Run:
+Run (local/remote):
 
 ```bash
 ssh jordan@ip
@@ -21,7 +21,7 @@ apt install sudo
 
 ## Add your user to sudoers
 
-Run:
+Run (remote):
 
 ```bash
 su -
@@ -30,7 +30,7 @@ addusers jordan sudo
 
 ## Install Python 3
 
-On your Mac, run:
+Run (local)
 
 ```bash
 brew install python
@@ -41,15 +41,15 @@ pip3 install --user 'passlib[bcrypt]'
 
 ## Encrypting variables
 
-Run:
+Run (local):
 
 ```bash
 ansible-vault encrypt ansible/inventory/host_vars/beacon.yml
 ```
 
-## Running playbooks
+## Running the playbook
 
-Run the playbook:
+Run (local):
 
 ```bash
 ansible-playbook ansible/playbook.yml --ask-become-pass --user jordan --inventory ansible/inventory/hosts.yml
