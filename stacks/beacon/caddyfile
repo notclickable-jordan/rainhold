@@ -2,14 +2,14 @@
 
 # Root domain: reverse proxy to not-clickable-redirect
 notclickable.com {
-    reverse_proxy not-clickable-redirect:9002
+    reverse_proxy localhost:9002
 }
 
 www.notclickable.com {
-    reverse_proxy not-clickable-redirect:9002
+    reverse_proxy localhost:9002
 }
 
 # Authentik: reverse proxy to Authentik service
 authentik.notclickable.com {
-    reverse_proxy authentik:9000
+    reverse_proxy localhost:9000
 }
