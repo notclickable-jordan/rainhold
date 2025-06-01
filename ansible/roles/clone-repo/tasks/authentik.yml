@@ -4,13 +4,20 @@
     path: "/etc/rainhold/stacks/{{ rainhold_stack }}/docker/authentik"
     state: directory
 
+- name: Check if .env file exists
+  stat:
+    path: "/etc/rainhold/stacks/{{ rainhold_stack }}/docker/authentik/.env"
+  register: env_file_stat
+
 - name: Generate PG_PASS
   set_fact:
     pg_pass: "{{ lookup('password', '/dev/null length=36 chars=ascii_letters,digits') }}"
+  when: not env_file_stat.stat.exists
 
 - name: Generate AUTHENTIK_SECRET_KEY
   set_fact:
     authentik_secret_key: "{{ lookup('password', '/dev/null length=60 chars=ascii_letters,digits') }}"
+  when: not env_file_stat.stat.exists
 
 - name: Create .env file with secrets
   copy:
@@ -21,3 +28,4 @@
     owner: root
     group: root
     mode: '0600'
+  when: not env_file_stat.stat.exists
