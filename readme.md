@@ -79,3 +79,15 @@ ansible-playbook ansible/playbook.yml --ask-become-pass --user username --invent
 ## Tailscale
 
 If the Tailscale role fails, disable manual device approval in the Tailscale admin console.
+
+## Authentik first user
+
+In case you can't login anymore, perhaps due to an incorrectly configured stage or a failed flow import, you can create a recovery key.
+
+To create the key, run the following command:
+
+``` bash
+docker compose run --rm server create_recovery_key 1 akadmin
+```
+
+This will output a link that can be used to instantly gain access to authentik as the user specified above. The link is valid for amount of years specified above, in this case, 1 year.
