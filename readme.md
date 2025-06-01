@@ -52,7 +52,7 @@ ansible-vault encrypt ansible/inventory/host_vars/beacon.yml
 Run the playbook:
 
 ```bash
-ansible-playbook ansible/playbook.yml --ask-become-pass --user jordan --inventory ansible/inventory/hosts.ini
+ansible-playbook ansible/playbook.yml --ask-become-pass --user jordan --inventory ansible/inventory/hosts.yml
 ```
 
 # Troubleshooting
