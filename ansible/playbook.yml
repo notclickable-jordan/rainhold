@@ -2,13 +2,15 @@
   hosts: public
   become: true
   roles:
-#    - role: base
-#    - role: tailscale
-#    - role: fail2ban
-#    - role: updates
-#    - role: ssh-hardening
-#    - role: root-password
-#    - role: users
-#    - role: docker
-#    - role: cloudflared
+    - role: base
+    - role: tailscale
+    - role: fail2ban
+    - role: updates
+    - role: ssh-hardening
+    - role: root-password
+    - role: users
+    - role: caddy
+    - role: docker
+    - role: cloudflared
     - role: clone-repo
+    - role: caddy

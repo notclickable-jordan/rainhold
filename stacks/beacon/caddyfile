@@ -1,0 +1,11 @@
+# Caddyfile for notclickable.com stack
+
+# Root domain: reverse proxy to not-clickable-redirect
+notclickable.com {
+    reverse_proxy not-clickable-redirect:80
+}
+
+# Authentik: reverse proxy to Authentik service
+authentik.notclickable.com {
+    reverse_proxy authentik:9000
+}

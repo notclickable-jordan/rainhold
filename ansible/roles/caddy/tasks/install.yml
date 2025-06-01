@@ -1,0 +1,31 @@
+---
+- name: Install dependencies for Caddy
+  apt:
+    name:
+      - debian-keyring
+      - debian-archive-keyring
+      - apt-transport-https
+      - curl
+    state: present
+    update_cache: yes
+
+- name: Download and dearmor Caddy GPG key
+  ansible.builtin.shell: |
+    curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | gpg --dearmor -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg
+  args:
+    creates: /usr/share/keyrings/caddy-stable-archive-keyring.gpg
+
+- name: Add Caddy APT repository list
+  ansible.builtin.get_url:
+    url: https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt
+    dest: /etc/apt/sources.list.d/caddy-stable.list
+    mode: '0644'
+
+- name: Update apt cache
+  apt:
+    update_cache: yes
+
+- name: Install Caddy
+  apt:
+    name: caddy
+    state: present

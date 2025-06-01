@@ -1,0 +1,23 @@
+---
+- name: Ensure Caddy is installed
+  apt:
+    name: caddy
+    state: present
+  become: true
+
+- name: Copy custom Caddyfile into place
+  copy:
+    src: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/Caddyfile"
+    dest: /etc/caddy/Caddyfile
+    remote_src: true
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Restart Caddy
+
+- name: Ensure caddy is enabled and started
+  systemd:
+    name: caddy
+    enabled: true
+    state: started
+  become: true
