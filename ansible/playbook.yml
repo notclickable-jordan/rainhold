@@ -1,5 +1,5 @@
-- name: Configure Rainhold virtual machines
-  hosts: rainhold
+- name: Configure Rainhold public virtual machine
+  hosts: public
   become: true
   roles:
     - role: base

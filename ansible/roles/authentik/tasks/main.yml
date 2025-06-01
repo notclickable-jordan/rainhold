@@ -1,0 +1,23 @@
+---
+- name: Set up Authentik Docker dependencies
+  apt:
+    name:
+      - docker.io
+      - docker-compose
+    state: present
+
+- name: Create Authentik docker-compose directory
+  file:
+    path: /opt/authentik
+    state: directory
+
+- name: Copy docker-compose.yml
+  template:
+    src: docker-compose.yml.j2
+    dest: /opt/authentik/docker-compose.yml
+    mode: 0644
+
+- name: Start Authentik containers
+  command: docker-compose up -d
+  args:
+    chdir: /opt/authentik
