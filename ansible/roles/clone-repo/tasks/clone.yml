@@ -5,7 +5,24 @@
     state: directory
     mode: '0755'
 
-- name: Clone rainhold repository
+- name: Check if destination is a git repo
+  stat:
+    path: "{{ rainhold_dest }}/.git"
+  register: git_dir
+
+- name: Initialize git repo if not present
+  command: git init
+  args:
+    chdir: "{{ rainhold_dest }}"
+  when: not git_dir.stat.exists
+
+- name: Set remote origin
+  command: git remote add origin "{{ rainhold_repo }}"
+  args:
+    chdir: "{{ rainhold_dest }}"
+  when: not git_dir.stat.exists
+
+- name: Pull latest changes
   git:
     repo: "{{ rainhold_repo }}"
     dest: "{{ rainhold_dest }}"

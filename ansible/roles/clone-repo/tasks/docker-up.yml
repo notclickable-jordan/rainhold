@@ -6,9 +6,15 @@
     depth: 1
   register: rainhold_docker_dirs
 
+- name: Check if compose.yml exists in each subdirectory
+  stat:
+    path: "{{ item.path }}/compose.yml"
+  loop: "{{ rainhold_docker_dirs.files }}"
+  register: compose_yml_stat
+
 - name: Run docker compose in each subdirectory
   shell: docker compose up -d
   args:
-    chdir: "{{ item.path }}"
-  loop: "{{ rainhold_docker_dirs.files }}"
-  when: "'compose.yml' in lookup('fileglob', item.path + '/*', wantlist=True)"
+    chdir: "{{ item.item.path }}"
+  loop: "{{ compose_yml_stat.results }}"
+  when: item.stat.exists
