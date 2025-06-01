@@ -11,3 +11,6 @@ tailscale_authkey: "tskey-1234567890abcdef1234567890abcdef1234567890abcdef123456
 
 cloudflared_token: "YOUR_CLOUDFLARED_TUNNEL_TOKEN"
 cloudflared_config_path: "/etc/cloudflared"
+
+rainhold_repo: https://github.com/notclickable-jordan/rainhold
+rainhold_dest: /etc/rainhold
