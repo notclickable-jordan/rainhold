@@ -5,6 +5,10 @@ notclickable.com {
     reverse_proxy not-clickable-redirect:9002
 }
 
+www.notclickable.com {
+    reverse_proxy not-clickable-redirect:9002
+}
+
 # Authentik: reverse proxy to Authentik service
 authentik.notclickable.com {
     reverse_proxy authentik:9000
