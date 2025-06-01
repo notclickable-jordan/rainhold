@@ -8,22 +8,40 @@ Ansible-based automation for provisioning, configuring, and managing Linux serve
 - Designed to spin up public, private, and off-grid servers (beacon, haven, wilds)
 - Docker containers with with backup/restore scripts
 
-# Setup
+# Setup local machine
+
+## Install Python 3
+
+Run:
+
+```bash
+brew install python
+pip3 install --user 'passlib[bcrypt]'
+```
+
+## Install Ansible
+Run:
+
+```bash
+brew install ansible
+```
+
+# Setup remote server
 
 ## Put SSH key in authorized_keys
 
-Run (local):
+Run:
 
 ```bash
-ssh-copy-id jordan@ip.address
+ssh-copy-id username@ip.address
 ```
 
 ## Install sudo
 
-Run (local/remote):
+Run:
 
 ```bash
-ssh jordan@ip.address
+ssh username@ip.address
 su -
 apt update
 apt install sudo
@@ -31,27 +49,18 @@ apt install sudo
 
 ## Add your user to sudoers
 
-Run (remote):
+Run:
 
 ```bash
 su -
-addusers jordan sudo
+addusers username sudo
 ```
 
-## Install Python 3
-
-Run (local)
-
-```bash
-brew install python
-pip3 install --user 'passlib[bcrypt]'
-```
-
-# Ansible
+# Running Ansible
 
 ## Encrypting variables
 
-Run (local):
+Run:
 
 ```bash
 ansible-vault encrypt ansible/inventory/host_vars/beacon.yml
@@ -59,10 +68,10 @@ ansible-vault encrypt ansible/inventory/host_vars/beacon.yml
 
 ## Running the playbook
 
-Run (local):
+Run:
 
 ```bash
-ansible-playbook ansible/playbook.yml --ask-become-pass --user jordan --inventory ansible/inventory/hosts.yml
+ansible-playbook ansible/playbook.yml --ask-become-pass --user username --inventory ansible/inventory/hosts.yml
 ```
 
 # Troubleshooting
