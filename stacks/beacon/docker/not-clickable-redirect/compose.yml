@@ -1,6 +1,7 @@
 services:
   not-clickable-redirect:
     image: nginx:alpine
+    container_name: not-clickable-redirect
     ports:
       - 9002:80
     volumes:

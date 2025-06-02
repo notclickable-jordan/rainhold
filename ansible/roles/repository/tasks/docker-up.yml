@@ -12,7 +12,14 @@
   loop: "{{ rainhold_docker_dirs.files }}"
   register: compose_yml_stat
 
-- name: Run docker compose in each subdirectory
+- name: Take down docker service in each subdirectory
+  shell: docker compose down
+  args:
+    chdir: "{{ item.item.path }}"
+  loop: "{{ compose_yml_stat.results }}"
+  when: item.stat.exists
+
+- name: Bring up docker service in each subdirectory
   shell: docker compose up -d
   args:
     chdir: "{{ item.item.path }}"

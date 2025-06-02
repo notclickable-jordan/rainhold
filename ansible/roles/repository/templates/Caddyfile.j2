@@ -1,0 +1,21 @@
+{
+    auto_https off
+}
+
+# Root domain
+notclickable.com {
+    reverse_proxy {{ ansible_host }}:9002
+}
+
+www.notclickable.com {
+    reverse_proxy {{ ansible_host }}:9002
+}
+
+# Dozzle
+dozzle.notclickable.com {
+    reverse_proxy {{ ansible_host }}:9001
+}
+
+auth.notclickable.com {
+    reverse_proxy {{ ansible_host }}:1411
+}
