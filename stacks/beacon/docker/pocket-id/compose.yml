@@ -1,0 +1,19 @@
+services:
+  pocket-id:
+    image: ghcr.io/pocket-id/pocket-id
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - 1411:1411
+    volumes:
+      - "data:/app/data"
+    # Optional healthcheck
+    healthcheck:
+      test: "curl -f http://localhost:1411/healthz"
+      interval: 1m30s
+      timeout: 5s
+      retries: 2
+      start_period: 10s
+
+volumes:
+  data:
