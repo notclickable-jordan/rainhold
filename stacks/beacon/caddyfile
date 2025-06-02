@@ -1,21 +1,17 @@
 # Root domain
 notclickable.com {
     reverse_proxy localhost:9002
-    log
 }
 
 www.notclickable.com {
     reverse_proxy localhost:9002
-    log
 }
 
 dozzle.notclickable.com {
     reverse_proxy localhost:9001
-    log
 }
 
 # Authentik
 auth.notclickable.com {
-    reverse_proxy localhost:9443
-    log
+    reverse_proxy localhost:9000
 }
