@@ -14,8 +14,10 @@ dozzle.notclickable.com {
 # Authentik
 auth.notclickable.com {
     reverse_proxy https://localhost:9443 {
+        header_up Host {http.reverse_proxy.upstream.hostport}
         transport http {
             tls_insecure_skip_verify
+            versions = 1.1
         }
     }
 }
