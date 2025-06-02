@@ -3,9 +3,7 @@ services:
     image: lldap/lldap:stable
     container_name: lldap
     ports:
-      # For LDAPS (LDAP Over SSL), enable port if LLDAP_LDAPS_OPTIONS__ENABLED set true, look env below
-      #- "6360:6360"
-      # For the web front-end
+      - 389:389
       - 17170:17170
     volumes:
       - lldap_data:/data
