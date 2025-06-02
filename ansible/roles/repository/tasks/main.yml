@@ -2,5 +2,8 @@
 - name: Clone repository
   import_tasks: clone.yml
 
+- name: Create environment files
+  import_tasks: env.yml
+
 - name: Start docker containers
   import_tasks: docker-up.yml

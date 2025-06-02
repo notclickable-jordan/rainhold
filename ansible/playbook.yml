@@ -11,5 +11,5 @@
     - role: users
     - role: docker
     - role: cloudflared
-    - role: clone-repo
+    - role: repository
     - role: caddy

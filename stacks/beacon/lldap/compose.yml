@@ -1,0 +1,14 @@
+services:
+  lldap:
+    image: lldap/lldap:stable
+    ports:
+      # For LDAPS (LDAP Over SSL), enable port if LLDAP_LDAPS_OPTIONS__ENABLED set true, look env below
+      #- "6360:6360"
+      # For the web front-end
+      - 17170:17170
+    volumes:
+      - lldap_data:/data
+
+volumes:
+  lldap_data:
+    driver: local

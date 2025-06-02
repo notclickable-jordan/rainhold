@@ -14,3 +14,7 @@ cloudflared_config_path: "/etc/cloudflared"
 
 rainhold_repo: https://github.com/notclickable-jordan/rainhold
 rainhold_dest: /etc/rainhold
+
+LLDAP_JWT_SECRET: "your_jwt_secret_here"
+LLDAP_KEY_SEED: "your_key_seed_here"
+LLDAP_LDAP_USER_PASS: "your_ldap_user_password_here"
