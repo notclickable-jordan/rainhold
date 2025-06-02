@@ -22,3 +22,10 @@ http://auth.notclickable.com {
     reverse_proxy {{ ansible_host }}:1411
     tls internal
 }
+
+# LLDAP
+
+http://ldap.notclickable.com {
+    reverse_proxy {{ ansible_host }}:1389
+    tls internal
+}
