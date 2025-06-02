@@ -4,23 +4,17 @@
 
 http://ldap.notclickable.com {
     reverse_proxy {{ ansible_host }}:4202
-    tls internal
 }
 
 http://pocket-id.notclickable.com {
     reverse_proxy {{ ansible_host }}:4203
-    tls internal
 }
 
 http://dozzle.notclickable.com {
-    reverse_proxy {{ ansible_host }}:4204
-    tls internal
-    route {
-        forward_auth tinyauth.notclickable.com {
-            uri /api/auth/caddy
-        }
-        reverse_proxy {{ ansible_host }}:4204
+    forward_auth tinyauth.notclickable.com {
+        uri /api/auth/caddy
     }
+    reverse_proxy {{ ansible_host }}:4204
 }
 
 http://notclickable.com {
@@ -33,5 +27,4 @@ http://www.notclickable.com {
 
 http://tinyauth.notclickable.com {
     reverse_proxy {{ ansible_host }}:4206
-    tls internal
 }
