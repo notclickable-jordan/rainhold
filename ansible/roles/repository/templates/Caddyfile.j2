@@ -11,8 +11,9 @@ http://pocket-id.notclickable.com {
 }
 
 http://dozzle.notclickable.com {
-    forward_auth tinyauth.notclickable.com {
+    forward_auth {{ ansible_host }}:4206 {
         uri /api/auth/caddy
+        copy_headers Remote-User Remote-Email Remote-Name Remote-Groups
     }
     reverse_proxy {{ ansible_host }}:4204
 }
