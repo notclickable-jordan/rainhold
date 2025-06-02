@@ -41,9 +41,15 @@
     dest: "{{ cloudflared_config_path }}/config.yml"
     mode: '0644'
 
+- name: Check if cloudflared is already logged in
+  stat:
+    path: /etc/systemd/system/cloudflared.service
+  register: cloudflared_service
+
 - name: Login to Cloudflare Tunnel (using token)
   command: >
     cloudflared service install {{ cloudflared_token }}
+  when: not cloudflared_service.stat.exists
   args:
     creates: /etc/systemd/system/cloudflared.service
 

@@ -9,6 +9,8 @@ services:
       - 17170:17170
     volumes:
       - lldap_data:/data
+    env_file:
+      - .env
 
 volumes:
   lldap_data:

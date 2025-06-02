@@ -25,9 +25,17 @@
     name: tailscale
     state: present
 
+- name: Check if Tailscale is already connected
+  command: tailscale status --json
+  register: tailscale_status
+  failed_when: false
+  changed_when: false
+  become: true
+
 - name: Connect to Tailscale using auth key
   command: "tailscale up --authkey={{ tailscale_authkey }}"
   register: tailscale_result
   changed_when: "'Logged in' in tailscale_result.stdout or 'Success' in tailscale_result.stdout"
   no_log: true  # Hide key in output
   become: true
+  when: tailscale_status.rc != 0 or (tailscale_status.stdout is defined and "'Authenticated'" not in tailscale_status.stdout)
