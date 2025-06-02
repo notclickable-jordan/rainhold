@@ -3,7 +3,7 @@ services:
     image: lldap/lldap:stable
     container_name: lldap
     ports:
-      - 389:389
+      - 389:3890
       - 17170:17170
     volumes:
       - lldap_data:/data
