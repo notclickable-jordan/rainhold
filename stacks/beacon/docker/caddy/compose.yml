@@ -1,19 +1,19 @@
 services:
-  caddy:
-    image: caddy:alpine
-    container_name: caddy
-    restart: unless-stopped
-    cap_add:
-      - NET_ADMIN
-    ports:
-      - "80:80"
-      - "443:443"
-      - "443:443/udp"
-    volumes:
-      - ./conf:/etc/caddy
-      - data:/data
-      - config:/config
+    caddy:
+        image: caddy:alpine
+        container_name: caddy
+        restart: unless-stopped
+        cap_add:
+            - NET_ADMIN
+        ports:
+            - "80:80"
+            - "443:443"
+            - "443:443/udp"
+        volumes:
+            - ./conf:/etc/caddy
+            - data:/data
+            - config:/config
 
 volumes:
-  data:
-  config:
+    data:
+    config:

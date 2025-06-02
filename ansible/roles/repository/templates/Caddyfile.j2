@@ -15,6 +15,12 @@ http://pocket-id.notclickable.com {
 http://dozzle.notclickable.com {
     reverse_proxy {{ ansible_host }}:4204
     tls internal
+    route {
+        forward_auth tinyauth.notclickable.com {
+            uri /api/auth/caddy
+        }
+        reverse_proxy {{ ansible_host }}:4204
+    }
 }
 
 http://notclickable.com {
