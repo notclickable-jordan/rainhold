@@ -1,29 +1,21 @@
 # Root domain
 notclickable.com {
     reverse_proxy localhost:9002
-    log {
-        output file /var/log/caddy/notclickable.com.log
-    }
+    log
 }
 
 www.notclickable.com {
     reverse_proxy localhost:9002
-    log {
-        output file /var/log/caddy/www.notclickable.com.log
-    }
+    log
 }
 
 dozzle.notclickable.com {
     reverse_proxy localhost:9001
-    log {
-        output file /var/log/caddy/dozzle.notclickable.com.log
-    }
+    log
 }
 
 # Authentik
 auth.notclickable.com {
     reverse_proxy localhost:9443
-    log {
-        output file /var/log/caddy/auth.notclickable.com.log
-    }
+    log
 }
