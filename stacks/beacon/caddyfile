@@ -1,3 +1,10 @@
+{
+    log {
+        output file /var/log/caddy/access.log
+        level DEBUG
+    }
+}
+
 # Root domain
 notclickable.com {
     reverse_proxy localhost:9002
