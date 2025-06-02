@@ -2,29 +2,25 @@
     auto_https off
 }
 
-# Root domain
+http://ldap.notclickable.com {
+    reverse_proxy {{ ansible_host }}:4202
+    tls internal
+}
+
+http://pocket-id.notclickable.com {
+    reverse_proxy {{ ansible_host }}:4203
+    tls internal
+}
+
+http://dozzle.notclickable.com {
+    reverse_proxy {{ ansible_host }}:4204
+    tls internal
+}
+
 http://notclickable.com {
-    reverse_proxy {{ ansible_host }}:9002
+    reverse_proxy {{ ansible_host }}:4205
 }
 
 http://www.notclickable.com {
-    reverse_proxy {{ ansible_host }}:9002
-}
-
-# Dozzle
-http://dozzle.notclickable.com {
-    reverse_proxy {{ ansible_host }}:9001
-    tls internal
-}
-
-# Pocket ID
-http://auth.notclickable.com {
-    reverse_proxy {{ ansible_host }}:1411
-    tls internal
-}
-
-# LLDAP
-http://ldap.notclickable.com {
-    reverse_proxy {{ ansible_host }}:17170
-    tls internal
+    reverse_proxy {{ ansible_host }}:4205
 }

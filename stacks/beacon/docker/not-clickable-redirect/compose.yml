@@ -1,13 +1,13 @@
 services:
-  not-clickable-redirect:
-    image: nginx:alpine
-    container_name: not-clickable-redirect
-    ports:
-      - 9002:80
-    volumes:
-      - ./index.html:/usr/share/nginx/html/index.html:ro
-    healthcheck:
-      test: ["CMD", "wget", "--spider", "-q", "http://localhost"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
+    not-clickable-redirect:
+        image: nginx:alpine
+        container_name: not-clickable-redirect
+        ports:
+            - 4205:80
+        volumes:
+            - ./index.html:/usr/share/nginx/html/index.html:ro
+        healthcheck:
+            test: ["CMD", "wget", "--spider", "-q", "http://localhost"]
+            interval: 30s
+            timeout: 10s
+            retries: 3

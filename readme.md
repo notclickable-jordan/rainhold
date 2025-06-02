@@ -2,11 +2,11 @@
 
 Ansible-based automation for provisioning, configuring, and managing Linux servers and application stacks.
 
-- Secure server setup
-- SSH hardening
-- Security roles (Fail2Ban, Tailscale)
-- Designed to spin up public, private, and off-grid servers (beacon, haven, wilds)
-- Docker containers with with backup/restore scripts
+-   Secure server setup
+-   SSH hardening
+-   Security roles (Fail2Ban, Tailscale)
+-   Designed to spin up public, private, and off-grid servers (beacon, haven, wilds)
+-   Docker containers with with backup/restore scripts
 
 # Setup local machine
 
@@ -20,6 +20,7 @@ pip3 install --user 'passlib[bcrypt]'
 ```
 
 ## Install Ansible
+
 Run:
 
 ```bash
@@ -78,33 +79,45 @@ ansible-playbook ansible/playbook.yml --ask-become-pass --user jordan --inventor
 
 ## Client Configuration
 
-| Field                        | Value                                                  |
-|-----------------------------|--------------------------------------------------------|
-| **LDAP URL**                | `ldap://100.89.146.30:389`                             |
-| **LDAP Bind DN**            | `uid=admin,ou=people,dc=notclickable,dc=com`           |
-| **LDAP Bind Password**      | *(set via UI — use value from `.env`)*                |
-| **LDAP Base DN**            | `dc=notclickable,dc=com`                               |
-| **User Search Filter**      | `(objectClass=person)`                                 |
-| **Groups Search Filter**    | `(objectClass=groupOfNames)`                           |
-| **Skip Certificate Verification** | (enabled)                               |
-| **Keep Disabled Users**     | (enabled)                                            |
+| Field                             | Value                                        |
+| --------------------------------- | -------------------------------------------- |
+| **LDAP URL**                      | `ldap://100.89.146.30:389`                   |
+| **LDAP Bind DN**                  | `uid=admin,ou=people,dc=notclickable,dc=com` |
+| **LDAP Bind Password**            | _(set via UI — use value from `.env`)_       |
+| **LDAP Base DN**                  | `dc=notclickable,dc=com`                     |
+| **User Search Filter**            | `(objectClass=person)`                       |
+| **Groups Search Filter**          | `(objectClass=groupOfNames)`                 |
+| **Skip Certificate Verification** | (enabled)                                    |
+| **Keep Disabled Users**           | (enabled)                                    |
 
 ---
 
 ## Attribute Mapping
 
-| Attribute                              | Value             |
-|----------------------------------------|-------------------|
-| **User Unique Identifier Attribute**   | `uuid`            |
-| **Username Attribute**                 | `user_id`         |
-| **User Mail Attribute**                | `mail`            |
-| **User First Name Attribute**          | `first_name`      |
-| **User Last Name Attribute**           | `last_name`       |
-| **User Profile Picture Attribute**     | `avatar`          |
-| **Group Members Attribute**            | `member`          |
-| **Group Name Attribute**               | `display_name`    |
-| **Group Unique Identifier Attribute**  | `uuid`            |
-| **Admin Group Name**                   | `_admin_group_name` |
+| Attribute                             | Value               |
+| ------------------------------------- | ------------------- |
+| **User Unique Identifier Attribute**  | `uuid`              |
+| **Username Attribute**                | `user_id`           |
+| **User Mail Attribute**               | `mail`              |
+| **User First Name Attribute**         | `first_name`        |
+| **User Last Name Attribute**          | `last_name`         |
+| **User Profile Picture Attribute**    | `avatar`            |
+| **Group Members Attribute**           | `member`            |
+| **Group Name Attribute**              | `display_name`      |
+| **Group Unique Identifier Attribute** | `uuid`              |
+| **Admin Group Name**                  | `_admin_group_name` |
+
+# Ports
+
+| Port | Service                | Description                           |
+| ---- | ---------------------- | ------------------------------------- |
+| 80   | Caddy                  | Web server for HTTP traffic           |
+| 443  | Caddy                  | Web server for HTTPS traffic          |
+| 4201 | LLDAP                  | LLDAP service (389) for Pocket ID     |
+| 4202 | LLDAP Admin UI         | Web interface for LLDAP management    |
+| 4203 | Pocket ID              | Pocket ID service for user management |
+| 4204 | Dozzle                 | Dozzle service for Docker logs        |
+| 4205 | Not Clickable redirect | Redirect Not Clickable to YouTube     |
 
 # Troubleshooting
 

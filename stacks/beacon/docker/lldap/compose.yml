@@ -1,15 +1,15 @@
 services:
-  lldap:
-    image: lldap/lldap:stable
-    container_name: lldap
-    ports:
-      - 389:3890
-      - 17170:17170
-    volumes:
-      - lldap_data:/data
-    env_file:
-      - .env
+    lldap:
+        image: lldap/lldap:stable
+        container_name: lldap
+        ports:
+            - 4201:3890
+            - 4202:17170
+        volumes:
+            - lldap_data:/data
+        env_file:
+            - .env
 
 volumes:
-  lldap_data:
-    driver: local
+    lldap_data:
+        driver: local
