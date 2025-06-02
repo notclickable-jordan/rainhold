@@ -1,24 +1,24 @@
 {
     auto_https off
-    log
 }
 
 # Root domain
-notclickable.com {
+http://notclickable.com {
     reverse_proxy {{ ansible_host }}:9002
 }
 
-www.notclickable.com {
+http://www.notclickable.com {
     reverse_proxy {{ ansible_host }}:9002
 }
 
 # Dozzle
-dozzle.notclickable.com {
+http://dozzle.notclickable.com {
     reverse_proxy {{ ansible_host }}:9001
     tls internal
 }
 
-auth.notclickable.com {
+# Pocket ID
+http://auth.notclickable.com {
     reverse_proxy {{ ansible_host }}:1411
     tls internal
 }
