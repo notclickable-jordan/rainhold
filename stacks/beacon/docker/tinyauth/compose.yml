@@ -3,6 +3,7 @@ services:
         image: ghcr.io/steveiliop56/tinyauth:v3
         container_name: tinyauth
         restart: unless-stopped
-        env_file: .env
+        env_file:
+            - .env
         ports:
             - 4206:3000
