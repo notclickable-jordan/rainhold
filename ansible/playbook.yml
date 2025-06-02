@@ -12,4 +12,3 @@
     - role: docker
     - role: cloudflared
     - role: repository
-    - role: caddy
