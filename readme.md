@@ -76,6 +76,17 @@ ansible-playbook ansible/playbook.yml --ask-become-pass --user username --invent
 
 # Troubleshooting
 
+## Manually reloading Caddy
+
+If you make changes to the Caddyfile, you can manually reload Caddy with:
+
+```bash
+cd /etc/rainhold/
+sudo git pull
+sudo cp stacks/beacon/caddyfile /etc/caddy/Caddyfile
+sudo systemctl reload caddy
+```
+
 ## Tailscale
 
 If the Tailscale role fails, disable manual device approval in the Tailscale admin console.
@@ -91,3 +102,7 @@ docker compose run --rm server create_recovery_key 1 akadmin
 ```
 
 This will output a link that can be used to instantly gain access to authentik as the user specified above. The link is valid for amount of years specified above, in this case, 1 year.
+
+## Authentik tutorial
+
+xpufx has a helpful [tutorial on protecting applications](https://xpufx.com/posts/protecting-your-first-app-with-authentik/)

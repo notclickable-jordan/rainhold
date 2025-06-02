@@ -90,3 +90,7 @@ volumes:
     driver: local
   redis:
     driver: local
+
+networks:
+  local-net:
+    external: false
