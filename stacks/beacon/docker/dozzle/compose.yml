@@ -9,7 +9,3 @@ services:
     environment:
       - DOZZLE_ENABLE_ACTIONS=true
       - DOZZLE_ENABLE_SHELL=true
-
-networks:
-  local-net:
-    external: false
