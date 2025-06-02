@@ -71,21 +71,10 @@ ansible-vault encrypt ansible/inventory/host_vars/beacon.yml
 Run:
 
 ```bash
-ansible-playbook ansible/playbook.yml --ask-become-pass --user username --inventory ansible/inventory/hosts.yml
+ansible-playbook ansible/playbook.yml --ask-become-pass --user jordan --inventory ansible/inventory/hosts.yml
 ```
 
 # Troubleshooting
-
-## Manually reloading Caddy
-
-If you make changes to the Caddyfile, you can manually reload Caddy with:
-
-```bash
-cd /etc/rainhold/
-sudo git pull
-sudo cp stacks/beacon/caddyfile /etc/caddy/Caddyfile
-sudo systemctl reload caddy
-```
 
 ## Tailscale
 

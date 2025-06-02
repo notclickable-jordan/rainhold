@@ -1,6 +1,0 @@
----
-- name: Install
-  import_tasks: install.yml
-
-- name: Configure
-  import_tasks: config.yml
