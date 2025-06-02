@@ -1,7 +1,5 @@
 {
-    "automatic_https": {
-        "disable": true,
-    }
+    auto_https off
 }
 
 # Root domain
