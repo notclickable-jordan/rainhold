@@ -24,3 +24,8 @@ http://notclickable.com {
 http://www.notclickable.com {
     reverse_proxy {{ ansible_host }}:4205
 }
+
+http://tinyauth.notclickable.com {
+    reverse_proxy {{ ansible_host }}:4206
+    tls internal
+}

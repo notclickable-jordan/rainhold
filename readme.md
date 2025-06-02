@@ -81,7 +81,7 @@ ansible-playbook ansible/playbook.yml --ask-become-pass --user jordan --inventor
 
 | Field                             | Value                                        |
 | --------------------------------- | -------------------------------------------- |
-| **LDAP URL**                      | `ldap://100.89.146.30:389`                   |
+| **LDAP URL**                      | `ldap://100.89.146.30:4201`                  |
 | **LDAP Bind DN**                  | `uid=admin,ou=people,dc=notclickable,dc=com` |
 | **LDAP Bind Password**            | _(set via UI — use value from `.env`)_       |
 | **LDAP Base DN**                  | `dc=notclickable,dc=com`                     |
@@ -118,8 +118,13 @@ ansible-playbook ansible/playbook.yml --ask-become-pass --user jordan --inventor
 | 4203 | Pocket ID              | Pocket ID service for user management |
 | 4204 | Dozzle                 | Dozzle service for Docker logs        |
 | 4205 | Not Clickable redirect | Redirect Not Clickable to YouTube     |
+| 4206 | Tinyauth               | Tinyauth service for authentication   |
 
 # Troubleshooting
+
+## Pocket ID
+
+To access the Pocket ID admin interface, visit `https://pocketid.example.com/login/setup`
 
 ## Tailscale
 

@@ -1,19 +1,8 @@
 services:
-  tinyauth:
-    image: ghcr.io/steveiliop56/tinyauth:v3
-    container_name: tinyauth
-    restart: unless-stopped
-    environment:
-      - SECRET=some-random-32-chars-string
-      - APP_URL=https://tinyauth.example.com
-      - GENERIC_CLIENT_ID=your-pocket-id-client-id
-      - GENERIC_CLIENT_SECRET=your-pocket-id-client-secret
-      - GENERIC_AUTH_URL=https://pocket-id.example.com/authorize
-      - GENERIC_TOKEN_URL=https://pocket-id.example.com/api/oidc/token
-      - GENERIC_USER_URL=https://pocket-id.example.com/api/oidc/userinfo
-      - GENERIC_SCOPES=openid email profile groups
-      - GENERIC_NAME=Pocket ID
-    labels:
-      traefik.enable: true
-      traefik.http.routers.tinyauth.rule: Host(`tinyauth.example.com`)
-      traefik.http.middlewares.tinyauth.forwardauth.address: http://tinyauth:3000/api/auth/traefik
+    tinyauth:
+        image: ghcr.io/steveiliop56/tinyauth:v3
+        container_name: tinyauth
+        restart: unless-stopped
+        env_file: .env
+        ports:
+            - 4206:3000
