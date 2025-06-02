@@ -7,14 +7,8 @@ www.notclickable.com {
     reverse_proxy localhost:9002
 }
 
-# Authentik
-auth.notclickable.com {
-    reverse_proxy localhost:9000
-    tls internal
-}
-
 # Dozzle
 dozzle.notclickable.com {
-    reverse_proxy localhost:9000
+    reverse_proxy localhost:9001
     tls internal
 }
