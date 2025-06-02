@@ -8,10 +8,14 @@ www.notclickable.com {
 }
 
 dozzle.notclickable.com {
-    reverse_proxy localhost:9001
+    reverse_proxy https://localhost:9001
 }
 
 # Authentik
 auth.notclickable.com {
-    reverse_proxy localhost:9443
+    reverse_proxy https://localhost:9443 {
+        transport http {
+            tls_insecure_skip_verify
+        }
+    }
 }
