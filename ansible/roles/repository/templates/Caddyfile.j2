@@ -1,7 +1,6 @@
 {
     auto_https off
     log
-    tls internal
 }
 
 # Root domain
@@ -16,8 +15,10 @@ www.notclickable.com {
 # Dozzle
 dozzle.notclickable.com {
     reverse_proxy {{ ansible_host }}:9001
+    tls internal
 }
 
 auth.notclickable.com {
     reverse_proxy {{ ansible_host }}:1411
+    tls internal
 }
