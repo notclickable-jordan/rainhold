@@ -19,6 +19,6 @@ LLDAP_JWT_SECRET: "your_jwt_secret_here"
 LLDAP_KEY_SEED: "your_key_seed_here"
 LLDAP_LDAP_USER_PASS: "your_ldap_user_password_here"
 
-tinyauth_secret: "your_tinyauth_secret_here"
+tinyauth_secret: "your_tinyauth_secret_here" # must be 32 characters
 tinyauth_pocket_id_client_id: "your_pocket_id_client_id_here"
 tinyauth_pocket_id_client_secret: "your_pocket_id_client_secret_here"
