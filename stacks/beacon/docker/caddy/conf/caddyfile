@@ -1,3 +1,9 @@
+{
+    "automatic_https": {
+        "disable": true,
+    }
+}
+
 # Root domain
 notclickable.com {
     reverse_proxy localhost:9002
