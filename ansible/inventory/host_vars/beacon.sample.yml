@@ -19,6 +19,8 @@ LLDAP_JWT_SECRET: "your_jwt_secret_here"
 LLDAP_KEY_SEED: "your_key_seed_here"
 LLDAP_LDAP_USER_PASS: "your_ldap_user_password_here"
 
-tinyauth_secret: "your_tinyauth_secret_here" # Generate with: openssl rand -base64 32 | tr -dc 'a-zA-Z0-9' | head -c 32
+# Generate with: openssl rand -base64 32 | tr -dc 'a-zA-Z0-9' | head -c 32
+# Make sure it is exactly 32 characters long
+tinyauth_secret: "your_tinyauth_secret_here"
 tinyauth_pocket_id_client_id: "your_pocket_id_client_id_here"
 tinyauth_pocket_id_client_secret: "your_pocket_id_client_secret_here"
