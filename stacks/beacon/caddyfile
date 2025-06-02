@@ -13,5 +13,5 @@ dozzle.notclickable.com {
 
 # Authentik
 auth.notclickable.com {
-    reverse_proxy localhost:9000
+    reverse_proxy localhost:9443
 }
