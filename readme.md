@@ -26,23 +26,13 @@ I wanted to have a server that mixed public and private sites. Users should be m
 
 # Documentation
 
--   [Proxmox VE](docs/proxmox.md): Initial setup of virtualization platform
--   [Remote computer](docs/remote.md): Initial set up VM created on Proxmox
--   [Local computer](docs/local.md): Local computer setup for Ansible deployment
--   [Cloudflare](docs/cloudflare.md): DNS and SSL management
--   [Ansible](docs/ansible.md): Ansible playbooks for automated deployment
--   [Pocket ID](docs/pocket-id.md): Connecting Pocket ID to LLDAP for user management
--   [Caddy](docs/caddy.md): Using a special build of Caddy for SSL with Cloudflare
--   [Troubleshooting](docs/troubleshooting.md): Common issues and solutions
-
-# Ports and services
-
-| Port    | Service                | Description                           |
-| ------- | ---------------------- | ------------------------------------- |
-| 80, 443 | Caddy                  | Web server for HTTP traffic           |
-| 4201    | LLDAP                  | LLDAP service (389) for Pocket ID     |
-| 4202    | LLDAP Admin UI         | Web interface for LLDAP management    |
-| 4203    | Pocket ID              | Pocket ID service for user management |
-| 4204    | Dozzle                 | Dozzle service for Docker logs        |
-| 4205    | Not Clickable redirect | Redirect Not Clickable to YouTube     |
-| 4206    | Tinyauth               | Tinyauth service for authentication   |
+-   [Proxmox VE](docs/proxmox.md): Create virtualization platform
+-   [Remote computer](docs/remote.md): Configure VM created on Proxmox
+-   [Local computer](docs/local.md): Use a Mac for Ansible deployment
+-   [Cloudflare](docs/cloudflare.md): Manage DNS and SSL for public sites
+-   [Private sites](docs/private.md): Set up private sites with Tailscale and NextDNS
+-   [Ansible](docs/ansible.md): Run Ansible playbooks for automated deployment
+-   [Pocket ID](docs/pocket-id.md): Connect Pocket ID to LLDAP for user management
+-   [Caddy](docs/caddy.md): Use a special build of Caddy for SSL with Cloudflare
+-   [Troubleshooting](docs/troubleshooting.md): Fix common issues and solutions
+-   [Ports](docs/ports.md): All ports and services used in this setup

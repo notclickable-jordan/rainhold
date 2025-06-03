@@ -1,0 +1,31 @@
+# Private sites using Tailscale and NextDNS
+
+## Cloudflare
+
+In Cloudflare, create a new DNS record for your private site, e.g., `private.example.com`
+
+-   **Type:** A
+-   **Name:** private
+-   **IPv4 address:** 127.0.0.1
+-   **Proxy status:** DNS only (grey cloud)
+
+## NextDNS
+
+In NextDNS, go to Settings > Rewrites and add a new rewrite:
+
+-   **Domain:** private.example.com
+-   **Answer:** (Tailscale IP address)
+
+## Caddy
+
+Keep the site configuration in `Caddyfile` as is, e.g.
+
+```caddyfile
+private.example.com {
+    reverse_proxy ip.address:4202
+
+    tls {
+        dns cloudflare {{ cloudflare_ssl_api_token }}
+    }
+}
+```
