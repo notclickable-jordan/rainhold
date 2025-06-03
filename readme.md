@@ -1,6 +1,6 @@
 # Overview
 
-Complete guide to set up a secure, automated server environment.
+Complete guide to set up a secure, automated server environment. Users are managed through LDAP and use Passkeys to sign in. Public sites are served from Cloudflare. Private sites go through custom DNS via Tailscale.
 
 ## Virtualization stack
 
@@ -19,10 +19,6 @@ Complete guide to set up a secure, automated server environment.
 2. Pocket ID (Authentication)
 3. Tinyauth (Authorization)
 4. Caddy (Reverse proxy)
-
-# Goal
-
-I wanted to have a server that mixed public and private sites. Users should be managed through LDAP and have a good user experience. Tailscale provides private access and Cloudflare for SSL certificates and public access.
 
 # Documentation
 
