@@ -5,6 +5,7 @@
     - role: base
     - role: tailscale
     - role: fail2ban
+    - role: postfix
     - role: updates
     - role: ssh-hardening
     - role: root-password
