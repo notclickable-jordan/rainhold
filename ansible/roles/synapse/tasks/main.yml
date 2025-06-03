@@ -1,22 +1,42 @@
+- name: Generate Synapse configuration
+  community.docker.docker_container:
+    name: synapse_generate
+    image: matrixdotorg/synapse:latest
+    command: generate
+    env:
+      SYNAPSE_SERVER_NAME: synapse.notclickable.com
+      SYNAPSE_REPORT_STATS: "yes"
+    volumes:
+      - synapse_files:/data
+    auto_remove: true
+    detach: false
+    tty: true
+    interactive: true
+
+- name: Start Synapse
+  shell: docker compose up -d
+  args:
+    chdir: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/synapse"
+
 - name: Render LDAP config template
   template:
     src: ldap_config.yml.j2
     dest: /tmp/ldap_config.yml
 
 - name: Copy LDAP config into synapse container
-  community.docker.docker_container_cp:
+  community.docker.docker_container_copy_into:
     container: synapse
-    src: /tmp/ldap_config.yml
-    dest: /tmp/ldap_config.yml
+    path: /tmp/ldap_config.yml
+    container_path: /tmp/ldap_config.yml
 
 - name: Append LDAP config to homeserver.yml in synapse container
   community.docker.docker_container_exec:
     container: synapse
-    command: /bin/sh -c "cat /tmp/ldap_config.yml >> /data/homeserver.yml"
+    command: /bin/sh -c "cat /tmp/ldap_config.yml | tee -a /data/homeserver.yml > /dev/null"
     user: root
-  become: false
+  become: true
 
 - name: Restart synapse container
   community.docker.docker_container:
     name: synapse
-    state: restarted
+    restart: true
