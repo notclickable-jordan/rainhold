@@ -26,6 +26,9 @@ tinyauth_secret: "your_tinyauth_secret_here"
 tinyauth_pocket_id_client_id: "your_pocket_id_client_id_here"
 tinyauth_pocket_id_client_secret: "your_pocket_id_client_secret_here"
 
+mailrise_host: "mailrise.example.com" # or ip.address
+mailrise_port: 4207
+mailrise_username: "your_mailrise_username_here"
 mailrise_password: "your_mailrise_password_here"
 
 apprise_repo: "https://github.com/caronc/apprise.git"
