@@ -1,5 +1,19 @@
 # Pocket ID and LLDAP
 
+In Pocket ID, you can connect to your LLDAP server to manage users and groups. This allows you to use Pocket ID for authentication while leveraging LLDAP for user management.
+
+## Prerequisites
+
+Set up your LLDAP server. This will happen during the Ansible deployment process.
+
+## Admin user
+
+To access the Pocket ID admin interface after installing it for the first time, visit `https://pocketid.example.com/login/setup`
+
+# LDAP
+
+In Pocket ID, go to **Application Configuration &gt; LDAP** and enter the following details:
+
 ## Client Configuration
 
 | Field                             | Value                                        |

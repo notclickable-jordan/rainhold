@@ -1,4 +1,4 @@
-# Setup remote server
+# Remote server
 
 ## Put SSH key in authorized_keys
 

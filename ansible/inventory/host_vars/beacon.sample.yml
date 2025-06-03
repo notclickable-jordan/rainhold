@@ -1,38 +1,84 @@
+# --- Root user ---
+# keep
 root_old_password: "password1"
+
+# replace
 root_new_password: "{{ 'newplaintextpassword' | password_hash('sha512') }}"
 
+# --- First normal user ---
+
+# replace
 username: jordan
+
+# keep
 user_password: "{{ 'password2' | password_hash('sha512') }}"
+
+# generate
 user_ssh_pubkey: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBExampleKeyGoesHere jordan@rainhold-beacon"
 
+# --- Tailscale ---
+
+# keep
 tailscale_keyring_url: "https://pkgs.tailscale.com/stable/debian/bookworm.noarmor.gpg"
 tailscale_repo_url: "https://pkgs.tailscale.com/stable/debian/bookworm.tailscale-keyring.list"
+
+# generate
 tailscale_authkey: "tskey-1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef"
 
-cloudflared_token: "YOUR_CLOUDFLARED_TUNNEL_TOKEN"
-cloudflared_config_path: "/etc/cloudflared"
-cloudflare_ssl_api_token: "YOUR_CLOUDFLARE_SSL_API_TOKEN" # Cloudflare > My Profile > API Tokens. Create a custom token with two permissions: Zone/Zone/Read and Zone/DNS/Edit.
+# --- Cloudflare ---
 
+# generate
+cloudflared_token: "YOUR_CLOUDFLARED_TUNNEL_TOKEN"
+
+# keep
+cloudflared_config_path: "/etc/cloudflared"
+
+# generate
+cloudflare_ssl_api_token: "YOUR_CLOUDFLARE_SSL_API_TOKEN"
+
+# --- Rainhold ---
+
+# keep
 rainhold_repo: https://github.com/notclickable-jordan/rainhold
 rainhold_dest: /etc/rainhold
 
+# --- LLDAP ---
+
+# generate
 LLDAP_JWT_SECRET: "your_jwt_secret_here"
 LLDAP_KEY_SEED: "your_key_seed_here"
+
+# replace
 LLDAP_LDAP_USER_PASS: "your_ldap_user_password_here"
 
-# Generate with: openssl rand -base64 32 | tr -dc 'a-zA-Z0-9' | head -c 32
-# Make sure it is exactly 32 characters long
+# --- Tinyauth ---
+
+# generate
 tinyauth_secret: "your_tinyauth_secret_here"
+
+# replace
 tinyauth_pocket_id_client_id: "your_pocket_id_client_id_here"
 tinyauth_pocket_id_client_secret: "your_pocket_id_client_secret_here"
 
-mailrise_host: "mailrise.example.com" # or ip.address
+# --- Mailrise ---
+
+# keep
+mailrise_host: "{{ ansible_host }}"
 mailrise_port: 4207
+
+# replace
 mailrise_username: "your_mailrise_username_here"
 mailrise_password: "your_mailrise_password_here"
 
+# --- Apprise ---
+
+# keep
 apprise_repo: "https://github.com/caronc/apprise.git"
 apprise_clone_dest: "/opt/apprise"
 apprise_venv_dir: /opt/apprise-venv
+
+# generate
 apprise_mastodon_token: "your_token"
+
+# replace
 apprise_mastodon_host: "mastodon.social"

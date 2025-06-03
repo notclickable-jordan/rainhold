@@ -2,15 +2,15 @@
   hosts: public
   become: true
   roles:
-    - role: base
-    - role: tailscale
-    - role: fail2ban
-    - role: postfix
-    - role: updates
-    - role: ssh-hardening
-    - role: root-password
-    - role: users
-    - role: docker
-    - role: cloudflared
+    # - role: base
+    # - role: tailscale
+    # - role: fail2ban
+    # - role: postfix
+    # - role: updates
+    # - role: ssh-hardening
+    # - role: root-password
+    # - role: users
+    # - role: docker
+    # - role: cloudflared
     - role: repository
-    - role: apprise
+    # - role: apprise

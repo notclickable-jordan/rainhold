@@ -1,4 +1,4 @@
-# Proxmox Setup Guide
+# Proxmox
 
 ## Installation
 
