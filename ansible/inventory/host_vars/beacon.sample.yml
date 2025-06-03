@@ -28,6 +28,7 @@ tinyauth_pocket_id_client_secret: "your_pocket_id_client_secret_here"
 
 apprise_repo: "https://github.com/caronc/apprise.git"
 apprise_clone_dest: "/opt/apprise"
+apprise_venv_dir: /opt/apprise-venv
 
 synapse_user: "synapse"
 synapse_password: "your_synapse_password_here"
