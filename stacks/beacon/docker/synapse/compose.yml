@@ -17,7 +17,7 @@ services:
         depends_on:
             - db
         ports:
-            - 4208:8448/tcp
+            - 4208:8008/tcp
 
     db:
         image: docker.io/postgres:15-alpine

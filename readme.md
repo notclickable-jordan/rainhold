@@ -34,5 +34,6 @@ I wanted to have a server that mixed public and private sites. Users should be m
 -   [Ansible](docs/ansible.md): Run Ansible playbooks for automated deployment
 -   [Pocket ID](docs/pocket-id.md): Connect Pocket ID to LLDAP for user management
 -   [Caddy](docs/caddy.md): Use a special build of Caddy for SSL with Cloudflare
+-   [Synapse](docs/synapse.md): Set up Synapse for Matrix communication
 -   [Troubleshooting](docs/troubleshooting.md): Fix common issues and solutions
 -   [Ports](docs/ports.md): All ports and services used in this setup
