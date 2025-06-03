@@ -120,6 +120,10 @@ ansible-playbook ansible/playbook.yml --ask-become-pass --user jordan --inventor
 | 4205 | Not Clickable redirect | Redirect Not Clickable to YouTube     |
 | 4206 | Tinyauth               | Tinyauth service for authentication   |
 
+# Caddy
+
+Why does Caddy use a personal Docker image? Because, in order to get SSL certificates through Cloudflare, I needed to use a custom build of Caddy. You might not if you're not using Cloudflare.
+
 # Troubleshooting
 
 ## Pocket ID
