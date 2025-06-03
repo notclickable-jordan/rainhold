@@ -1,0 +1,26 @@
+---
+- name: Ensure required packages are installed
+  apt:
+    name:
+      - git
+      - python3-pip
+    state: present
+    update_cache: yes
+
+- name: Clone Apprise repository
+  git:
+    repo: "{{ apprise_repo }}"
+    dest: "{{ apprise_clone_dest }}"
+    version: master
+
+- name: Install Apprise in editable mode
+  pip:
+    chdir: "{{ apprise_clone_dest }}"
+    editable: true
+    name: .
+
+- name: Verify Apprise installation
+  command: python3 -c "import apprise"
+  register: apprise_check
+  changed_when: false
+  failed_when: apprise_check.rc != 0

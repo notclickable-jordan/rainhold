@@ -25,3 +25,9 @@ LLDAP_LDAP_USER_PASS: "your_ldap_user_password_here"
 tinyauth_secret: "your_tinyauth_secret_here"
 tinyauth_pocket_id_client_id: "your_pocket_id_client_id_here"
 tinyauth_pocket_id_client_secret: "your_pocket_id_client_secret_here"
+
+apprise_repo: "https://github.com/caronc/apprise.git"
+apprise_clone_dest: "/opt/apprise"
+
+synapse_user: "synapse"
+synapse_password: "your_synapse_password_here"

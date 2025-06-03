@@ -9,3 +9,4 @@
 | 4204    | Dozzle                 | Dozzle service for Docker logs        |
 | 4205    | Not Clickable redirect | Redirect Not Clickable to YouTube     |
 | 4206    | Tinyauth               | Tinyauth service for authentication   |
+| 4207    | MailRise               | SMTP server to AppRise                |
