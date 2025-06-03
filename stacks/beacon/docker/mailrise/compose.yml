@@ -3,5 +3,7 @@ services:
         image: yoryan/mailrise:latest
         container_name: mailrise
         restart: unless-stopped
+        volumes:
+            - ./mailrise.conf:/etc/mailrise.conf
         ports:
             - 4207:8025

@@ -1,0 +1,9 @@
+configs:
+  mastodon:
+    urls:
+      - mastodons://{{ apprise_mastodon_token }}@{{ apprise_mastodon_host }}
+
+smtp:
+  auth:
+    basic:
+      mailrise: {{ mailrise_password }}

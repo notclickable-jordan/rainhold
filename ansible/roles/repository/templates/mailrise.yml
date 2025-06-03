@@ -1,8 +1,0 @@
-configs:
-  notify@mailrise.notclickable.com:
-
-smtp:
-  auth:
-    basic:
-      username: password
-      AzureDiamond: hunter2

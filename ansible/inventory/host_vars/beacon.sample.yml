@@ -26,9 +26,10 @@ tinyauth_secret: "your_tinyauth_secret_here"
 tinyauth_pocket_id_client_id: "your_pocket_id_client_id_here"
 tinyauth_pocket_id_client_secret: "your_pocket_id_client_secret_here"
 
+mailrise_password: "your_mailrise_password_here"
+
 apprise_repo: "https://github.com/caronc/apprise.git"
 apprise_clone_dest: "/opt/apprise"
 apprise_venv_dir: /opt/apprise-venv
-
-synapse_user: "synapse"
-synapse_password: "your_synapse_password_here"
+apprise_mastodon_token: "your_token"
+apprise_mastodon_host: "mastodon.social"
