@@ -1,4 +1,12 @@
-# Apprise
+# Email with Mailrise and Apprise
+
+## Mailrise
+
+[Project homepage](https://github.com/YoRyan/mailrise)
+
+This is a private server, so Cloudflare, Tailscale, and NextDNS are involved.
+
+Follow the instructions in [private site](private.md) to set up a DNS record in Cloudflare, a rewrite in NextDNS, and a reverse proxy in Caddy.
 
 ## Mastodon
 
