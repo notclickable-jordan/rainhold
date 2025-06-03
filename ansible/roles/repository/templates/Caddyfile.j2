@@ -1,13 +1,17 @@
-tls {
-	dns cloudflare {{ cloudflare_ssl_api_token }}
-}
-
 ldap.notclickable.com {
     reverse_proxy {{ ansible_host }}:4202
+
+    tls {
+        dns cloudflare {{ cloudflare_ssl_api_token }}
+    }
 }
 
 pocket-id.notclickable.com {
     reverse_proxy {{ ansible_host }}:4203
+    
+    tls {
+        dns cloudflare {{ cloudflare_ssl_api_token }}
+    }
 }
 
 dozzle.notclickable.com {
@@ -15,17 +19,34 @@ dozzle.notclickable.com {
         uri /api/auth/caddy
         copy_headers Remote-User Remote-Email Remote-Name Remote-Groups
     }
+    
+    tls {
+        dns cloudflare {{ cloudflare_ssl_api_token }}
+    }
+
     reverse_proxy {{ ansible_host }}:4204
 }
 
 notclickable.com {
     reverse_proxy {{ ansible_host }}:4205
+    
+    tls {
+        dns cloudflare {{ cloudflare_ssl_api_token }}
+    }
 }
 
 www.notclickable.com {
     reverse_proxy {{ ansible_host }}:4205
+    
+    tls {
+        dns cloudflare {{ cloudflare_ssl_api_token }}
+    }
 }
 
 tinyauth.notclickable.com {
     reverse_proxy {{ ansible_host }}:4206
+    
+    tls {
+        dns cloudflare {{ cloudflare_ssl_api_token }}
+    }
 }
