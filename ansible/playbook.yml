@@ -13,4 +13,3 @@
     - role: cloudflared
     - role: repository
     - role: apprise
-    - role: synapse
