@@ -1,0 +1,11 @@
+modules:
+  - module: "ldap_auth_provider.LdapAuthProviderModule"
+    config:
+      enabled: true
+      uri: "ldap://{{ ansible_host }}:4201"
+      start_tls: true
+      base: "ou=people,dc=notclickable,dc=com"
+      attributes:
+        uid: "admin"
+        mail: "mail"
+        name: "user_id"

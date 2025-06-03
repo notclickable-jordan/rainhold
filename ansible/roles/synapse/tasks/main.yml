@@ -1,0 +1,22 @@
+- name: Render LDAP config template
+  template:
+    src: ldap_config.yml.j2
+    dest: /tmp/ldap_config.yml
+
+- name: Copy LDAP config into synapse container
+  community.docker.docker_container_cp:
+    container: synapse
+    src: /tmp/ldap_config.yml
+    dest: /tmp/ldap_config.yml
+
+- name: Append LDAP config to homeserver.yml in synapse container
+  community.docker.docker_container_exec:
+    container: synapse
+    command: /bin/sh -c "cat /tmp/ldap_config.yml >> /data/homeserver.yml"
+    user: root
+  become: false
+
+- name: Restart synapse container
+  community.docker.docker_container:
+    name: synapse
+    state: restarted
