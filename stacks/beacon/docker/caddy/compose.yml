@@ -1,6 +1,6 @@
 services:
     caddy:
-        image: caddy:alpine
+        image: jordanroher/caddy-cloudflare-dns
         container_name: caddy
         restart: unless-stopped
         cap_add:
