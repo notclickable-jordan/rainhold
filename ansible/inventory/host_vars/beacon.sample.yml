@@ -11,6 +11,7 @@ tailscale_authkey: "tskey-1234567890abcdef1234567890abcdef1234567890abcdef123456
 
 cloudflared_token: "YOUR_CLOUDFLARED_TUNNEL_TOKEN"
 cloudflared_config_path: "/etc/cloudflared"
+cloudflare_ssl_api_token: "YOUR_CLOUDFLARE_SSL_API_TOKEN" # Cloudflare > My Profile > API Tokens. Create a custom token with two permissions: Zone/Zone/Read and Zone/DNS/Edit.
 
 rainhold_repo: https://github.com/notclickable-jordan/rainhold
 rainhold_dest: /etc/rainhold

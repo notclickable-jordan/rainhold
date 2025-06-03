@@ -1,16 +1,16 @@
-{
-    auto_https off
+tls {
+	dns cloudflare {{ cloudflare_ssl_api_token }}
 }
 
-http://ldap.notclickable.com {
+ldap.notclickable.com {
     reverse_proxy {{ ansible_host }}:4202
 }
 
-http://pocket-id.notclickable.com {
+pocket-id.notclickable.com {
     reverse_proxy {{ ansible_host }}:4203
 }
 
-http://dozzle.notclickable.com {
+dozzle.notclickable.com {
     forward_auth {{ ansible_host }}:4206 {
         uri /api/auth/caddy
         copy_headers Remote-User Remote-Email Remote-Name Remote-Groups
@@ -18,14 +18,14 @@ http://dozzle.notclickable.com {
     reverse_proxy {{ ansible_host }}:4204
 }
 
-http://notclickable.com {
+notclickable.com {
     reverse_proxy {{ ansible_host }}:4205
 }
 
-http://www.notclickable.com {
+www.notclickable.com {
     reverse_proxy {{ ansible_host }}:4205
 }
 
-http://tinyauth.notclickable.com {
+tinyauth.notclickable.com {
     reverse_proxy {{ ansible_host }}:4206
 }
