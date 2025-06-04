@@ -1,6 +1,6 @@
 # Pocket ID and LLDAP
 
-In Pocket ID, you can connect to your LLDAP server to manage users and groups. This allows you to use Pocket ID for authentication while leveraging LLDAP for user management.
+Connect Pocket ID to your LLDAP server to manage users and groups. This lets Pocket ID handle authentication while letting LLDAP be the source for user management.
 
 ## Prerequisites
 

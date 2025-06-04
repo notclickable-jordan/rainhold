@@ -1,5 +1,7 @@
 # Remote server
 
+After creating a VM in Proxmox, you need to configure it so Ansible can reach it.
+
 ## Put SSH key in authorized_keys
 
 Run:

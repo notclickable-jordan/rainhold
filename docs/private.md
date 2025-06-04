@@ -1,5 +1,7 @@
 # Private sites using Tailscale and NextDNS
 
+Create private sites that are accessible only while your device is connected to Tailscale and NextDNS. This setup allows you to have secure access to your private services without exposing them to the public internet.
+
 ## Cloudflare
 
 In Cloudflare, create a new DNS record for your private site, e.g., `private.example.com`
@@ -14,7 +16,7 @@ In Cloudflare, create a new DNS record for your private site, e.g., `private.exa
 In NextDNS, go to Settings > Rewrites and add a new rewrite:
 
 -   **Domain:** private.example.com
--   **Answer:** (Tailscale IP address)
+-   **Answer:** (Tailscale IP address of server)
 
 ## Caddy
 

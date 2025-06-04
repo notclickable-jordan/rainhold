@@ -2,35 +2,34 @@
 
 ## Installation
 
-1. **Install Proxmox from USB**
+1. Install Proxmox from USB
 
     - **Hostname:** `example.domain.com` (the `example` part becomes the node name in Tailscale)
     - **IP Address:** `ip.address/24`
     - **Gateway:** `router.ip.address`
     - **DNS Server:** `router.ip.address`
 
-2. **Repositories**
+2. Repositories
 
-    - Navigate to `Datacenter > home > Repositories`
+    - Navigate to `Datacenter > example > Repositories`
     - Disable all repositories starting with `enterprise.proxmox`
 
-3. **Download Debian ISO**
+3. Download Debian ISO
 
-    - Go to `Datacenter > home > local > ISO Images`
+    - Go to `Datacenter > example > local > ISO Images`
     - Add from URL:  
       `https://cdimage.debian.org/debian-cd/current/amd64/iso-dvd/debian-12.11.0-amd64-DVD-1.iso`
 
-4. **Create VM and Install**
-    - Make sure the VM disk is stored in the correct location.
-    - Avoid creating custom storage folders.
+4. Create VM and Install
+    - Avoid creating custom storage folders
 
 ---
 
 ## Tailscale Setup
 
-1. **Install Tailscale**
+1. Install Tailscale
 
-    - Navigate to `Datacenter > home > Shell`
+    - Navigate to `Datacenter > example > Shell`
     - Run:
         ```bash
         curl -fsSL https://pkgs.tailscale.com/stable/debian/bookworm.noarmor.gpg | tee /usr/share/keyrings/tailscale-archive-keyring.gpg >/dev/null
@@ -39,7 +38,7 @@
         apt-get install tailscale
         ```
 
-2. **Authenticate Tailscale**
+2. Authenticate Tailscale
     ```bash
     tailscale up
     ```
@@ -48,7 +47,7 @@
 
 ## Tailscale SSL
 
-1. **Create script at `/root/tailscale-ssl.sh`:**
+1. Create script at `/root/tailscale-ssl.sh`:
 
     ```bash
     #!/bin/bash
@@ -57,27 +56,27 @@
     pvenode cert set "${NAME}.crt" "${NAME}.key" --force --restart
     ```
 
-2. **Run manually at first**, then make it executable and schedule via cron:
+2. Run manually at first, then make it executable and schedule via cron:
 
     ```bash
     chmod +x ./tailscale-ssl.sh
     crontab -e
     ```
 
-3. **Add to crontab:**
+3. Add to crontab:
 
     ```cron
     0 1 * * * /root/tailscale-ssl.sh
     ```
 
-4. **Check Proxmox URL (example):**  
+4. Check Proxmox URL (example):  
    `https://example.tail6e07a.ts.net:8006`
 
 ---
 
 ## System Updates
 
-1. **Connect via shell:**
+1. Connect via shell:
     ```bash
     apt-get update
     apt-get upgrade
@@ -87,19 +86,19 @@
 
 ## User Setup
 
-1. **Create personal user:**
+1. Create personal user:
 
     ```bash
     adduser username
     ```
 
-2. **Set up SSH key login:**
+2. Set up SSH key login:
 
     ```bash
     ssh-copy-id username@server
     ```
 
-3. **Disable password authentication:**
+3. Disable password authentication:
     - Edit `/etc/ssh/sshd_config`
     - Search for `PasswordAuthentication`, uncomment and set to `no`
     - Restart SSH:
@@ -111,7 +110,7 @@
 
 ## Enable Automatic Updates
 
-1. **Install unattended upgrades:**
+1. Install unattended upgrades:
 
     ```bash
     apt update
@@ -119,7 +118,7 @@
     dpkg-reconfigure --priority=low unattended-upgrades
     ```
 
-2. **Edit auto-clean interval:**
+2. Edit auto-clean interval:
 
     ```bash
     nano /etc/apt/apt.conf.d/20auto-upgrades

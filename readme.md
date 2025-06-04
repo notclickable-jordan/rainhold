@@ -12,6 +12,7 @@ Complete guide to set up a secure, automated server environment. Users are manag
 
 1. Tailscale
 2. Cloudflare
+3. NextDNS
 
 ## Authentication stack
 
@@ -27,7 +28,6 @@ Follow these steps in order to set up your server environment:
 1. [Variables](docs/variables.md): Set up your server name and first username
 1. [Proxmox VE](docs/proxmox.md): Create virtualization platform
 1. [Remote computer](docs/remote.md): Configure VM created on Proxmox
-1. [Local computer](docs/local.md): Use Mac for Ansible deployment
 1. [Cloudflare](docs/cloudflare.md): Manage DNS and SSL for public sites
 1. [Private sites](docs/private.md): Set up private sites with Tailscale and NextDNS
 1. [Ansible](docs/ansible.md): Run Ansible playbooks for automated deployment
