@@ -83,7 +83,7 @@ apprise_mastodon_token: "your_token"
 # replace
 apprise_mastodon_host: "mastodon.social"
 
-# --- Network Share Example ---
+# --- Network Share ---
 
 network_share_host: "192.168.1.100"
 network_share_name: "SHARE_NAME"
