@@ -12,18 +12,9 @@
   loop: "{{ rainhold_docker_dirs.files }}"
   register: compose_yml_stat
 
-- name: Bring down docker compose services in each subdirectory
-  community.docker.docker_compose:
-    project_src: "{{ item.item.path }}"
-    state: absent
-  loop: "{{ compose_yml_stat.results }}"
-  when: item.stat.exists
-
-- name: Bring up docker compose services in each subdirectory
-  community.docker.docker_compose:
-    project_src: "{{ item.item.path }}"
-    state: present
-    restarted: true
-    pull: true
+- name: Restart docker service in each subdirectory
+  shell: docker compose down && docker compose up -d
+  args:
+    chdir: "{{ item.item.path }}"
   loop: "{{ compose_yml_stat.results }}"
   when: item.stat.exists
