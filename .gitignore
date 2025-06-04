@@ -1,5 +1,6 @@
 .DS_Store
 .env
-ansible/inventory/host_vars/beacon.yml
-ansible/inventory/host_vars/haven.yml
-ansible/inventory/host_vars/wilds.yml
+ansible/inventory/host_vars/*
+!ansible/inventory/host_vars/sample.yml
+stacks/*/docker/mailrise/mailrise.crt
+stacks/*/docker/mailrise/mailrise.key

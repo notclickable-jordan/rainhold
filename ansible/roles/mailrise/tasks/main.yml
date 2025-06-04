@@ -1,0 +1,23 @@
+---
+# Generate a self-signed TLS certificate for Mailrise
+- name: Ensure directory for Mailrise TLS cert exists
+  file:
+    path: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/mailrise"
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Generate self-signed TLS certificate for Mailrise
+  community.crypto.openssl_certificate:
+    path: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/mailrise/mailrise.crt"
+    privatekey_path: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/mailrise/mailrise.key"
+    common_name: "{{ inventory_hostname }}"
+    provider: selfsigned
+    state: present
+  register: mailrise_tls_cert
+
+- name: Set mailrise TLS cert/key variables
+  set_fact:
+    mailrise_tls_certfile: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/mailrise/mailrise.crt"
+    mailrise_tls_keyfile: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/mailrise/mailrise.key"
