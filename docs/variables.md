@@ -18,7 +18,7 @@ For the sake of replacement, let's pretend these are yours:
 
 ## Host variables
 
-1. Rename `host_vars/beacon.sample.yml` to the name of your server, e.g. `compy386.yml`
+1. Rename `host_vars/sample.yml` to the name of your server, e.g. `compy386.yml`
 1. This will cause your text editor (and git) to ignore the file. That's normal. It protects you from accidentally committing your secret keys.
 1. Open `comp386.yml` and follow the guide in comments (lines starting with `#`):
     - `keep` &gt; don't change it
