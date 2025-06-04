@@ -13,14 +13,15 @@ gitlab_rails['gitlab_email_reply_to'] = 'gitlab@notclickable.com';
 # LDAP
 gitlab_rails['ldap_enabled'] = true;
 gitlab_rails['ldap_servers'] = {
-    'main':
-        'label': 'LDAP'
-        'host': 'ldap.notclickable.com'
-        'port': 4201
-        'uid': 'uid'
-        'bind_dn': 'cn=admin,dc=notclickable,dc=com'
-        'password': '{{ LLDAP_LDAP_USER_PASS }}'
-        'encryption': 'simple_tls'
-        'verify_certificates': true
-        'active_directory': false
-}
+  'main' => {
+    'label' => 'LDAP',
+    'host' => 'ldap.notclickable.com',
+    'port' => 4201,
+    'uid' => 'uid',
+    'bind_dn' => 'cn=admin,dc=notclickable,dc=com',
+    'password' => '{{ LLDAP_LDAP_USER_PASS }}',
+    'encryption' => 'simple_tls',
+    'verify_certificates' => true,
+    'active_directory' => false
+  }
+};
