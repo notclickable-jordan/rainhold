@@ -28,4 +28,4 @@ To get SSL certificates through Cloudflare, you need to set up an API key. This 
     - **Zone > DNS > Edit**
 8. Click **Continue to summary**
 9. Review the permissions and click **Create Token**
-10. Copy the token and save it in your host_vars/`<hostname>.yml` file as `cloudflare_ssl_api_token`
+10. Copy the token and save it in your `host_vars/<hostname>.yml` file as `cloudflare_ssl_api_token`
