@@ -1,0 +1,42 @@
+[
+	{
+		"category": "Services",
+		"services": [
+			{
+				"name": "LDAP Admin",
+				"uri": "https://ldap.notclickable.com",
+				"icon": "lldap"
+			},
+			{
+				"name": "Pocket ID",
+				"uri": "https://pocket-id.notclickable.com",
+				"icon": "pocketbase"
+			},
+			{
+				"name": "Dozzle Logs",
+				"uri": "https://dozzle.notclickable.com",
+				"icon": "dozzle"
+			},
+			{
+				"name": "TinyAuth",
+				"uri": "https://tinyauth.notclickable.com",
+				"icon": "keycloak"
+			},
+			{
+				"name": "Mailrise",
+				"uri": "https://mailrise.notclickable.com",
+				"icon": "mail"
+			},
+			{
+				"name": "Synapse",
+				"uri": "https://synapse.notclickable.com",
+				"icon": "matrix"
+			},
+			{
+				"name": "YouTube Channel",
+				"uri": "https://www.youtube.com/@notclickable",
+				"icon": "youtube"
+			}
+		]
+	}
+]

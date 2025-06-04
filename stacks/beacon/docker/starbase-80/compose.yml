@@ -1,0 +1,11 @@
+services:
+    starbase-80:
+        image: jordanroher/starbase-80
+        container_name: starbase-80
+        restart: unless-stopped
+        ports:
+            - 4205:4173
+        environment:
+            - TITLE="Not Clickable"
+        volumes:
+            - ./config.json:/app/src/config/config.json:ro
