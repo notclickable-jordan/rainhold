@@ -3,11 +3,12 @@ configs:
     urls:
       - mastodons://{{ apprise_mastodon_token }}@{{ apprise_mastodon_host }}?overflow=truncate
 
+tls:
+  mode: starttlsrequire
+  certfile: {{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/mailrise/mailrise.crt
+  keyfile: {{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/mailrise/mailrise.key
+
 smtp:
   auth:
     basic:
       {{ mailrise_username }}: {{ mailrise_password }}
-  tls:
-    mode: onconnect
-    certfile: {{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/mailrise/mailrise.crt
-    keyfile: {{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/mailrise/mailrise.key
