@@ -5,37 +5,38 @@
 			{
 				"name": "LDAP Admin",
 				"uri": "https://ldap.notclickable.com",
-				"icon": "lldap"
+				"icon": "lldap",
+				"description": "User directory"
 			},
 			{
 				"name": "Pocket ID",
 				"uri": "https://pocket-id.notclickable.com",
-				"icon": "pocketbase"
+				"icon": "pocketbase",
+				"description": "Identity provider"
 			},
 			{
 				"name": "Dozzle Logs",
 				"uri": "https://dozzle.notclickable.com",
-				"icon": "dozzle"
+				"icon": "dozzle",
+				"description": "Container logs"
 			},
 			{
 				"name": "TinyAuth",
 				"uri": "https://tinyauth.notclickable.com",
-				"icon": "keycloak"
+				"icon": "keycloak",
+				"description": "Authorization"
 			},
 			{
 				"name": "Mailrise",
 				"uri": "https://mailrise.notclickable.com",
-				"icon": "mail"
-			},
-			{
-				"name": "Synapse",
-				"uri": "https://synapse.notclickable.com",
-				"icon": "matrix"
+				"icon": "mail",
+				"description": "Internal email"
 			},
 			{
 				"name": "YouTube Channel",
 				"uri": "https://www.youtube.com/@notclickable",
-				"icon": "youtube"
+				"icon": "youtube",
+				"description": "Videos"
 			}
 		]
 	}
