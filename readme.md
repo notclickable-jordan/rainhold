@@ -16,7 +16,7 @@ Complete guide to set up a secure, automated server environment. Users are manag
 
 ## Authentication stack
 
-1. Lightweight LDAP (LLDAP)
+1. Lightweight LDAP (users and groups)
 2. Pocket ID (Authentication)
 3. Tinyauth (Authorization)
 4. Caddy (Reverse proxy)

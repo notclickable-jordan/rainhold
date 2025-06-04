@@ -75,4 +75,7 @@ Your Mastodon token, e.g. `1234567890abcdef1234567890abcdef`
 
 1. Sign in to your Mastodon account, go to **Settings &gt; Development &gt; New Application**, and create a new application with the following settings:
     1. **Name**: `Apprise`
-    2. **Scopes**: `write:statuses`, `write:media`, `read:accounts`
+    2. **Scopes**:
+        - `write:statuses`
+        - `write:media`
+        - `read:accounts`
