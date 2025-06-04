@@ -1,0 +1,43 @@
+# Install cifs-utils
+- name: Install cifs-utils
+  apt:
+    name: cifs-utils
+    state: present
+  become: true
+
+# Ensure mount point exists
+- name: Ensure mount point exists
+  file:
+    path: "{{ network_share_mount_point }}"
+    state: directory
+    owner: "{{ network_share_owner | default('root') }}"
+    group: "{{ network_share_group | default('root') }}"
+    mode: "0755"
+  become: true
+
+# Create credentials file
+- name: Create SMB credentials file
+  copy:
+    dest: "/root/.smbcredentials-{{ network_share_name }}"
+    content: |
+      username={{ network_share_username }}
+      password={{ network_share_password }}
+    owner: root
+    group: root
+    mode: "0600"
+  become: true
+
+# Add fstab entry
+- name: Ensure fstab entry for network share
+  mount:
+    path: "{{ network_share_mount_point }}"
+    src: "//{{ network_share_host }}/{{ network_share_name }}"
+    fstype: cifs
+    opts: "vers=3.0,credentials=/root/.smbcredentials-{{ network_share_name }},uid={{ network_share_uid | default(1000) }},gid={{ network_share_gid | default(1000) }}"
+    state: mounted
+  become: true
+
+# Run mount -a to activate all fstab mounts
+- name: Run mount -a to activate all fstab mounts
+  command: mount -a
+  become: true

@@ -82,3 +82,13 @@ apprise_mastodon_token: "your_token"
 
 # replace
 apprise_mastodon_host: "mastodon.social"
+
+# --- Network Share Example ---
+
+network_share_host: "192.168.1.100"
+network_share_name: "SHARE_NAME"
+network_share_mount_point: "/mnt/myfolder"
+network_share_username: "your_username"
+network_share_password: "your_password"
+# network_share_uid: 1000 # Local user UID (optional)
+# network_share_gid: 1000 # Local group GID (optional)
