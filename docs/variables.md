@@ -54,7 +54,7 @@ Your Cloudflare token, e.g. `1234567890abcdef1234567890abcdef`
 
 Your Cloudflare SSL API token, e.g. `1234567890abcdef1234567890abcdef`
 
-1. See [Cloudflare Tunnels](docs/cloudflare.md#ssl-api-key) for details on how to set this up
+1. Follow [Cloudflare Tunnels](./cloudflare.md#ssl-api-key) for details on how to set this up
 
 ### LLDAP_JWT_SECRET and LLDAP_KEY_SEED
 
