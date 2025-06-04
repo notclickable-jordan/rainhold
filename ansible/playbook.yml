@@ -2,16 +2,17 @@
   hosts: public
   become: true
   roles:
-    - role: base
+    - role: apt-update
     - role: tailscale
     - role: fail2ban
     - role: postfix
-    - role: updates
+    - role: unattended-upgrades
     - role: ssh-hardening
     - role: root-password
-    - role: users
+    - role: user-management
     - role: docker
     - role: cloudflared
     - role: mailrise
-    - role: repository
+    - role: clone-repository
+    - role: docker-start
     - role: apprise

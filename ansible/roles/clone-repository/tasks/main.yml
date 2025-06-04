@@ -3,7 +3,7 @@
   file:
     path: "{{ rainhold_dest }}"
     state: directory
-    mode: '0755'
+    mode: "0755"
 
 - name: Check if destination is a git repo
   stat:
