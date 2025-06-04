@@ -2,6 +2,9 @@ configs:
   mastodon@mailrise.notclickable.com:
     urls:
       - mastodons://{{ apprise_mastodon_token }}@{{ apprise_mastodon_host }}?overflow=truncate
+  mastodon-full@mailrise.notclickable.com:
+    urls:
+      - mastodons://{{ apprise_mastodon_token }}@{{ apprise_mastodon_host }}?overflow=split
 
 tls:
   mode: starttlsrequire

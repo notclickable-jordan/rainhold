@@ -1,9 +1,3 @@
 {
-	"recommendations": [
-		"dbaeumer.vscode-eslint",
-		"esbenp.prettier-vscode",
-		"github.github-vscode-theme",
-		"miguelsolorio.fluent-icons",
-		"budparr.language-hugo-vscode"
-	]
+	"recommendations": ["dbaeumer.vscode-eslint", "esbenp.prettier-vscode"]
 }

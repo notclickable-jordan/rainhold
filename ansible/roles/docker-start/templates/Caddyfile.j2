@@ -58,3 +58,11 @@ mailrise.notclickable.com {
         dns cloudflare {{ cloudflare_ssl_api_token }}
     }
 }
+
+gitlab.notclickable.com {
+    reverse_proxy {{ ansible_host }}:4208
+    
+    tls {
+        dns cloudflare {{ cloudflare_ssl_api_token }}
+    }
+}

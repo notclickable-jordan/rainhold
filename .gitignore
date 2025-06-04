@@ -5,3 +5,4 @@ ansible/inventory/host_vars/*
 stacks/*/docker/mailrise/mailrise.crt
 stacks/*/docker/mailrise/mailrise.key
 stacks/*/docker/mailrise/mailrise.csr
+stacks/*/docker/gitlab/gitlab.rb
