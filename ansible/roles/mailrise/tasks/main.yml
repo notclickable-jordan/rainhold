@@ -9,15 +9,9 @@
     mode: "0755"
 
 - name: Generate self-signed TLS certificate for Mailrise
-  community.crypto.openssl_certificate:
+  community.crypto.x509_certificate:
     path: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/mailrise/mailrise.crt"
     privatekey_path: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/mailrise/mailrise.key"
-    common_name: "{{ inventory_hostname }}"
+    csr_path: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/mailrise/mailrise.csr"
     provider: selfsigned
     state: present
-  register: mailrise_tls_cert
-
-- name: Set mailrise TLS cert/key variables
-  set_fact:
-    mailrise_tls_certfile: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/mailrise/mailrise.crt"
-    mailrise_tls_keyfile: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/mailrise/mailrise.key"

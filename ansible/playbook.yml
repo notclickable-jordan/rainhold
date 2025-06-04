@@ -12,6 +12,6 @@
     - role: users
     - role: docker
     - role: cloudflared
-    - role: repository
     - role: mailrise
+    - role: repository
     - role: apprise
