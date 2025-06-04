@@ -10,7 +10,7 @@
     - role: ssh-hardening
     - role: root-password
     - role: user-management
-    - role: docker
+    - role: docker-install
     - role: cloudflared
     - role: mailrise
     - role: clone-repository
