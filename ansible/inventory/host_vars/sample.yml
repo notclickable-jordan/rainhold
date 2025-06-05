@@ -99,3 +99,6 @@ GITEA__database__NAME: gitea
 
 # replace
 GITEA__database__PASSWD: "your_gitea_database_password_here"
+
+# generate
+gitea_runner_registration_token: "your_gitea_runner_registration_token_here"

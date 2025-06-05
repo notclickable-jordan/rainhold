@@ -16,8 +16,8 @@ services:
             - /etc/timezone:/etc/timezone:ro
             - /etc/localtime:/etc/localtime:ro
         ports:
-            - "4208:3000"
-            - "4209:22"
+            - 4208:3000
+            - 4209:22
         depends_on:
             - db
 
@@ -31,6 +31,17 @@ services:
             - gitea
         volumes:
             - db:/var/lib/postgresql/data
+
+    runner:
+        image: gitea/act_runner
+        container_name: gitea-runner
+        env_file:
+            - .env.runner
+        restart: unless-stopped
+        networks:
+            - gitea
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
 
 volumes:
     data:

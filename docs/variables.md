@@ -83,3 +83,9 @@ Your Mastodon token, e.g. `1234567890abcdef1234567890abcdef`
 ### `GITEA__database__PASSWD`
 
 1. Generate a random string, e.g. `openssl rand -base64 32`
+
+### `gitea_runner_registration_token`
+
+1. Generate in Gitea after installing it
+2. Go to **Site Administration &gt; Actions &gt; Runners** and click **Create new Runner**
+3. Copy the registration token and paste it here
