@@ -96,6 +96,7 @@ network_share_password: "your_password"
 # keep
 GITEA__database__USER: gitea
 GITEA__database__NAME: gitea
+gitea_port: 4208
 
 # replace
 GITEA__database__PASSWD: "your_gitea_database_password_here"
