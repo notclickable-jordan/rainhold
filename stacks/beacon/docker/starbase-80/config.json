@@ -21,6 +21,12 @@
 				"description": "Container logs"
 			},
 			{
+				"name": "Gitea",
+				"uri": "https://gitea.notclickable.com",
+				"icon": "gitea",
+				"description": "Source code repository"
+			},
+			{
 				"name": "TinyAuth",
 				"uri": "https://tinyauth.notclickable.com",
 				"icon": "keycloak",

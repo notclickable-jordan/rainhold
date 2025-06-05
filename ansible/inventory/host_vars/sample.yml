@@ -90,5 +90,12 @@ network_share_name: "SHARE_NAME"
 network_share_mount_point: "/mnt/myfolder"
 network_share_username: "your_username"
 network_share_password: "your_password"
-# network_share_uid: 1000 # Local user UID (optional)
-# network_share_gid: 1000 # Local group GID (optional)
+
+# --- Gitea ---
+
+# keep
+GITEA__database__USER: gitea
+GITEA__database__NAME: gitea
+
+# replace
+GITEA__database__PASSWD: "your_gitea_database_password_here"

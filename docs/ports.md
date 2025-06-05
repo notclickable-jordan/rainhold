@@ -10,5 +10,5 @@
 | 4205    | Starbase 80    | Home page                          |
 | 4206    | Tinyauth       | Authorization                      |
 | 4207    | MailRise       | SMTP server to AppRise             |
-| 4208    | GitLab         | GitLab instance                    |
-| 4209    | GitLab SSH     | GitLab SSH access                  |
+| 4208    | Gitea          | Gitea instance                     |
+| 4209    | Gitea SSH      | Gitea SSH access                   |

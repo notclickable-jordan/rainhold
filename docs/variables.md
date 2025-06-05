@@ -79,3 +79,7 @@ Your Mastodon token, e.g. `1234567890abcdef1234567890abcdef`
         - `write:statuses`
         - `write:media`
         - `read:accounts`
+
+### `GITEA__database__PASSWD`
+
+1. Generate a random string, e.g. `openssl rand -base64 32`
