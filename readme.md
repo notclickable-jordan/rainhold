@@ -40,3 +40,15 @@ Follow these steps in order to set up your server environment:
 -   [Network share](docs/network-share.md): Mount a network shared folder using SMB/CIFS
 -   [Tailscale](docs/tailscale.md): Set up Tailscale for secure private networking
 -   [Ports](docs/ports.md): All ports and services used in this setup
+
+# Sites hosted
+
+-   [Caddy Cloudflare DNS](https://github.com/jordanroher/caddy-cloudflare-dns)
+-   [Dozzle](https://dozzle.dev)
+-   [Gitea](https://about.gitea.com)
+-   [LLDAP](https://github.com/lldap/lldap)
+-   [Mailrise](https://github.com/yoryan/mailrise)
+-   [Pocket ID](https://github.com/pocket-id/pocket-id)
+-   [Starbase 80](https://github.com/jordanroher/starbase-80)
+-   [Tinyauth](https://tinyauth.app)
+-   [Watchtower](https://github.com/containrrr/watchtower)
