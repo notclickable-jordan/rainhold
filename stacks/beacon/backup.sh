@@ -8,10 +8,11 @@ set -e
 
 EMAIL="admin@notclickable.com"
 DATE="$(date '+%Y-%m-%d %H:%M:%S')"
-BACKUP_FILE="rainhold-beacon.tgz"
+DATE_SUFFIX="$(date '+%Y-%m-%d')"
+BACKUP_FILE="rainhold-beacon-${DATE_SUFFIX}.tgz"
 
-# Get docker service names from compose files
-SERVICES=$(grep -hE '^\s{0,4}[a-zA-Z0-9_-]+:' ./docker/*/compose.yml | grep -vE 'services:' | sed 's/://;s/^ *//' | sort | uniq | xargs)
+# Get docker service folder names under ./docker, format as list with dashes and capitalize
+SERVICES=$(find ./docker -mindepth 1 -maxdepth 1 -type d -exec basename {} \; | sort | sed 's/.*/- &/' | sed 's/- \(.*\)/- \U\1\E/' )
 
 echo "[Backup] Starting backup of Docker volumes..."
 
@@ -39,10 +40,10 @@ docker run --rm $MOUNT_ARGS -v "$TMPDIR:/backup" alpine:3.17.2 sh -c '
   done
 ' _ "${VOLUMES[@]}"
 
-echo "[Backup] Combining all volume archives into rainhold-beacon.tgz..."
+echo "[Backup] Combining all volume archives into $BACKUP_FILE..."
 cd "$TMPDIR"
-tar -czf rainhold-beacon.tgz *.tgz
-mv rainhold-beacon.tgz "$OLDPWD/"
+tar -czf "$BACKUP_FILE" *.tgz
+mv "$BACKUP_FILE" "$OLDPWD/"
 cd "$OLDPWD"
 rm -rf "$TMPDIR"
 
@@ -52,12 +53,7 @@ echo "[Backup] Backup complete: $BACKUP_FILE"
 BACKUP_SIZE=$(du -h "$BACKUP_FILE" | awk '{print $1}')
 
 # Compose email body
-MAIL_BODY="Backup completed on $DATE
-
-Backup file: $BACKUP_FILE
-Size: $BACKUP_SIZE
-
-Docker services backed up:\n$SERVICES\n"
+MAIL_BODY="Backup completed on $DATE\n\nFile: $BACKUP_FILE\nSize: $BACKUP_SIZE\n\nServices:\n$SERVICES\n"
 
 echo -e "$MAIL_BODY" | mail -s "[rainhold-beacon] Backup complete on $DATE" "$EMAIL"
 echo "[Backup] Notification email sent to $EMAIL."
