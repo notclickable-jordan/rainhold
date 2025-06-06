@@ -38,6 +38,7 @@ Follow these steps in order to set up your server environment:
 -   [Caddy](docs/caddy.md): Use a special build of Caddy for SSL with Cloudflare
 -   [Apprise](docs/apprise.md): Send notifications to Mastodon and other services
 -   [Network share](docs/network-share.md): Mount a network shared folder using SMB/CIFS
+-   [Gitea](docs/gitea.md): Get the runner registration token
 -   [Tailscale](docs/tailscale.md): Set up Tailscale for secure private networking
 -   [Ports](docs/ports.md): All ports and services used in this setup
 
