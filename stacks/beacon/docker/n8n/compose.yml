@@ -1,0 +1,35 @@
+services:
+    n8n:
+        image: docker.n8n.io/n8nio/n8n
+        container_name: n8n
+        restart: always
+        env_file:
+            - .env
+        ports:
+            - 4210:5678
+        links:
+            - postgres
+        volumes:
+            - app:/home/node/.n8n
+        depends_on:
+            postgres:
+                condition: service_healthy
+
+    postgres:
+        image: postgres:16
+        container_name: db
+        restart: always
+        env_file:
+            - .env
+        volumes:
+            - db:/var/lib/postgresql/data
+            - ./init-data.sh:/docker-entrypoint-initdb.d/init-data.sh
+        healthcheck:
+            test: ["CMD-SHELL", "pg_isready -h localhost -U n8n -d n8n"]
+            interval: 5s
+            timeout: 5s
+            retries: 10
+
+volumes:
+    db:
+    app:

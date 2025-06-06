@@ -12,3 +12,4 @@
 | 4207    | MailRise       | SMTP server to AppRise             |
 | 4208    | Gitea          | Gitea instance                     |
 | 4209    | Gitea SSH      | Gitea SSH access                   |
+| 4210    | N8N            | Automation                         |

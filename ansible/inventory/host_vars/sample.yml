@@ -103,3 +103,14 @@ GITEA__database__PASSWD: "your_gitea_database_password_here"
 
 # generate
 gitea_runner_registration_token: "your_gitea_runner_registration_token_here"
+
+# --- N8N ---
+
+# keep
+n8n_POSTGRES_DB_name: "n8n"
+n8n_POSTGRES_USER: "n8n"
+n8n_POSTGRES_NON_ROOT_USER: "n8n"
+
+# generate
+n8n_POSTGRES_NON_ROOT_PASSWORD: "your_n8n_non_root_password_here"
+n8n_POSTGRES_PASSWORD: "your_n8n_postgres_password_here"

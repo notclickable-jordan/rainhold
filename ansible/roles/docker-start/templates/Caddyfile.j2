@@ -66,3 +66,11 @@ gitea.notclickable.com {
         dns cloudflare {{ cloudflare_ssl_api_token }}
     }
 }
+
+n8n.notclickable.com {
+    reverse_proxy {{ ansible_host }}:4210
+    
+    tls {
+        dns cloudflare {{ cloudflare_ssl_api_token }}
+    }
+}

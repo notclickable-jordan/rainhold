@@ -39,6 +39,12 @@
 				"description": "Internal email"
 			},
 			{
+				"name": "N8N",
+				"uri": "https://n8n.notclickable.com",
+				"icon": "n8n",
+				"description": "Automation platform"
+			},
+			{
 				"name": "YouTube Channel",
 				"uri": "https://www.youtube.com/@notclickable",
 				"icon": "youtube",
