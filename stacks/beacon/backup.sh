@@ -47,13 +47,15 @@ mv "$BACKUP_FILE" "$OLDPWD/"
 cd "$OLDPWD"
 rm -rf "$TMPDIR"
 
-echo "[Backup] Backup complete: $BACKUP_FILE"
+HUMAN_DATE="$(date '+%B %-d, %Y at %I:%M %p')"
+
+echo "[Backup] Backup complete: $BACKUP_FILE on $HUMAN_DATE"
 
 # Get human-readable backup size
 BACKUP_SIZE=$(du -h "$BACKUP_FILE" | awk '{print $1}')
 
 # Compose email body
-MAIL_BODY="Backup completed on $DATE\n\nFile: $BACKUP_FILE\nSize: $BACKUP_SIZE\n\nServices:\n$SERVICES\n"
+MAIL_BODY="Backup completed on $HUMAN_DATE\n\nFile: $BACKUP_FILE\nSize: $BACKUP_SIZE\n\nServices:\n$SERVICES\n"
 
 echo -e "$MAIL_BODY" | mail -s "[rainhold-beacon] Backup complete on $DATE" "$EMAIL"
 echo "[Backup] Notification email sent to $EMAIL."
