@@ -72,5 +72,5 @@ fi
 # Compose email body
 MAIL_BODY="Backup completed on $HUMAN_DATE\nTime elapsed: $ELAPSED_STR\n\nFile: $BACKUP_FILE\nSize: $BACKUP_SIZE\nServices: $SERVICE_COUNT\n"
 
-echo -e "$MAIL_BODY" | mail -s "[rainhold-beacon] Backup complete on $DATE" "$EMAIL"
+echo -e "$MAIL_BODY" | mail -s "[rainhold-beacon] Backup complete" "$EMAIL"
 echo "[Backup] Notification email sent to $EMAIL"
