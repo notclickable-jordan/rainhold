@@ -1,10 +1,21 @@
 #!/bin/bash
 
-# Restore all named Docker volumes in the beacon stack from rainhold-beacon.tgz
+# Restore all named Docker volumes in the beacon stack from ${SERVER_NAME}*.tgz
 set -e
+
+# Set the backup file prefix (change this if your server uses a different name)
+SERVER_NAME="rainhold-beacon"
 
 # Source shared volumes variable
 . "$(dirname "$0")/volumes.sh"
+
+# Find the latest ${SERVER_NAME}*.tgz file
+BACKUP_FILE=$(ls -1t ${SERVER_NAME}*.tgz 2>/dev/null | head -n 1)
+if [ -z "$BACKUP_FILE" ]; then
+  echo "No ${SERVER_NAME}*.tgz backup file found in $(pwd)"
+  exit 1
+fi
+echo "Using backup file: $BACKUP_FILE"
 
 # 1. Shut down all running docker services in each subfolder
 echo "Stopping all docker compose services in subfolders..."
@@ -17,7 +28,7 @@ echo "All services stopped."
 
 # 2. Extract backup archive to a temp dir
 TMPDIR=$(mktemp -d)
-tar -xzf rainhold-beacon.tgz -C "$TMPDIR"
+tar -xzf "$BACKUP_FILE" -C "$TMPDIR"
 
 # 3. Restore each volume using a temporary container
 MOUNT_ARGS=""

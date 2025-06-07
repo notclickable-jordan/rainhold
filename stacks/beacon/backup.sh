@@ -3,13 +3,16 @@
 # Backup all named Docker volumes in the beacon stack into a single archive
 set -e
 
+# Set the server name (change this if your server uses a different name)
+SERVER_NAME="rainhold-beacon"
+
 # Source shared volumes variable
 . "$(dirname "$0")/volumes.sh"
 
 EMAIL="admin@notclickable.com"
 DATE="$(date '+%Y-%m-%d %H:%M:%S')"
 DATE_SUFFIX="$(date '+%Y-%m-%d')"
-BACKUP_FILE="rainhold-beacon-${DATE_SUFFIX}.tgz"
+BACKUP_FILE="${SERVER_NAME}-${DATE_SUFFIX}.tgz"
 
 # Get docker service folder count under ./docker
 SERVICE_COUNT=$(find ./docker -mindepth 1 -maxdepth 1 -type d | wc -l | tr -d ' ')
@@ -72,5 +75,5 @@ fi
 # Compose email body
 MAIL_BODY="Backup completed on $HUMAN_DATE\nTime elapsed: $ELAPSED_STR\n\nFile: $BACKUP_FILE\nSize: $BACKUP_SIZE\nServices: $SERVICE_COUNT\n"
 
-echo -e "$MAIL_BODY" | mail -s "[rainhold-beacon] Backup complete" "$EMAIL"
+echo -e "$MAIL_BODY" | mail -s "[${SERVER_NAME}] Backup complete" "$EMAIL"
 echo "[Backup] Notification email sent to $EMAIL"
