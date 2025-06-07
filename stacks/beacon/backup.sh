@@ -69,7 +69,7 @@ ELAPSED_MIN=$((ELAPSED_SEC / 60))
 if [ $ELAPSED_MIN -eq 0 ]; then
   ELAPSED_STR="Less than 1 minute"
 else
-  ELAPSED_STR="$ELAPSED_MIN minute(s)"
+  ELAPSED_STR="$ELAPSED_MIN minutes"
 fi
 
 # Compose email body
