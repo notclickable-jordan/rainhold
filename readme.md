@@ -40,6 +40,7 @@ Follow these steps in order to set up your server environment:
 -   [Network share](docs/network-share.md): Mount a network shared folder using SMB/CIFS
 -   [Gitea](docs/gitea.md): Get the runner registration token
 -   [Tailscale](docs/tailscale.md): Set up Tailscale for secure private networking
+-   [Backup](docs/backup.md): Backup Docker volumes
 -   [Ports](docs/ports.md): All ports and services used in this setup
 
 # Sites hosted
