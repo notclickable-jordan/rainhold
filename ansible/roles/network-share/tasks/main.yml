@@ -5,29 +5,35 @@
     state: present
   become: true
 
-- name: Ensure mount point exists
+- name: Ensure mount points exist
   file:
-    path: "{{ network_share_mount_point }}"
+    path: "{{ item.mount_point }}"
     state: directory
     mode: "0755"
+  loop: "{{ network_shares }}"
+  loop_control:
+    label: "{{ item.mount_point }}"
   become: true
 
-- name: Create SMB credentials file
+- name: Create SMB credentials file (shared)
   copy:
-    dest: "/root/.smbcredentials"
+    dest: "/root/.smbcredentials_networkshare"
     content: |
       username={{ network_share_username }}
       password={{ network_share_password }}
     mode: "0600"
   become: true
 
-- name: Ensure fstab entry for network share
+- name: Ensure fstab entries for network shares
   lineinfile:
     path: /etc/fstab
-    line: "//{{ network_share_host }}/{{ network_share_name }} {{ network_share_mount_point }} cifs vers=3.0,credentials=/root/.smbcredentials,uid={{ network_share_uid | default(1000) }},gid={{ network_share_gid | default(1000) }} 0 0"
+    line: "//{{ network_share_host }}/{{ item.name }} {{ item.mount_point }} cifs vers=3.0,credentials=/root/.smbcredentials_networkshare,uid={{ item.uid | default(1000) }},gid={{ item.gid | default(1000) }} 0 0"
     state: present
     create: yes
     backup: yes
+  loop: "{{ network_shares }}"
+  loop_control:
+    label: "{{ item.mount_point }}"
   become: true
 
 - name: Run systemctl daemon-reload

@@ -86,10 +86,16 @@ apprise_mastodon_host: "mastodon.social"
 # --- Network Share ---
 
 network_share_host: "192.168.1.100"
-network_share_name: "SHARE_NAME"
-network_share_mount_point: "/mnt/myfolder"
 network_share_username: "your_username"
 network_share_password: "your_password"
+
+network_shares:
+  - name: "downloads"
+    mount_point: "/mnt/downloads"
+  - name: "backup"
+    mount_point: "/mnt/backup"
+  - name: "video"
+    mount_point: "/mnt/video"
 
 # --- Gitea ---
 
