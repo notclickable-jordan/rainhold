@@ -1,0 +1,23 @@
+{
+  # Documentation
+  # https://join-lemmy.org/docs/en/administration/configuration.html
+  # Defaults
+  # https://github.com/LemmyNet/lemmy/blob/main/config/defaults.hjson
+
+  database: {
+    host: postgres
+    password: "{{ lemmy_db_password }}"
+  }
+  hostname: "{{ lemmy_hostname }}"
+  pictrs: {
+    url: "http://pictrs:8080/"
+    api_key: "{{ lemmy_pictrs_api_key }}"
+  }
+  email: {
+    smtp_server: "{{ mailrise_host }}:{{ mailrise_port }}"
+    smtp_from_address: "{{ lemmy_email_from_address }}"
+    tls_type: "tls",
+    smtp_login: "{{ mailrise_username }}",
+    smtp_password: "{{ mailrise_password }}"
+  }
+}

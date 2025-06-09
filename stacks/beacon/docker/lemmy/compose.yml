@@ -1,0 +1,97 @@
+x-logging: &default-logging
+    driver: "json-file"
+    options:
+        max-size: "50m"
+        max-file: "4"
+
+services:
+    backup:
+        image: alpine:3.17.2
+        container_name: lemmy_backup
+        entrypoint: "tail -f /dev/null"
+        restart: unless-stopped
+        volumes:
+            - extra_themes:/app/extra_themes:ro
+            - pictrs:/mnt:ro
+            - postgres:/var/lib/postgresql/data:ro
+
+    proxy:
+        image: nginx:1-alpine
+        container_name: lemmy-nginx
+        ports:
+            - 4211:8536
+        volumes:
+            - ./nginx.conf:/etc/nginx/nginx.conf:ro,Z
+        restart: unless-stopped
+        logging: *default-logging
+        depends_on:
+            - pictrs
+            - lemmy-ui
+
+    lemmy:
+        image: dessalines/lemmy:0.19.11
+        container_name: lemmy
+        hostname: lemmy
+        restart: unless-stopped
+        logging: *default-logging
+        environment:
+            - RUST_LOG="warn"
+        volumes:
+            - ./lemmy.hjson:/config/config.hjson:Z
+        depends_on:
+            - postgres
+            - pictrs
+
+    lemmy-ui:
+        image: dessalines/lemmy-ui:0.19.11
+        container_name: lemmy-ui
+        env_file:
+            - .env
+        volumes:
+            - extra_themes:/app/extra_themes
+        depends_on:
+            - lemmy
+        restart: unless-stopped
+        logging: *default-logging
+
+    pictrs:
+        image: asonix/pictrs:0.5.0-rc.2
+        container_name: lemmy-pictrs
+        # this needs to match the pictrs url in lemmy.hjson
+        hostname: pictrs
+        env_file:
+            - .env.pictrs
+        user: 991:991
+        volumes:
+            - pictrs:/mnt
+        restart: unless-stopped
+        logging: *default-logging
+        deploy:
+            resources:
+                limits:
+                    memory: 690m
+
+    postgres:
+        image: postgres:15-alpine
+        container_name: lemmy-db
+        hostname: postgres
+        env_file:
+            - .env.postgres
+        volumes:
+            - postgres:/var/lib/postgresql/data
+            - ./postgresql.conf:/etc/postgresql.conf
+        restart: unless-stopped
+        logging: *default-logging
+
+    postfix:
+        image: mwader/postfix-relay
+        container_name: lemmy-postfix
+        env_file:
+            - .env.postfix
+        restart: "always"
+        logging: *default-logging
+
+volumes:
+    extra_themes:
+    pictrs:
+    postgres:

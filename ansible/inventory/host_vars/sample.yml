@@ -120,3 +120,35 @@ n8n_POSTGRES_NON_ROOT_USER: "n8n"
 # generate
 n8n_POSTGRES_NON_ROOT_PASSWORD: "your_n8n_non_root_password_here"
 n8n_POSTGRES_PASSWORD: "your_n8n_postgres_password_here"
+
+# --- Lemmy ---
+
+# replace
+lemmy_db_password: "your_lemmy_db_password_here"
+
+# keep
+lemmy_hostname: "lemmy.example.com"
+
+# replace
+lemmy_pictrs_api_key: "your_pictrs_api_key_here"
+
+# replace
+lemmy_pictrs_store_endpoint: "http://s3-us-west-2.amazonaws.com"
+lemmy_pictrs_store_bucket: "your_pictrs_bucket_name_here"
+lemmy_pictrs_region: "us-west-2"
+lemmy_pictrs_access_key: "your_pictrs_access_key_here"
+lemmy_pictrs_secret_key: "your_pictrs_secret_key_here"
+
+# replace
+lemmy_postgres_user: "lemmy"
+lemmy_postgres_password: "your_lemmy_postgres_password_here"
+lemmy_postgres_db: "lemmy"
+
+# replace
+lemmy_postfix_hostname: "lemmy.example.com"
+
+# replace
+lemmy_email_from_address: "lemmy@example.com"
+
+# replace
+lemmy_port: 4211
