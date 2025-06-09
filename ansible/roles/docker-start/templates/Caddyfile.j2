@@ -79,3 +79,11 @@ n8n.notclickable.com {
 
     reverse_proxy {{ ansible_host }}:4210
 }
+
+lemmy.notclickable.com {
+    reverse_proxy {{ ansible_host }}:4211
+    
+    tls {
+        dns cloudflare {{ cloudflare_ssl_api_token }}
+    }
+}

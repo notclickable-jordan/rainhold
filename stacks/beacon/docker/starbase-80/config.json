@@ -27,6 +27,12 @@
 				"description": "Source code repository"
 			},
 			{
+				"name": "Lemmy",
+				"uri": "https://lemmy.notclickable.com",
+				"icon": "lemmy",
+				"description": "Federated discussion platform"
+			},
+			{
 				"name": "TinyAuth",
 				"uri": "https://tinyauth.notclickable.com",
 				"icon": "keycloak",
