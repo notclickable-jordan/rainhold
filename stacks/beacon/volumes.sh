@@ -12,4 +12,6 @@ VOLUMES=(
   "lemmy_extra_themes:/lemmy/extra-themes"
   "lemmy_pictrs:/lemmy/pictrs"
   "lemmy_postgres:/lemmy/postgres"
+  "freshrss_data:/freshrss/data"
+  "freshrss_extensions:/freshrss/extensions"
 )

@@ -87,3 +87,11 @@ lemmy.notclickable.com {
         dns cloudflare {{ cloudflare_ssl_api_token }}
     }
 }
+
+freshrss.notclickable.com {
+    reverse_proxy {{ ansible_host }}:4212
+    
+    tls {
+        dns cloudflare {{ cloudflare_ssl_api_token }}
+    }
+}

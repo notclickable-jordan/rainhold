@@ -1,0 +1,27 @@
+services:
+    freshrss:
+        image: freshrss/freshrss:edge
+        # Optional build section if you want to build the image locally:
+        build:
+            # Pick #latest (stable release) or #edge (rolling release) or a specific release like #1.21.0
+            context: https://github.com/FreshRSS/FreshRSS.git#edge
+            dockerfile: Docker/Dockerfile-Alpine
+        container_name: freshrss
+        restart: unless-stopped
+        logging:
+            options:
+                max-size: 10m
+        volumes:
+            # Recommended volume for FreshRSS persistent data such as configuration and SQLite databases
+            - data:/var/www/FreshRSS/data
+            # Optional volume for storing third-party extensions
+            - extensions:/var/www/FreshRSS/extensions
+        ports:
+            # If you want to open a port 8080 on the local machine:
+            - 4212:80
+        env_file:
+            - .env
+
+volumes:
+    data:
+    extensions:

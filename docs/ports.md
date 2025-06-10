@@ -14,3 +14,4 @@
 | 4209    | Gitea SSH      | Gitea SSH access                   |
 | 4210    | N8N            | Automation                         |
 | 4211    | Lemmy          | Social network                     |
+| 4212    | FreshRSS       | RSS reader                         |

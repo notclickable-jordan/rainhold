@@ -27,6 +27,12 @@
 				"description": "Source code repository"
 			},
 			{
+				"name": "FreshRSS",
+				"uri": "https://freshrss.notclickable.com",
+				"icon": "freshrss",
+				"description": "RSS feed aggregator"
+			},
+			{
 				"name": "Lemmy",
 				"uri": "https://lemmy.notclickable.com",
 				"icon": "lemmy",
