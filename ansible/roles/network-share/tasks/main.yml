@@ -17,7 +17,7 @@
 
 - name: Create SMB credentials file (shared)
   copy:
-    dest: "/root/.smbcredentials_networkshare"
+    dest: "/root/.smbcredentials"
     content: |
       username={{ network_share_username }}
       password={{ network_share_password }}
@@ -27,7 +27,7 @@
 - name: Ensure fstab entries for network shares
   lineinfile:
     path: /etc/fstab
-    line: "//{{ network_share_host }}/{{ item.name }} {{ item.mount_point }} cifs vers=3.0,credentials=/root/.smbcredentials_networkshare,uid={{ item.uid | default(1000) }},gid={{ item.gid | default(1000) }} 0 0"
+    line: "//{{ network_share_host }}/{{ item.name }} {{ item.mount_point }} cifs vers=3.0,credentials=/root/.smbcredentials,uid={{ item.uid | default(1000) }},gid={{ item.gid | default(1000) }} 0 0"
     state: present
     create: yes
     backup: yes
