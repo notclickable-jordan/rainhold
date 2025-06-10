@@ -15,3 +15,4 @@
 | 4210    | N8N            | Automation                         |
 | 4211    | Lemmy          | Social network                     |
 | 4212    | FreshRSS       | RSS reader                         |
+| 4213    | Grafana        | Monitoring dashboard               |

@@ -14,4 +14,5 @@ VOLUMES=(
   "lemmy_postgres:/lemmy/postgres"
   "freshrss_data:/freshrss/data"
   "freshrss_extensions:/freshrss/extensions"
+  "grafana_storage:/grafana/storage"
 )
