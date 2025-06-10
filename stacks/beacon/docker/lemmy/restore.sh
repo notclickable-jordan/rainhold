@@ -16,11 +16,11 @@ Volume3="lemmy_postgres"
 Folder3="/restore/${Volume3}"
 
 # Bring down the existing site
-docker-compose down -v
+docker compose down -v
 
 # Bring up the containers to recreate the volumes
-docker-compose up -d --build backup
-docker-compose down
+docker compose up -d --build backup
+docker compose down
 
 # Restore the volume data from the backups
 docker run --rm \
@@ -36,4 +36,4 @@ docker run --rm \
         tar -xvzf /backup/${File3} -C ${Folder3}"
 
 # Restore the site with the data
-docker-compose up -d
+docker compose up -d
