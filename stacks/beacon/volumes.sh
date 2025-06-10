@@ -9,4 +9,7 @@ VOLUMES=(
   "caddy_data:/caddy/data"
   "caddy_config:/caddy/config"
   "pocket-id_data:/pocket-id/data"
+  "lemmy_extra_themes:/lemmy/extra-themes"
+  "lemmy_pictrs:/lemmy/pictrs"
+  "lemmy_postgres:/lemmy/postgres"
 )
