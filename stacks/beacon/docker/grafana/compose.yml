@@ -10,6 +10,7 @@ services:
         environment:
             - GF_SERVER_ROOT_URL=https://grafana.notclickable.com
             - GF_LOG_FILTERS=oauth.generic_oauth:debug
+            - GF_LOG_LEVEL=debug
 
 volumes:
     storage:
