@@ -14,6 +14,7 @@ services:
 
     loki:
         image: grafana/loki:latest
+        container_name: loki
         ports:
             - 4214:3100
         command: -config.file=/etc/loki/local-config.yaml
@@ -22,6 +23,7 @@ services:
 
     promtail:
         image: grafana/promtail:latest
+        container_name: promtail
         volumes:
             - /var/log:/var/log
             - ./promtail-config.yml:/etc/promtail/config.yml:ro
