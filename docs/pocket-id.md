@@ -48,4 +48,5 @@ In Pocket ID, go to **Application Configuration &gt; LDAP** and enter the follow
 
 Grafana supports generic OAuth providers, such as Pocket ID.
 
--   Callback URL: https://grafana.example.com/login/generic_oauth/ (don't forget the trailing slash)
+-   Callback URL: https://grafana.example.com/login/generic_oauth
+-   Scopes: `openid email profile` (do not use `user:email`)
