@@ -7,6 +7,8 @@ services:
             - 4213:3000
         volumes:
             - storage:/var/lib/grafana
+        environment:
+            - GF_SERVER_ROOT_URL=https://grafana.notclickable.com
 
 volumes:
     storage:

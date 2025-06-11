@@ -43,3 +43,9 @@ In Pocket ID, go to **Application Configuration &gt; LDAP** and enter the follow
 | **Group Name Attribute**              | `display_name`      |
 | **Group Unique Identifier Attribute** | `uuid`              |
 | **Admin Group Name**                  | `_admin_group_name` |
+
+# Grafana
+
+Grafana supports generic OAuth providers, such as Pocket ID.
+
+-   Callback URL: https://grafana.example.com/login/generic_oauth/ (don't forget the trailing slash)
