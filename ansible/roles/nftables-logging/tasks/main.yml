@@ -1,0 +1,42 @@
+---
+# tasks file for nftables-logging
+- name: Ensure nftables logging is enabled for input chain
+  become: true
+  command: >
+    nft add rule inet filter input log prefix "nftables-input: " flags all
+  ignore_errors: true
+
+- name: Ensure nftables logging is enabled for forward chain
+  become: true
+  command: >
+    nft add rule inet filter forward log prefix "nftables-forward: " flags all
+  ignore_errors: true
+
+- name: Ensure nftables logging is enabled for output chain
+  become: true
+  command: >
+    nft add rule inet filter output log prefix "nftables-output: " flags all
+  ignore_errors: true
+
+- name: Ensure Promtail config collects nftables logs
+  become: true
+  lineinfile:
+    path: /etc/promtail/config.yml
+    insertafter: EOF
+    line: |
+      - job_name: nftables
+        static_configs:
+        - targets:
+            - localhost
+          labels:
+            job: nftables
+            __path__: /var/log/syslog
+        pipeline_stages:
+          - match:
+              selector: '{job="nftables"}'
+              stages:
+                - regex:
+                    expression: 'nftables-(input|forward|output): (?P<msg>.*)'
+                - labels:
+                    chain: "$1"
+  notify: Restart promtail

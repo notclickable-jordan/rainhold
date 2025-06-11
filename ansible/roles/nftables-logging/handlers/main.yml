@@ -1,0 +1,12 @@
+---
+# handlers file for nftables-logging
+- name: Reload nftables
+  become: true
+  command: nft -f /etc/nftables.conf
+
+- name: Restart promtail
+  become: true
+  systemd:
+    name: promtail
+    state: restarted
+    enabled: yes

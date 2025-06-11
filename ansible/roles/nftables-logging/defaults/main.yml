@@ -1,0 +1,5 @@
+---
+# defaults file for nftables-logging
+# You can override these in host_vars or playbooks if needed
+nftables_log_prefix: "nftables-"
+nftables_log_file: "/var/log/syslog"
