@@ -9,8 +9,7 @@ services:
             - storage:/var/lib/grafana
         environment:
             - GF_SERVER_ROOT_URL=https://grafana.notclickable.com
-            - GF_AUTH_GENERIC_OAUTH_USE_ID_TOKEN=true
-            - GF_AUTH_GENERIC_OAUTH_SKIP_USERINFO=true
+            - GF_LOG_FILTERS=oauth.generic_oauth:debug
 
 volumes:
     storage:
