@@ -1,42 +1,70 @@
 ---
 # tasks file for nftables-logging
+- name: Ensure inet table exists
+  become: true
+  command: nft add table inet filter
+  register: nft_table_result
+  failed_when: false
+  changed_when: nft_table_result.rc == 0
+
+- name: Ensure input chain exists
+  become: true
+  command: nft add chain inet filter input '{ type filter hook input priority 0; }'
+  register: nft_input_chain_result
+  failed_when: false
+  changed_when: nft_input_chain_result.rc == 0
+
+- name: Ensure forward chain exists
+  become: true
+  command: nft add chain inet filter forward '{ type filter hook forward priority 0; }'
+  register: nft_forward_chain_result
+  failed_when: false
+  changed_when: nft_forward_chain_result.rc == 0
+
+- name: Ensure output chain exists
+  become: true
+  command: nft add chain inet filter output '{ type filter hook output priority 0; }'
+  register: nft_output_chain_result
+  failed_when: false
+  changed_when: nft_output_chain_result.rc == 0
+
 - name: Ensure nftables logging is enabled for input chain
   become: true
   command: >
-    nft add rule inet filter input log prefix "nftables-input: " flags all
+    nft add rule inet filter input log prefix "nftables-input" flags all
   ignore_errors: true
 
 - name: Ensure nftables logging is enabled for forward chain
   become: true
   command: >
-    nft add rule inet filter forward log prefix "nftables-forward: " flags all
+    nft add rule inet filter forward log prefix "nftables-forward" flags all
   ignore_errors: true
 
 - name: Ensure nftables logging is enabled for output chain
   become: true
   command: >
-    nft add rule inet filter output log prefix "nftables-output: " flags all
+    nft add rule inet filter output log prefix "nftables-output" flags all
   ignore_errors: true
-
-- name: Ensure Promtail config collects nftables logs
-  become: true
-  lineinfile:
-    path: /etc/promtail/config.yml
-    insertafter: EOF
-    line: |
-      - job_name: nftables
-        static_configs:
-        - targets:
-            - localhost
-          labels:
-            job: nftables
-            __path__: /var/log/syslog
-        pipeline_stages:
-          - match:
-              selector: '{job="nftables"}'
-              stages:
-                - regex:
-                    expression: 'nftables-(input|forward|output): (?P<msg>.*)'
-                - labels:
-                    chain: "$1"
-  notify: Restart promtail
+# The following task is commented out because Promtail config is managed by Docker Compose, not on the host.
+#- name: Ensure Promtail config collects nftables logs
+#  become: true
+#  lineinfile:
+#    path: /etc/promtail/config.yml
+#    insertafter: EOF
+#    line: |
+#      - job_name: nftables
+#        static_configs:
+#        - targets:
+#            - localhost
+#          labels:
+#            job: nftables
+#            __path__: /var/log/syslog
+#        pipeline_stages:
+#          - match:
+#              selector: '{job="nftables"}'
+#              stages:
+#                - regex:
+#                    expression: 'nftables-(input|forward|output): (?P<msg>.*)'
+#                - labels:
+#                    chain: "$1"
+#  notify: Restart promtail
