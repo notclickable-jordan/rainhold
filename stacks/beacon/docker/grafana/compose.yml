@@ -9,6 +9,8 @@ services:
             - storage:/var/lib/grafana
         env_file:
             - .env
+        networks:
+            - loki
 
     loki:
         image: grafana/loki:latest
@@ -29,3 +31,6 @@ services:
 
 volumes:
     storage:
+
+networks:
+    loki:
