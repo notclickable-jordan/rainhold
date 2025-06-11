@@ -152,3 +152,8 @@ lemmy_email_from_address: "lemmy@example.com"
 
 # replace
 lemmy_port: 4211
+
+# --- Grafana ---
+
+# replace
+grafana_server_root_url: "https://grafana.example.com"
