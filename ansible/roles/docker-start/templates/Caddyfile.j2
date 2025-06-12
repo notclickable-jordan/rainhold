@@ -1,4 +1,3 @@
-# Logs for Loki and Promtail
 {
 	log {
 		output file /var/log/caddy/access.log {
@@ -8,13 +7,9 @@
 		}
 		format json
 	}
-}
-
-# Metrics for Prometheus
-{
-    servers {
-            metrics
-     }
+	servers {
+		metrics
+	}
 }
 
 ldap.notclickable.com {
