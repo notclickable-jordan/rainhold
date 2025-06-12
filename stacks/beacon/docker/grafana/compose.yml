@@ -9,8 +9,6 @@ services:
             - storage:/var/lib/grafana
         env_file:
             - .env
-        networks:
-            - loki
 
     loki:
         image: grafana/loki:latest
@@ -18,8 +16,6 @@ services:
         ports:
             - 4214:3100
         command: -config.file=/etc/loki/local-config.yaml
-        networks:
-            - loki
 
     promtail:
         image: grafana/promtail:latest
@@ -28,8 +24,6 @@ services:
             - /var/log:/var/log
             - ./promtail-config.yml:/etc/promtail/config.yml:ro
         command: -config.file=/etc/promtail/config.yml
-        networks:
-            - loki
 
     prometheus:
         image: prom/prometheus:latest
@@ -38,11 +32,6 @@ services:
             - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
         ports:
             - 4215:9090
-        networks:
-            - loki
 
 volumes:
     storage:
-
-networks:
-    loki:
