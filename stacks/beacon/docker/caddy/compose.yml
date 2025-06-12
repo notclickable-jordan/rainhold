@@ -14,7 +14,12 @@ services:
             - ./conf:/etc/caddy
             - data:/data
             - config:/config
+        networks:
+            - loki
 
 volumes:
     data:
     config:
+
+networks:
+    loki:
