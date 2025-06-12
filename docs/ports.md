@@ -3,6 +3,7 @@
 | Port    | Service        | Description                        |
 | ------- | -------------- | ---------------------------------- |
 | 80, 443 | Caddy          | Web server for HTTP traffic        |
+| 2019    | Caddy metrics  | Caddy metrics endpoint             |
 | 4201    | LLDAP          | LDAP service (389)                 |
 | 4202    | LLDAP Admin UI | Web interface for LLDAP management |
 | 4203    | Pocket ID      | Authentication                     |
