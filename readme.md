@@ -47,7 +47,7 @@ Follow these steps in order to set up your server environment:
 # Services used
 
 -   [Apprise](https://github.com/caronc/apprise)
--   [Caddy Cloudflare DNS](https://github.com/jordanroher/caddy-cloudflare-dns)
+-   [Caddy Cloudflare DNS](https://github.com/notclickable-jordan/caddy-cloudflare-dns)
 -   [Debian](https://www.debian.org)
 -   [Dozzle](https://dozzle.dev)
 -   [FreshRSS](https://freshrss.org)
