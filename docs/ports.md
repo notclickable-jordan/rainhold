@@ -18,3 +18,4 @@
 | 4212    | FreshRSS       | RSS reader                         |
 | 4213    | Grafana        | Monitoring dashboard               |
 | 4214    | Loki           | Log aggregation                    |
+| 4215    | Prometheus     | Metrics collection                 |

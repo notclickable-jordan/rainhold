@@ -9,6 +9,7 @@ services:
             - "80:80"
             - "443:443"
             - "443:443/udp"
+            - "2019:2019"
         volumes:
             - ./conf:/etc/caddy
             - data:/data
