@@ -1,20 +1,3 @@
-- name: Configure Rainhold public virtual machine
-  hosts: public
-  become: true
-  roles:
-    - role: apt-update
-    - role: tailscale
-    - role: fail2ban
-    - role: postfix
-    - role: unattended-upgrades
-    - role: ssh-hardening
-    - role: root-password
-    - role: user-management
-    - role: network-share
-    - role: docker-install
-    - role: cloudflared
-    - role: mailrise
-    - role: nftables-logging
-    - role: clone-repository
-    - role: docker-start
-    - role: apprise
+---
+- import_playbook: initial-setup.yml
+- import_playbook: web-server.yml

@@ -4,9 +4,9 @@
 
 Public hostnames should be configured as:
 
--   Hostname: subdomain.domain.com
+-   Hostname: subdomain.example.com
 -   Service: HTTPS://localhost:443
--   TLS > Origin server name: subdomain.domain.com
+-   TLS > Origin server name: subdomain.example.com
 -   No TLS verify (checked)
 
 ## Private sites

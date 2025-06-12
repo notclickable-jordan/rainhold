@@ -18,14 +18,20 @@ For the sake of replacement, let's pretend these are yours:
 
 ## Host variables
 
-1. Rename `host_vars/sample.yml` to the name of your server, e.g. `compy386.yml`
+1. Make a copy of `host_vars/sample.yml` and give it the name of your server, e.g. `compy386.yml`
 1. This will cause your text editor (and git) to ignore the file. That's normal. It protects you from accidentally committing your secret keys.
 1. Open `comp386.yml` and follow the guide in comments (lines starting with `#`):
-    - `keep` &gt; don't change it
-    - `replace` &gt; replace with your own secret (create however you like)
+    - `keep` &gt; don't change it unless you know what you're doing
+    - `replace` &gt; replace with your own value/domain/secret
     - `generate` &gt; follow the instructions below to generate a new secret
 
 ## Generate secrets
+
+Most secrets can be generated using the `openssl` command below:
+
+```bash
+openssl rand -base64 32
+```
 
 ### username
 
@@ -56,10 +62,6 @@ Your Cloudflare SSL API token, e.g. `1234567890abcdef1234567890abcdef`
 
 1. Follow [Cloudflare Tunnels](./cloudflare.md#ssl-api-key) for details on how to set this up
 
-### LLDAP_JWT_SECRET and LLDAP_KEY_SEED
-
-1. Generate a random string, e.g. `openssl rand -base64 32`
-
 ### tinyauth_secret
 
 1. Generate with `openssl rand -base64 32 | tr -dc 'a-zA-Z0-9' | head -c 32`
@@ -75,17 +77,14 @@ Your Mastodon token, e.g. `1234567890abcdef1234567890abcdef`
 
 1. Sign in to your Mastodon account, go to **Settings &gt; Development &gt; New Application**, and create a new application with the following settings:
     1. **Name**: `Apprise`
-    2. **Scopes**:
+    1. **Scopes**:
         - `write:statuses`
         - `write:media`
         - `read:accounts`
 
-### `GITEA__database__PASSWD`
-
-1. Generate a random string, e.g. `openssl rand -base64 32`
-
 ### `gitea_runner_registration_token`
 
 1. Generate in Gitea after installing it
-2. Go to **Site Administration &gt; Actions &gt; Runners** and click **Create new Runner**
-3. Copy the registration token and paste it here
+1. Go to **Site Administration &gt; Actions &gt; Runners** and click **Create new Runner**
+1. Copy the registration token and paste it here
+1. Re-run the Ansible playbook to register the runner

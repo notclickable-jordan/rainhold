@@ -1,0 +1,14 @@
+- name: Initial setup of Rainhold virtual machine
+  hosts: public
+  become: true
+  roles:
+    - role: apt-update
+    - role: tailscale
+    - role: fail2ban
+    - role: unattended-upgrades
+    - role: ssh-hardening
+    - role: root-password
+    - role: user-management
+    - role: network-share
+    - role: docker-install
+    - role: cloudflared
