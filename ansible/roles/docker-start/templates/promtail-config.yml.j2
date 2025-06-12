@@ -32,6 +32,7 @@ scrape_configs:
                 expression: "nftables-(input|forward|output): (?P<msg>.*)"
             - labels:
                 chain: "$1"
+
   - job_name: caddy
     static_configs:
       - targets:

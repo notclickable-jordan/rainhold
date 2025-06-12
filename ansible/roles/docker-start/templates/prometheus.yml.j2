@@ -14,6 +14,10 @@ scrape_configs:
       - targets: ['{{ ansible_host }}:4215']
 
   - job_name: 'caddy'
-    metrics_path: /metrics
+    scrape_interval: 5s
+    scrape_timeout: 5s
+    metrics_path: '/metrics'
+    scheme: 'http'
+
     static_configs:
       - targets: ['{{ ansible_host }}:2019']
