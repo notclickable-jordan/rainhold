@@ -14,8 +14,8 @@ DATE="$(date '+%Y-%m-%d %H:%M:%S')"
 DATE_SUFFIX="$(date '+%Y-%m-%d')"
 BACKUP_FILE="${SERVER_NAME}-${DATE_SUFFIX}.tgz"
 
-# Get docker service folder count under ./docker
-SERVICE_COUNT=$(find ./docker -mindepth 1 -maxdepth 1 -type d | wc -l | tr -d ' ')
+# Get the number of entries in the VOLUMES variable
+SERVICE_COUNT=$(echo "$VOLUMES" | wc -w)
 
 echo "[Backup] Starting backup of Docker volumes"
 
