@@ -6,5 +6,6 @@
     - role: mailrise
     - role: nftables-logging
     - role: clone-repository
+    - role: schedule-backup
     - role: docker-start
     - role: apprise

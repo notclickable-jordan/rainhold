@@ -1,0 +1,15 @@
+---
+# Ensure the backup.sh file is executable
+- name: Make backup.sh executable
+  file:
+    path: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/backup.sh"
+    state: file
+    mode: "0755"
+
+# Schedule a cron job to run backup.sh every day at 1 AM
+- name: Schedule backup.sh in cron
+  cron:
+    name: "Daily backup"
+    minute: "0"
+    hour: "1"
+    job: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/backup.sh"
