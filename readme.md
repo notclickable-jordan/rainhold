@@ -59,6 +59,6 @@ Follow these steps in order to set up your server environment:
 -   [N8N](https://n8n.io)
 -   [Pocket ID](https://github.com/pocket-id/pocket-id)
 -   [Proxmox](https://proxmox.com/en/)
--   [Starbase 80](https://github.com/jordanroher/starbase-80)
+-   [Starbase 80](https://github.com/notclickable-jordan/starbase-80)
 -   [Tinyauth](https://tinyauth.app)
 -   [Watchtower](https://github.com/containrrr/watchtower)
