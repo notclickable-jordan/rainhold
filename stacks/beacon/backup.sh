@@ -72,6 +72,24 @@ else
   ELAPSED_STR="$ELAPSED_MIN minutes"
 fi
 
+DATE_FOLDER="$(date '+%Y-%m-%d')"
+TARGET_FOLDER="$BACKUP_PATH/$DATE_FOLDER"
+
+# Create the target folder if it doesn't exist
+mkdir -p "$TARGET_FOLDER"
+
+# Move the backup file to the target folder
+mv "$BACKUP_FILE" "$TARGET_FOLDER/"
+
+# Delete files older than 7 days in the backup_path
+find "$BACKUP_PATH" -type f -mtime +7 -exec rm -f {} \;
+
+# Delete empty folders in the backup_path
+find "$BACKUP_PATH" -type d -empty -exec rmdir {} \;
+
+echo "[Backup] Backup file moved to $TARGET_FOLDER and old files cleaned up."
+echo "[Backup] Empty folders cleaned up."
+
 # Compose email body
 MAIL_BODY="Backup completed on $HUMAN_DATE\nTime elapsed: $ELAPSED_STR\n\nFile: $BACKUP_FILE\nSize: $BACKUP_SIZE\nServices: $SERVICE_COUNT\n"
 

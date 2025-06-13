@@ -157,3 +157,8 @@ lemmy_port: 4211
 
 # replace
 grafana_server_root_url: "https://grafana.example.com"
+
+# --- Backup ---
+
+# replace
+backup_path: "/mnt/backup"
