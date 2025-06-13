@@ -15,7 +15,7 @@ DATE_SUFFIX="$(date '+%Y-%m-%d')"
 BACKUP_FILE="${SERVER_NAME}-${DATE_SUFFIX}.tgz"
 
 # Get the number of entries in the VOLUMES variable
-SERVICE_COUNT=$(echo "$VOLUMES" | wc -w)
+SERVICE_COUNT=${#VOLUMES[@]}
 
 echo "[Backup] Starting backup of Docker volumes"
 
