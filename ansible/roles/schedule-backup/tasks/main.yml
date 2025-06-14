@@ -13,9 +13,3 @@
     minute: "0"
     hour: "1"
     job: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/backup.sh"
-
-# Commit the change to backup.sh in git
-- name: Commit backup.sh to git
-  command: |
-    git add {{ rainhold_dest }}/stacks/{{ rainhold_stack }}/backup.sh && \
-    git commit -m "Update backup.sh"
