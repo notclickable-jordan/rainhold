@@ -91,7 +91,19 @@ services:
         restart: "always"
         logging: *default-logging
 
+    pgadmin:
+        container_name: lemmy-pgadmin
+        image: dpage/pgadmin4
+        env_file:
+            - .env.postgres
+        volumes:
+            - pgadmin:/var/lib/pgadmin
+        ports:
+            - 4216:80
+        restart: unless-stopped
+
 volumes:
     extra_themes:
     pictrs:
     postgres:
+    pgadmin:
