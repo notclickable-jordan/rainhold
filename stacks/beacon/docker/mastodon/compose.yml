@@ -61,7 +61,8 @@ services:
         image: ghcr.io/mastodon/mastodon-streaming:v4.3.8
         container_name: mastodon_streaming
         restart: unless-stopped
-        env_file: env.production
+        env_file:
+            - .env
         command: node ./streaming/index.js
         networks:
             - external_network
@@ -81,7 +82,8 @@ services:
         image: ghcr.io/mastodon/mastodon:v4.3.8
         container_name: mastodon_sidekiq
         restart: unless-stopped
-        env_file: env.production
+        env_file:
+            - .env
         command: bundle exec sidekiq
         depends_on:
             - db
