@@ -13,7 +13,8 @@ stacks/*/docker/mailrise/mailrise.conf
 stacks/*/docker/caddy/conf/
 stacks/*/docker/gitea/.env.runner
 stacks/*/docker/gitea/app.ini
-stacks/*/docker/lemmy/.env*
 stacks/*/docker/lemmy/lemmy.hjson
 stacks/*/docker/grafana/prometheus.yml
 stacks/*/docker/grafana/promtail-config.yml
+stacks/*/docker/*/.env*
+stacks/*/docker/*/*.tgz
