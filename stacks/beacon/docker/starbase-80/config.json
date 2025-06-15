@@ -45,6 +45,12 @@
 				"description": "Federated discussion platform"
 			},
 			{
+				"name": "Jellyfin",
+				"uri": "https://jellyfin.notclickable.com",
+				"icon": "jellyfin",
+				"description": "Media server"
+			},
+			{
 				"name": "Mastodon",
 				"uri": "https://notclickable.social",
 				"icon": "mastodon",

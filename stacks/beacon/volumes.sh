@@ -15,6 +15,8 @@ VOLUMES=(
   "n8n_app:/n8n/app"
   "n8n_db:/n8n/db"
   "pocket-id_data:/pocket-id/data"
+  "jellyfin_config:/jellyfin/config"
+  "jellyfin_cache:/jellyfin/cache"
 )
 
 BACKUP_PATH="/mnt/backup/rainhold/beacon"

@@ -130,6 +130,14 @@ grafana.notclickable.com {
     reverse_proxy {{ ansible_host }}:4213
 }
 
+jellyfin.notclickable.com {
+    tls {
+        dns cloudflare {{ cloudflare_ssl_api_token }}
+    }
+
+    reverse_proxy {{ ansible_host }}:4219
+}
+
 notclickable.social, www.notclickable.social {
         @local {
                 file
