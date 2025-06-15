@@ -45,6 +45,12 @@
 				"description": "Federated discussion platform"
 			},
 			{
+				"name": "Mastodon",
+				"uri": "https://notclickable.social",
+				"icon": "mastodon",
+				"description": "Social network"
+			},
+			{
 				"name": "TinyAuth",
 				"uri": "https://tinyauth.notclickable.com",
 				"icon": "keycloak",

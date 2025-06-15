@@ -129,3 +129,59 @@ grafana.notclickable.com {
 
     reverse_proxy {{ ansible_host }}:4213
 }
+
+notclickable.social, www.notclickable.social {
+        @local {
+                file
+                not path /
+        }
+        @streaming {
+                path /api/v1/streaming /api/v1/streaming/*
+        }
+        @cache_control {
+                path_regexp ^/(emoji|packs|/system/accounts/avatars|/system/media_attachments/files)
+        }
+
+        root * /home/mastodon/live/public
+
+        log {
+                output file /var/log/caddy/mastodon.log
+        }
+
+        handle_errors {
+                rewrite 500.html
+                file_server
+        }
+
+        header {
+                Strict-Transport-Security "max-age=31536000"
+        }
+        header /sw.js Cache-Control "public, max-age=0"
+        header @cache_control Cache-Control "public, max-age=31536000, immutable"
+
+        handle @local {
+                file_server
+        }
+
+        reverse_proxy @streaming {
+                to {{ ansible_host }}:4218
+                header_up X-Forwarded-Port 443
+                header_up X-Forwarded-Proto https
+
+                transport http {
+                        keepalive 5s
+                        keepalive_idle_conns 10
+                }
+        }
+
+        reverse_proxy {
+                to {{ ansible_host }}:4217
+                header_up X-Forwarded-Port 443
+                header_up X-Forwarded-Proto https
+
+                transport http {
+                        keepalive 5s
+                        keepalive_idle_conns 10
+                }
+        }
+}

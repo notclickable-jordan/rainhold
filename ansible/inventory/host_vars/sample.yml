@@ -162,3 +162,27 @@ grafana_server_root_url: "https://grafana.example.com"
 
 # replace
 backup_path: "/mnt/backup"
+
+# --- Mastodon ---
+
+mastodon_postgres_user: "mastodon"
+mastodon_postgres_password: "your_mastodon_postgres_password_here"
+mastodon_local_domain: "mastodon.example.com"
+mastodon_secret_key_base: "your_mastodon_secret_key_base_here"
+mastodon_otp_secret: "your_mastodon_otp_secret_here"
+mastodon_vapid_private_key: "your_mastodon_vapid_private_key_here"
+mastodon_vapid_public_key: "your_mastodon_vapid_public_key_here"
+mastodon_s3_bucket: "your_mastodon_s3_bucket_here"
+mastodon_s3_region: "us-west-2"
+mastodon_s3_hostname: "s3-us-west-2.amazonaws.com"
+mastodon_s3_access_key: "your_mastodon_s3_access_key_here"
+mastodon_s3_secret_key: "your_mastodon_s3_secret_key_here"
+mastodon_s3_alias_host: "something.cloudfront.net"
+mastodon_smtp_server: "smtp.example.com"
+mastodon_smtp_port: 587
+mastodon_smtp_login: "your_smtp_login_here"
+mastodon_smtp_password: "your_smtp_password_here"
+mastodon_smtp_from_address: "Mastodon <mastodon@example.com>"
+mastodon_active_record_encryption_deterministic_key: "your_mastodon_active_record_encryption_deterministic_key_here"
+mastodon_active_record_encryption_key_derivation_salt: "your_mastodon_active_record_encryption_key_derivation_salt_here"
+mastodon_active_record_encryption_primary_key: "your_mastodon_active_record_encryption_primary_key_here"

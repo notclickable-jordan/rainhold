@@ -1,0 +1,104 @@
+services:
+    backup:
+        image: alpine:3.17.2
+        container_name: mastodon_backup
+        entrypoint: "tail -f /dev/null"
+        restart: unless-stopped
+        volumes:
+            - web:/mastodon/public/system:ro
+            - redis:/data:ro
+            - db:/var/lib/postgresql/data:ro
+
+    db:
+        image: postgres:14-alpine
+        container_name: mastodon_db
+        restart: unless-stopped
+        env_file: env.postgres
+        shm_size: 256mb
+        networks:
+            - internal_network
+        healthcheck:
+            test: ["CMD", "pg_isready", "-U", "mastodon"]
+        volumes:
+            - db:/var/lib/postgresql/data
+
+    redis:
+        image: redis:7-alpine
+        container_name: mastodon_redis
+        restart: unless-stopped
+        networks:
+            - internal_network
+        healthcheck:
+            test: ["CMD", "redis-cli", "ping"]
+        volumes:
+            - redis:/data
+
+    web:
+        image: ghcr.io/mastodon/mastodon:v4.3.8
+        container_name: mastodon_web
+        restart: unless-stopped
+        env_file: env.production
+        command: bundle exec puma -C config/puma.rb
+        networks:
+            - external_network
+            - internal_network
+        healthcheck:
+            # prettier-ignore
+            test: ['CMD-SHELL',"curl -s --noproxy localhost localhost:3000/health | grep -q 'OK' || exit 1"]
+        ports:
+            - 4217:3000
+        depends_on:
+            - db
+            - redis
+        volumes:
+            - web:/mastodon/public/system
+        extra_hosts:
+            - "host.docker.internal:host-gateway"
+
+    streaming:
+        image: ghcr.io/mastodon/mastodon-streaming:v4.3.8
+        container_name: mastodon_streaming
+        restart: unless-stopped
+        env_file: env.production
+        command: node ./streaming/index.js
+        networks:
+            - external_network
+            - internal_network
+        healthcheck:
+            # prettier-ignore
+            test: ['CMD-SHELL', "curl -s --noproxy localhost localhost:4000/api/v1/streaming/health | grep -q 'OK' || exit 1"]
+        ports:
+            - 4218:4000
+        depends_on:
+            - db
+            - redis
+        extra_hosts:
+            - "host.docker.internal:host-gateway"
+
+    sidekiq:
+        image: ghcr.io/mastodon/mastodon:v4.3.8
+        container_name: mastodon_sidekiq
+        restart: unless-stopped
+        env_file: env.production
+        command: bundle exec sidekiq
+        depends_on:
+            - db
+            - redis
+        networks:
+            - external_network
+            - internal_network
+        healthcheck:
+            test: ["CMD-SHELL", "ps aux | grep '[s]idekiq\ 6' || false"]
+        volumes:
+            - web:/mastodon/public/system
+
+networks:
+    external_network:
+    internal_network:
+        internal: true
+
+volumes:
+    sidekiq:
+    db:
+    redis:
+    web:
