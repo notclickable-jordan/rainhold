@@ -8,8 +8,7 @@ services:
         ports:
             - 4203:1411
         volumes:
-            - "data:/app/data"
-        # Optional healthcheck
+            - data:/app/data
         healthcheck:
             test: "curl -f http://localhost:1411/healthz"
             interval: 1m30s

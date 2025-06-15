@@ -43,3 +43,13 @@ In Pocket ID, go to **Application Configuration &gt; LDAP** and enter the follow
 | **Group Name Attribute**              | `display_name`      |
 | **Group Unique Identifier Attribute** | `uuid`              |
 | **Admin Group Name**                  | `_admin_group_name` |
+
+# Jellyfin
+
+Follow this guide to [set up Jellyfin with Pocket ID](https://pocket-id.org/docs/client-examples/jellyfin).
+
+The short version:
+
+-   Install the [Jellyfin SSO plugin](https://github.com/9p4/jellyfin-plugin-sso?tab=readme-ov-file)
+-   The OID endpoint should just be the domain, without a trailing slash, e.g. `https://pocketid.example.com`
+-   In "Scheme override", enter `https`
