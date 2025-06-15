@@ -1,5 +1,16 @@
 # Proxmox
 
+## Troubleshooting
+
+Getting stuck on "waiting for /dev to be a fully populated" during installation?
+
+1. Restart the node
+1. From the installation menu, press the `e` key
+1. At the end of the `linux` boot line, add a space and the following word: `nomodeset`
+1. Press `Ctrl + X` to boot with this option
+
+This should allow the installation to proceed without issues.
+
 ## Installation
 
 1. Install Proxmox from USB
@@ -47,6 +58,10 @@
 
 ## Tailscale SSL
 
+1. Install jq for JSON parsing:
+    ```bash
+    apt-get install jq
+    ```
 1. Create script at `/root/tailscale-ssl.sh`:
 
     ```bash
@@ -56,20 +71,20 @@
     pvenode cert set "${NAME}.crt" "${NAME}.key" --force --restart
     ```
 
-2. Run manually at first, then make it executable and schedule via cron:
+1. Run manually at first, then make it executable and schedule via cron:
 
     ```bash
     chmod +x ./tailscale-ssl.sh
     crontab -e
     ```
 
-3. Add to crontab:
+1. Add to crontab:
 
     ```cron
     0 1 * * * /root/tailscale-ssl.sh
     ```
 
-4. Check Proxmox URL (example):  
+1. Check Proxmox URL (example):  
    `https://example.tail6e07a.ts.net:8006`
 
 ---
@@ -92,13 +107,20 @@
     adduser username
     ```
 
-2. Set up SSH key login:
+1. Install sudo:
+
+    ```bash
+    apt-get install sudo
+    adduser username sudo
+    ```
+
+1. Set up SSH key login:
 
     ```bash
     ssh-copy-id username@server
     ```
 
-3. Disable password authentication:
+1. Disable password authentication:
     - Edit `/etc/ssh/sshd_config`
     - Search for `PasswordAuthentication`, uncomment and set to `no`
     - Restart SSH:
