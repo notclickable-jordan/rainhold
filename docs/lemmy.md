@@ -109,6 +109,19 @@ To migrate the Lemmy instance to NotClickable.com, follow these steps:
         SET link = REPLACE(link, 'starbase80.dev', 'notclickable.com')
         WHERE link LIKE '%starbase80.dev%';
         ```
+1. Run this query to update the `post` table URLs:
+    1. Update the `ap_id` field:
+        ```sql
+        UPDATE post
+        SET ap_id = REPLACE(ap_id, 'starbase80.dev', 'notclickable.com')
+        WHERE ap_id LIKE '%starbase80.dev%';
+        ```
+    1. Update the `thumbnail_url` field:
+        ```sql
+        UPDATE post
+        SET thumbnail_url = REPLACE(thumbnail_url, 'starbase80.dev', 'notclickable.com')
+        WHERE thumbnail_url LIKE '%starbase80.dev%';
+        ```
 
 ---
 
@@ -187,6 +200,15 @@ To migrate the Lemmy instance to NotClickable.com, follow these steps:
     UPDATE image_details
     SET link = REPLACE(link, 'starbase80.dev', 'notclickable.com')
     WHERE link LIKE '%starbase80.dev%';
+
+    -- Update post table
+    UPDATE post
+    SET ap_id = REPLACE(ap_id, 'starbase80.dev', 'notclickable.com')
+    WHERE ap_id LIKE '%starbase80.dev%';
+
+    UPDATE post
+    SET thumbnail_url = REPLACE(thumbnail_url, 'starbase80.dev', 'notclickable.com')
+    WHERE thumbnail_url LIKE '%starbase80.dev%';
 
     COMMIT;
     ```
