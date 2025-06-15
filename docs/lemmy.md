@@ -109,3 +109,84 @@ To migrate the Lemmy instance to NotClickable.com, follow these steps:
         SET link = REPLACE(link, 'starbase80.dev', 'notclickable.com')
         WHERE link LIKE '%starbase80.dev%';
         ```
+
+---
+
+1. Run this query to update all tables in one go:
+
+    ```sql
+    BEGIN;
+
+    -- Update post table
+    UPDATE post
+    SET url = REPLACE(url, 'starbase80.dev', 'notclickable.com')
+    WHERE url LIKE '%starbase80.dev%';
+
+    -- Update person table
+    UPDATE person
+    SET avatar = REPLACE(avatar, 'starbase80.dev', 'notclickable.com')
+    WHERE avatar LIKE '%starbase80.dev%';
+
+    UPDATE person
+    SET actor_id = REPLACE(actor_id, 'starbase80.dev', 'notclickable.com')
+    WHERE actor_id LIKE '%starbase80.dev%';
+
+    UPDATE person
+    SET inbox_url = REPLACE(inbox_url, 'starbase80.dev', 'notclickable.com')
+    WHERE inbox_url LIKE '%starbase80.dev%';
+
+    UPDATE person
+    SET shared_inbox_url = REPLACE(shared_inbox_url, 'starbase80.dev', 'notclickable.com')
+    WHERE shared_inbox_url LIKE '%starbase80.dev%';
+
+    -- Update site table
+    UPDATE site
+    SET icon = REPLACE(icon, 'starbase80.dev', 'notclickable.com')
+    WHERE icon LIKE '%starbase80.dev%';
+
+    UPDATE site
+    SET actor_id = REPLACE(actor_id, 'starbase80.dev', 'notclickable.com')
+    WHERE actor_id LIKE '%starbase80.dev%';
+
+    UPDATE site
+    SET inbox_url = REPLACE(inbox_url, 'starbase80.dev', 'notclickable.com')
+    WHERE inbox_url LIKE '%starbase80.dev%';
+
+    -- Update community table
+    UPDATE community
+    SET actor_id = REPLACE(actor_id, 'starbase80.dev', 'notclickable.com')
+    WHERE actor_id LIKE '%starbase80.dev%';
+
+    UPDATE community
+    SET icon = REPLACE(icon, 'starbase80.dev', 'notclickable.com')
+    WHERE icon LIKE '%starbase80.dev%';
+
+    UPDATE community
+    SET followers_url = REPLACE(followers_url, 'starbase80.dev', 'notclickable.com')
+    WHERE followers_url LIKE '%starbase80.dev%';
+
+    UPDATE community
+    SET inbox_url = REPLACE(inbox_url, 'starbase80.dev', 'notclickable.com')
+    WHERE inbox_url LIKE '%starbase80.dev%';
+
+    UPDATE community
+    SET shared_inbox_url = REPLACE(shared_inbox_url, 'starbase80.dev', 'notclickable.com')
+    WHERE shared_inbox_url LIKE '%starbase80.dev%';
+
+    -- Update comment table
+    UPDATE comment
+    SET ap_id = REPLACE(ap_id, 'starbase80.dev', 'notclickable.com')
+    WHERE ap_id LIKE '%starbase80.dev%';
+
+    -- Update instance table
+    UPDATE instance
+    SET domain = REPLACE(domain, 'starbase80.dev', 'notclickable.com')
+    WHERE domain LIKE '%starbase80.dev%';
+
+    -- Update image_details table
+    UPDATE image_details
+    SET link = REPLACE(link, 'starbase80.dev', 'notclickable.com')
+    WHERE link LIKE '%starbase80.dev%';
+
+    COMMIT;
+    ```
