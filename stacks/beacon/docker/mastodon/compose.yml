@@ -13,7 +13,8 @@ services:
         image: postgres:14-alpine
         container_name: mastodon_db
         restart: unless-stopped
-        env_file: env.postgres
+        env_file:
+            - .env.postgres
         shm_size: 256mb
         networks:
             - internal_network
@@ -37,7 +38,8 @@ services:
         image: ghcr.io/mastodon/mastodon:v4.3.8
         container_name: mastodon_web
         restart: unless-stopped
-        env_file: env.production
+        env_file:
+            - .env
         command: bundle exec puma -C config/puma.rb
         networks:
             - external_network
