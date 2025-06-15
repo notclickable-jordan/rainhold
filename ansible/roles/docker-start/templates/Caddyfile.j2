@@ -163,6 +163,10 @@ notclickable.social, www.notclickable.social {
                 file_server
         }
 
+        tls {
+            dns cloudflare {{ cloudflare_ssl_api_token }}
+        }
+
         reverse_proxy @streaming {
                 to {{ ansible_host }}:4218
                 header_up X-Forwarded-Port 443
