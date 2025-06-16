@@ -7,7 +7,10 @@ services:
             - 4205:4173
         environment:
             - TITLE=Not Clickable
-            - LOGO=
+            - LOGO=/logo.png
             - NEWWINDOW=false
         volumes:
             - ./config.json:/app/src/config/config.json:ro
+            - ./img/logo.png:/app/public/logo.png:ro
+            - ./img/favicon.ico:/app/public/favicon.ico:ro
+            - ./img:/app/public/img:ro
