@@ -29,7 +29,7 @@ services:
             - lemmy-ui
 
     lemmy:
-        image: dessalines/lemmy:0.19.11
+        image: dessalines/lemmy:0.19.12
         container_name: lemmy
         hostname: lemmy
         restart: unless-stopped
@@ -43,7 +43,7 @@ services:
             - pictrs
 
     lemmy-ui:
-        image: dessalines/lemmy-ui:0.19.11
+        image: dessalines/lemmy-ui:0.19.12
         container_name: lemmy-ui
         env_file:
             - .env
@@ -55,7 +55,7 @@ services:
         logging: *default-logging
 
     pictrs:
-        image: asonix/pictrs:0.5.0-rc.2
+        image: asonix/pictrs:0.5.0
         container_name: lemmy-pictrs
         # this needs to match the pictrs url in lemmy.hjson
         hostname: pictrs
@@ -72,7 +72,7 @@ services:
                     memory: 690m
 
     postgres:
-        image: postgres:15-alpine
+        image: postgres:16-alpine
         container_name: lemmy-db
         hostname: postgres
         env_file:

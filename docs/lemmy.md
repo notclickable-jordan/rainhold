@@ -212,3 +212,13 @@ To migrate the Lemmy instance to NotClickable.com, follow these steps:
 
     COMMIT;
     ```
+
+## Troubleshooting
+
+Getting this error in logs?
+
+```plaintext
+ERROR lemmy_federate::worker: <some remote instance>: last successful id 135 is higher than latest id 0 in database (did the db get cleared?)
+```
+
+To fix: take any action on the site (e.g. upvoting a post).
