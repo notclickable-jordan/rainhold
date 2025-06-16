@@ -7,27 +7,28 @@
     owner: root
     group: root
     mode: "0755"
-# - name: Ensure python cryptography library is installed (Debian)
-#   ansible.builtin.apt:
-#     name: python3-cryptography
-#     state: present
-#     update_cache: yes
 
-# - name: Generate private key for Mailrise TLS
-#   community.crypto.openssl_privatekey:
-#     path: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/mailrise/mailrise.key"
-#     size: 2048
-#     type: RSA
-#     mode: "0644"
+- name: Ensure python cryptography library is installed (Debian)
+  ansible.builtin.apt:
+    name: python3-cryptography
+    state: present
+    update_cache: yes
 
-# - name: Generate self-signed TLS certificate for Mailrise
-#   community.crypto.x509_certificate:
-#     path: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/mailrise/mailrise.crt"
-#     privatekey_path: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/mailrise/mailrise.key"
-#     provider: selfsigned
-#     state: present
+- name: Generate private key for Mailrise TLS
+  community.crypto.openssl_privatekey:
+    path: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/mailrise/mailrise.key"
+    size: 2048
+    type: RSA
+    mode: "0644"
 
-# - name: Ensure mailrise.crt file mode is 0644
-#   ansible.builtin.file:
-#     path: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/mailrise/mailrise.crt"
-#     mode: "0644"
+- name: Generate self-signed TLS certificate for Mailrise
+  community.crypto.x509_certificate:
+    path: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/mailrise/mailrise.crt"
+    privatekey_path: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/mailrise/mailrise.key"
+    provider: selfsigned
+    state: present
+
+- name: Ensure mailrise.crt file mode is 0644
+  ansible.builtin.file:
+    path: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/mailrise/mailrise.crt"
+    mode: "0644"
