@@ -14,10 +14,8 @@
     api_key: "{{ lemmy_pictrs_api_key }}"
   }
   email: {
-    smtp_server: "{{ mailrise_host }}:{{ mailrise_port }}"
+    smtp_server: "http://postfix:25"
     smtp_from_address: "{{ lemmy_email_from_address }}"
-    tls_type: "tls",
-    smtp_login: "{{ mailrise_username }}",
-    smtp_password: "{{ mailrise_password }}"
+    tls_type: "none"
   }
 }

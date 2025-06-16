@@ -86,6 +86,7 @@ services:
     postfix:
         image: mwader/postfix-relay
         container_name: lemmy-postfix
+        hostname: postfix
         env_file:
             - .env.postfix
         restart: "always"
