@@ -8,5 +8,6 @@ services:
         environment:
             - TITLE=Not Clickable
             - LOGO=
+            - NEWWINDOW=false
         volumes:
             - ./config.json:/app/src/config/config.json:ro

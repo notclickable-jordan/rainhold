@@ -3,19 +3,7 @@
 		"category": "Services",
 		"services": [
 			{
-				"name": "LDAP Admin",
-				"uri": "https://ldap.notclickable.com",
-				"icon": "lldap",
-				"description": "User directory"
-			},
-			{
-				"name": "Pocket ID",
-				"uri": "https://pocket-id.notclickable.com",
-				"icon": "pocketbase",
-				"description": "Identity provider"
-			},
-			{
-				"name": "Dozzle Logs",
+				"name": "Dozzle",
 				"uri": "https://dozzle.notclickable.com",
 				"icon": "dozzle",
 				"description": "Container logs"
@@ -42,7 +30,7 @@
 				"name": "Lemmy",
 				"uri": "https://lemmy.notclickable.com",
 				"icon": "lemmy",
-				"description": "Federated discussion platform"
+				"description": "Link discussion"
 			},
 			{
 				"name": "Jellyfin",
@@ -57,18 +45,6 @@
 				"description": "Social network"
 			},
 			{
-				"name": "TinyAuth",
-				"uri": "https://tinyauth.notclickable.com",
-				"icon": "keycloak",
-				"description": "Authorization"
-			},
-			{
-				"name": "Mailrise",
-				"uri": "https://mailrise.notclickable.com",
-				"icon": "mail",
-				"description": "Internal email"
-			},
-			{
 				"name": "N8N",
 				"uri": "https://n8n.notclickable.com",
 				"icon": "n8n",
@@ -79,6 +55,59 @@
 				"uri": "https://www.youtube.com/@notclickable",
 				"icon": "youtube",
 				"description": "Videos"
+			}
+		]
+	},
+	{
+		"category": "Authentication",
+		"services": [
+			{
+				"name": "LLDAP",
+				"uri": "https://ldap.notclickable.com",
+				"icon": "lldap",
+				"description": "User directory"
+			},
+			{
+				"name": "Pocket ID",
+				"uri": "https://pocket-id.notclickable.com",
+				"icon": "pocketbase",
+				"description": "Identity provider"
+			},
+			{
+				"name": "TinyAuth",
+				"uri": "https://tinyauth.notclickable.com",
+				"icon": "keycloak",
+				"description": "Authorization"
+			}
+		]
+	},
+	{
+		"category": "Devices",
+		"services": [
+			{
+				"name": "Router",
+				"uri": "http://192.168.1.1/",
+				"description": "Netgear Orbi",
+				"icon": "/icons/router.png"
+			},
+			{
+				"name": "Home Assistant",
+				"uri": "http://homeassistant:8123/",
+				"description": "Home automation",
+				"icon": "/icons/home-assistant.svg"
+			},
+			{
+				"name": "Synology",
+				"uri": "http://synology:5000",
+				"description": "Network storage",
+				"icon": "/icons/synology.png"
+			},
+			{
+				"name": "Rainhold",
+				"uri": "https://rainhold.tail6e07a.ts.net:8006",
+				"description": "Proxmox",
+				"icon": "/icons/proxmox.png",
+				"iconBubble": false
 			}
 		]
 	}
