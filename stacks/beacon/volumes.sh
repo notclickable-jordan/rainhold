@@ -17,6 +17,10 @@ VOLUMES=(
   "pocket-id_data:/pocket-id/data"
   "jellyfin_config:/jellyfin/config"
   "jellyfin_cache:/jellyfin/cache"
+  "mastodon_sidekiq:/mastodon/sidekiq"
+  "mastodon_db:/mastodon/db"
+  "mastodon_redis:/mastodon/redis"
+  "mastodon_web:/mastodon/web"
 )
 
 BACKUP_PATH="/mnt/backup/rainhold/beacon"
