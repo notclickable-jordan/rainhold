@@ -22,6 +22,7 @@ VOLUMES=(
   "mastodon_redis:/mastodon/redis"
   "mastodon_web:/mastodon/web"
   "calibre_config:/calibre/config"
+  "ytptube_config:/ytptube/config"
 )
 
 BACKUP_PATH="/mnt/backup/rainhold/beacon"

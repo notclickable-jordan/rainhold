@@ -24,3 +24,4 @@
 | 4218    | Mastodon streaming | Mastodon streaming API             |
 | 4219    | Jellyfin           | Media server                       |
 | 4220    | Calibre            | E-book management                  |
+| 4221    | YTPTube            | YouTube video downloader           |

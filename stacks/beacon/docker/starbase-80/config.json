@@ -57,6 +57,12 @@
 				"description": "Automation platform"
 			},
 			{
+				"name": "YTPTube",
+				"uri": "https://ytptube.notclickable.com",
+				"icon": "/img/ytptube.png",
+				"description": "YouTube playlist manager"
+			},
+			{
 				"name": "YouTube Channel",
 				"uri": "https://www.youtube.com/@notclickable",
 				"icon": "/img/youtube.jpg",
