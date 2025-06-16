@@ -197,3 +197,16 @@ notclickable.social, www.notclickable.social {
                 }
         }
 }
+
+calibre.notclickable.com {
+    forward_auth {{ ansible_host }}:4206 {
+        uri /api/auth/caddy
+        copy_headers Remote-User Remote-Email Remote-Name Remote-Groups
+    }
+    
+    tls {
+        dns cloudflare {{ cloudflare_ssl_api_token }}
+    }
+
+    reverse_proxy {{ ansible_host }}:4220
+}

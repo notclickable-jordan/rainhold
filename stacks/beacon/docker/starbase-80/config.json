@@ -3,6 +3,12 @@
 		"category": "Services",
 		"services": [
 			{
+				"name": "Calibre",
+				"uri": "https://calibre.notclickable.com",
+				"icon": "/img/calibre.jpg",
+				"description": "E-book management"
+			},
+			{
 				"name": "Dozzle",
 				"uri": "https://dozzle.notclickable.com",
 				"icon": "/img/dozzle.jpg",
