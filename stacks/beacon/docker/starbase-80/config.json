@@ -29,19 +29,19 @@
 			{
 				"name": "Lemmy",
 				"uri": "https://lemmy.notclickable.com",
-				"icon": "img/lemmy.jpg",
+				"icon": "/img/lemmy.jpg",
 				"description": "Link discussion"
 			},
 			{
 				"name": "Jellyfin",
 				"uri": "https://jellyfin.notclickable.com",
-				"icon": "img/jellyfin.svg",
+				"icon": "/img/jellyfin.svg",
 				"description": "Media server"
 			},
 			{
 				"name": "Mastodon",
 				"uri": "https://notclickable.social",
-				"icon": "img/mastodon.jpg",
+				"icon": "/img/mastodon.jpg",
 				"description": "Social network"
 			},
 			{
