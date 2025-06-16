@@ -3,11 +3,6 @@ configs:
     urls:
       - mastodons://{{ apprise_mastodon_token }}@{{ apprise_mastodon_host }}?overflow=truncate
 
-tls:
-  mode: starttlsrequire
-  certfile: /etc/mailrise.crt
-  keyfile: /etc/mailrise.key
-
 smtp:
   auth:
     basic:

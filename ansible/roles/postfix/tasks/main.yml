@@ -14,27 +14,27 @@
     create: yes
     backup: yes
 
-- name: Configure Postfix SASL settings
-  blockinfile:
-    path: /etc/postfix/main.cf
-    marker: "# {mark} ANSIBLE MANAGED SASL SETTINGS"
-    block: |
-      smtp_sasl_auth_enable = yes
-      smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
-      smtp_sasl_security_options = noanonymous
+# - name: Configure Postfix SASL settings
+#   blockinfile:
+#     path: /etc/postfix/main.cf
+#     marker: "# {mark} ANSIBLE MANAGED SASL SETTINGS"
+#     block: |
+#       smtp_sasl_auth_enable = yes
+#       smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
+#       smtp_sasl_security_options = noanonymous
 
-- name: Create sasl_passwd file
-  template:
-    src: sasl_passwd.j2
-    dest: /etc/postfix/sasl_passwd
-    owner: root
-    group: root
-    mode: "0600"
+# - name: Create sasl_passwd file
+#   template:
+#     src: sasl_passwd.j2
+#     dest: /etc/postfix/sasl_passwd
+#     owner: root
+#     group: root
+#     mode: "0600"
 
-- name: Generate hash db for sasl_passwd
-  command: postmap /etc/postfix/sasl_passwd
-  args:
-    creates: /etc/postfix/sasl_passwd.db
+# - name: Generate hash db for sasl_passwd
+#   command: postmap /etc/postfix/sasl_passwd
+#   args:
+#     creates: /etc/postfix/sasl_passwd.db
 
 - name: Restart Postfix
   service:
