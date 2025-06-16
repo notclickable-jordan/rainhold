@@ -91,7 +91,7 @@ echo "[Backup] Backup file moved to $TARGET_FOLDER and old files cleaned up."
 echo "[Backup] Empty folders cleaned up."
 
 # Compose email body
-MAIL_BODY="Backup completed on $HUMAN_DATE\nTime elapsed: $ELAPSED_STR\n\nFile: $BACKUP_FILE\nSize: $BACKUP_SIZE\Volumes: $SERVICE_COUNT\n"
+MAIL_BODY="Backup completed on $HUMAN_DATE\nTime elapsed: $ELAPSED_STR\n\nFile: $BACKUP_FILE\nSize: $BACKUP_SIZE\nVolumes: $SERVICE_COUNT\n"
 
 echo -e "$MAIL_BODY" | mail -s "${SERVER_NAME} backup complete" "$EMAIL"
 echo "[Backup] Notification email sent to $EMAIL"
