@@ -64,19 +64,19 @@
 			{
 				"name": "LLDAP",
 				"uri": "https://ldap.notclickable.com",
-				"icon": "lldap",
+				"icon": "/img/ldap.jpg",
 				"description": "User directory"
 			},
 			{
 				"name": "Pocket ID",
 				"uri": "https://pocket-id.notclickable.com",
-				"icon": "pocketbase",
+				"icon": "/img/pocket-id.png",
 				"description": "Identity provider"
 			},
 			{
 				"name": "TinyAuth",
 				"uri": "https://tinyauth.notclickable.com",
-				"icon": "keycloak",
+				"icon": "/img/tinyauth.jpg",
 				"description": "Authorization"
 			}
 		]
@@ -106,8 +106,7 @@
 				"name": "Rainhold",
 				"uri": "https://rainhold.tail6e07a.ts.net:8006",
 				"description": "Proxmox",
-				"icon": "proxmox",
-				"iconBubble": false
+				"icon": "/img/proxmox.png"
 			}
 		]
 	}
