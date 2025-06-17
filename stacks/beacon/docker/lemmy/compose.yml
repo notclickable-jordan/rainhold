@@ -61,7 +61,7 @@ services:
                     memory: 690m
 
     postgres:
-        image: pgautoupgrade/pgautoupgrade:17-alpine
+        image: postgres:17-alpine
         container_name: lemmy-db
         hostname: postgres
         env_file:
