@@ -63,8 +63,9 @@ tinyauth_pocket_id_client_secret: "your_pocket_id_client_secret_here"
 # --- Mailrise ---
 
 # keep
+mailrise_hostname: "mailrise.example.com"
 mailrise_host: "{{ ansible_host }}"
-mailrise_port: 4207
+mailrise_port: 465
 
 # replace
 mailrise_username: "your_mailrise_username_here"

@@ -4,8 +4,6 @@ services:
         container_name: mailrise
         restart: unless-stopped
         volumes:
-            - ./mailrise.conf:/etc/mailrise.conf
-            - ./mailrise.crt:/etc/mailrise.crt
-            - ./mailrise.key:/etc/mailrise.key
+            - ./mailrise.conf:/etc/mailrise.conf:ro
         ports:
-            - 4207:8025
+            - 465:465
