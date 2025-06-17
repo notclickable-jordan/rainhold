@@ -12,6 +12,7 @@ services:
             - 4211:8536
         volumes:
             - ./nginx.conf:/etc/nginx/nginx.conf:ro,Z
+            - ./proxy_params:/etc/nginx/proxy_params:ro,Z
         restart: unless-stopped
         logging: *default-logging
         depends_on:
