@@ -45,9 +45,8 @@ services:
         logging: *default-logging
 
     pictrs:
-        image: asonix/pictrs:0.5.0
+        image: asonix/pictrs:0.5.19
         container_name: lemmy-pictrs
-        # this needs to match the pictrs url in lemmy.hjson
         hostname: pictrs
         env_file:
             - .env.pictrs
@@ -62,7 +61,7 @@ services:
                     memory: 690m
 
     postgres:
-        image: postgres:16-alpine
+        image: pgautoupgrade/pgautoupgrade:17-alpine
         container_name: lemmy-db
         hostname: postgres
         env_file:
