@@ -3,6 +3,12 @@
 		"category": "Services",
 		"services": [
 			{
+				"name": "AudioBookshelf",
+				"uri": "https://audiobookshelf.notclickable.com",
+				"icon": "audiobookshelf",
+				"description": "Audiobook server"
+			},
+			{
 				"name": "Calibre",
 				"uri": "https://calibre.notclickable.com",
 				"icon": "/img/calibre.jpg",
