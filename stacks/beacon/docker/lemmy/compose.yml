@@ -97,3 +97,7 @@ volumes:
     pictrs:
     postgres:
     pgadmin:
+    extra_themes_new:
+    pictrs_new:
+    postgres_new:
+    pgadmin_new:
