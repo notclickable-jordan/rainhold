@@ -11,9 +11,10 @@ services:
         volumes:
             - config:/config
             - /mnt/media/books:/books
-        ports:
-            - 4220:8083
         restart: unless-stopped
+        labels:
+            - traefik.enable=true
+            - traefik.http.routers.calibre.rule=Host(`calibre.notclickable.com`)
 
 volumes:
     config:

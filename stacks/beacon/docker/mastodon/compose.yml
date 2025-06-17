@@ -56,6 +56,10 @@ services:
             - web:/mastodon/public/system
         extra_hosts:
             - "host.docker.internal:host-gateway"
+        labels:
+            - traefik.enable=true
+            - traefik.http.routers.mastodon-web.rule=Host(`mastodon.notclickable.social`)
+            - "traefik.http.services.mastodon-web.loadbalancer.server.port=3000"
 
     streaming:
         image: ghcr.io/mastodon/mastodon-streaming:v4.3.8
@@ -77,6 +81,10 @@ services:
             - redis
         extra_hosts:
             - "host.docker.internal:host-gateway"
+        labels:
+            - traefik.enable=true
+            - traefik.http.routers.mastodon-streaming.rule=Host(`streaming.notclickable.social`)
+            - "traefik.http.services.mastodon-streaming.loadbalancer.server.port=4000"
 
     sidekiq:
         image: ghcr.io/mastodon/mastodon:v4.3.8
@@ -95,6 +103,8 @@ services:
             test: ["CMD-SHELL", "ps aux | grep '[s]idekiq\ 6' || false"]
         volumes:
             - web:/mastodon/public/system
+        labels:
+            - traefik.enable=false
 
 networks:
     external_network:

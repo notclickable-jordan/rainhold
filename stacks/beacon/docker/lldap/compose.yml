@@ -9,6 +9,10 @@ services:
             - lldap_data:/data
         env_file:
             - .env
+        labels:
+            - traefik.enable=true
+            - traefik.http.routers.ldap.rule=Host(`ldap.notclickable.com`)
+            - "traefik.http.services.ldap.loadbalancer.server.port=17170"
 
 volumes:
     lldap_data:

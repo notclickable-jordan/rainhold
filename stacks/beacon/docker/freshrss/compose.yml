@@ -16,11 +16,11 @@ services:
             - data:/var/www/FreshRSS/data
             # Optional volume for storing third-party extensions
             - extensions:/var/www/FreshRSS/extensions
-        ports:
-            # If you want to open a port 8080 on the local machine:
-            - 4212:80
         env_file:
             - .env
+        labels:
+            - traefik.enable=true
+            - traefik.http.routers.freshrss.rule=Host(`freshrss.notclickable.com`)
 
 volumes:
     data:

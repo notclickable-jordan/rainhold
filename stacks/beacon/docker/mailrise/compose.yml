@@ -7,3 +7,13 @@ services:
             - ./mailrise.conf:/etc/mailrise.conf:ro
         ports:
             - 465:465
+        labels:
+            - traefik.enable=true
+            - traefik.http.routers.mailrise.rule=Host(`mailrise.notclickable.com`)
+            - traefik.http.services.mailrise.loadbalancer.server.port=465
+            - traefik.tcp.routers.mailrise.rule:"HostSNI(`*`)"
+            - traefik.tcp.routers.mailrise.tls:"true"
+            - traefik.tcp.routers.mailrise.tls.certresolver:"letsencrypt"
+            - traefik.tcp.routers.mailrise.tls.domains[0].main:"mailrise.notclickable.com"
+            - traefik.tcp.routers.mailrise.tls.domains[0].sans:""
+            - traefik.tcp.routers.mailrise.entrypoints:"mailsecure"

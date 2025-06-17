@@ -11,3 +11,7 @@ services:
             start_period: 5s
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock
+        labels:
+            - traefik.enable=true
+            - traefik.http.routers.watchtower.rule=Host(`watchtower.notclickable.com`)
+            - "traefik.http.services.watchtower.loadbalancer.server.port=8080"

@@ -3,12 +3,14 @@ services:
         image: grafana/grafana-enterprise
         container_name: grafana
         restart: unless-stopped
-        ports:
-            - 4213:3000
         volumes:
             - storage:/var/lib/grafana
         env_file:
             - .env
+        labels:
+            - traefik.enable=true
+            - traefik.http.routers.grafana.rule=Host(`grafana.notclickable.com`)
+            - "traefik.http.services.grafana.loadbalancer.server.port=3000"
 
     loki:
         image: grafana/loki:latest
@@ -32,6 +34,10 @@ services:
             - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
         ports:
             - 4215:9090
+        labels:
+            - traefik.enable=true
+            - traefik.http.routers.prometheus.rule=Host(`prometheus.notclickable.com`)
+            - "traefik.http.services.prometheus.loadbalancer.server.port=9090"
 
 volumes:
     storage:

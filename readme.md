@@ -19,7 +19,7 @@ Complete guide to set up a secure, automated server environment. Users are manag
 1. Lightweight LDAP (users and groups)
 2. Pocket ID (Authentication)
 3. Tinyauth (Authorization)
-4. Caddy (Reverse proxy)
+4. Traefik (Reverse proxy)
 
 # Guide
 
@@ -35,7 +35,7 @@ Follow these steps in order to set up your server environment:
 # Additional documentation
 
 -   [Pocket ID](docs/pocket-id.md): Automatic login to sites using Pocket ID and LLDAP
--   [Caddy](docs/caddy.md): Use a special build of Caddy for SSL with Cloudflare
+-   [Traefik](docs/traefik.md): Use Traefik as the reverse proxy
 -   [Apprise](docs/apprise.md): Send notifications to Mastodon and other services
 -   [Network share](docs/network-share.md): Mount a network shared folder using SMB/CIFS
 -   [Gitea](docs/gitea.md): Get the runner registration token

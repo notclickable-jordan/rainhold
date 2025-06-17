@@ -2,9 +2,9 @@
 
 | Port    | Service            | Description                        |
 | ------- | ------------------ | ---------------------------------- |
-| 80, 443 | Caddy              | Web server for HTTP traffic        |
+| 80, 443 | Traefik            | Web server for HTTP traffic        |
 | 465     | MailRise           | SMTP server to AppRise             |
-| 2019    | Caddy metrics      | Caddy metrics endpoint             |
+| 2019    | Traefik metrics    | Traefik metrics endpoint           |
 | 4201    | LLDAP              | LDAP service (389)                 |
 | 4202    | LLDAP Admin UI     | Web interface for LLDAP management |
 | 4203    | Pocket ID          | Authentication                     |

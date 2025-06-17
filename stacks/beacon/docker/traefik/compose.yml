@@ -1,0 +1,14 @@
+services:
+    traefik:
+        image: traefik
+        container_name: traefik
+        ports:
+            - "80:80"
+            - "443:443"
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+            - ./traefik.yml:/etc/traefik/traefik.yml
+        labels:
+            - traefik.enable=true
+            - traefik.http.routers.traefik.rule=Host(`traefik.notclickable.com`)
+            - "traefik.http.services.traefik.loadbalancer.server.port=80"
