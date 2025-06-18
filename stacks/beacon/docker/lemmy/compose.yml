@@ -38,8 +38,6 @@ services:
         depends_on:
             - postgres
             - pictrs
-        labels:
-            traefik.http.routers.lemmy.entrypoints: websecure
         networks:
             - proxy
 
