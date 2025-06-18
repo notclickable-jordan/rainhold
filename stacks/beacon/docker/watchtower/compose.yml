@@ -11,5 +11,3 @@ services:
             start_period: 5s
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock
-        labels:
-            traefik.enable: false

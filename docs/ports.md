@@ -4,7 +4,6 @@
 | ------- | ------------------ | ---------------------------------- |
 | 80, 443 | Traefik            | Web server for HTTP traffic        |
 | 465     | MailRise           | SMTP server to AppRise             |
-| 2019    | Traefik metrics    | Traefik metrics endpoint           |
 | 4201    | LLDAP              | LDAP service (389)                 |
 | 4202    | LLDAP Admin UI     | Web interface for LLDAP management |
 | 4203    | Pocket ID          | Authentication                     |
@@ -26,3 +25,4 @@
 | 4220    | Calibre            | E-book management                  |
 | 4221    | YTPTube            | YouTube video downloader           |
 | 4222    | AudioBookshelf     | Audiobook management               |
+| 8080    | Traefik metrics    | Traefik metrics endpoint           |

@@ -35,8 +35,6 @@ services:
             - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
         ports:
             - 4215:9090
-        labels:
-            traefik.enable: false
 
 volumes:
     storage:

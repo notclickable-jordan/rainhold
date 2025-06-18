@@ -35,7 +35,6 @@ Follow these steps in order to set up your server environment:
 # Additional documentation
 
 -   [Pocket ID](docs/pocket-id.md): Automatic login to sites using Pocket ID and LLDAP
--   [Traefik](docs/traefik.md): Use Traefik as the reverse proxy
 -   [Apprise](docs/apprise.md): Send notifications to Mastodon and other services
 -   [Network share](docs/network-share.md): Mount a network shared folder using SMB/CIFS
 -   [Gitea](docs/gitea.md): Get the runner registration token

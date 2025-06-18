@@ -36,8 +36,6 @@ services:
             - gitea
         volumes:
             - db:/var/lib/postgresql/data
-        labels:
-            traefik.enable: false
 
     runner:
         image: gitea/act_runner
@@ -49,8 +47,6 @@ services:
             - gitea
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock
-        labels:
-            traefik.enable: false
 
 volumes:
     data:
