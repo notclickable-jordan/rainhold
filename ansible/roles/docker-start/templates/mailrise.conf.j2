@@ -4,7 +4,9 @@ configs:
       - mastodons://{{ apprise_mastodon_token }}@{{ apprise_mastodon_host }}?overflow=truncate
 
 tls:
-  mode: off
+  mode: onconnect
+  certfile: /etc/mailrise.crt
+  keyfile: /etc/mailrise.key
 
 smtp:
   hostname: {{ mailrise_hostname}}
