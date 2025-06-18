@@ -51,7 +51,7 @@ services:
             - "host.docker.internal:host-gateway"
         labels:
             traefik.enable: true
-            traefik.http.routers.mastodon.entrypoints: https
+            traefik.http.routers.mastodon.entrypoints: websecure
             traefik.http.routers.mastodon.rule: (Host(`notclickable.social`))
             traefik.http.routers.mastodon.tls: true
             traefik.http.routers.mastodon.tls.certresolver: cloudflare
@@ -82,7 +82,7 @@ services:
             - "host.docker.internal:host-gateway"
         labels:
             traefik.enable: true
-            traefik.http.routers.mastodon-api.entrypoints: https
+            traefik.http.routers.mastodon-api.entrypoints: websecure
             traefik.http.routers.mastodon-api.rule: (Host(`notclickable.social`) && PathPrefix(`/api/v1/streaming`))
             traefik.http.routers.mastodon-api.tls: true
             traefik.http.routers.mastodon-api.tls.certresolver: cloudflare
