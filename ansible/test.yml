@@ -2,8 +2,5 @@
   hosts: public
   become: true
   roles:
-    - role: postfix
-    - role: mailrise
-    - role: clone-repository
     - role: docker-start
     - role: apprise

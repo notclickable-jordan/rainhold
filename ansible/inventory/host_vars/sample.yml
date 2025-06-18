@@ -1,91 +1,52 @@
 # --- Root user ---
-# keep
 root_old_password: "password1"
-
-# replace
 root_new_password: "{{ 'newplaintextpassword' | password_hash('sha512') }}"
 
 # --- First normal user ---
-
-# replace
 username: jordan
-
-# keep
 user_password: "{{ 'password2' | password_hash('sha512') }}"
-
-# generate
 user_ssh_pubkey: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBExampleKeyGoesHere jordan@rainhold-beacon"
 
 # --- Tailscale ---
-
-# keep
 tailscale_keyring_url: "https://pkgs.tailscale.com/stable/debian/bookworm.noarmor.gpg"
 tailscale_repo_url: "https://pkgs.tailscale.com/stable/debian/bookworm.tailscale-keyring.list"
-
-# generate
 tailscale_authkey: "tskey-1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef"
 
 # --- Cloudflare ---
-
-# generate
 cloudflared_token: "YOUR_CLOUDFLARED_TUNNEL_TOKEN"
-
-# keep
 cloudflared_config_path: "/etc/cloudflared"
-
-# generate
+cloudflare_email: "your_email_address"
 cloudflare_ssl_api_token: "YOUR_CLOUDFLARE_SSL_API_TOKEN"
 
 # --- Rainhold ---
-
-# keep
 rainhold_repo: https://github.com/notclickable-jordan/rainhold
 rainhold_dest: /etc/rainhold
 
 # --- LLDAP ---
-
-# generate
 LLDAP_JWT_SECRET: "your_jwt_secret_here"
 LLDAP_KEY_SEED: "your_key_seed_here"
-
-# replace
 LLDAP_LDAP_USER_PASS: "your_ldap_user_password_here"
 
 # --- Tinyauth ---
-
-# generate
 tinyauth_secret: "your_tinyauth_secret_here"
-
-# replace
 tinyauth_pocket_id_client_id: "your_pocket_id_client_id_here"
 tinyauth_pocket_id_client_secret: "your_pocket_id_client_secret_here"
 
 # --- Mailrise ---
-
-# keep
 mailrise_hostname: "mailrise.example.com"
 mailrise_host: "{{ ansible_host }}"
 mailrise_port: 465
-
-# replace
 mailrise_username: "your_mailrise_username_here"
 mailrise_password: "your_mailrise_password_here"
 
 # --- Apprise ---
-
-# keep
 apprise_repo: "https://github.com/caronc/apprise.git"
 apprise_clone_dest: "/opt/apprise"
 apprise_venv_dir: /opt/apprise-venv
-
-# generate
 apprise_mastodon_token: "your_token"
-
-# replace
 apprise_mastodon_host: "mastodon.social"
 
 # --- Network Share ---
-
 network_share_host: "192.168.1.100"
 network_share_username: "your_username"
 network_share_password: "your_password"
@@ -99,73 +60,42 @@ network_shares:
     mount_point: "/mnt/video"
 
 # --- Gitea ---
-
-# keep
 GITEA__database__USER: gitea
 GITEA__database__NAME: gitea
 gitea_port: 4208
-
-# replace
 GITEA__database__PASSWD: "your_gitea_database_password_here"
-
-# generate
 gitea_runner_registration_token: "your_gitea_runner_registration_token_here"
 
 # --- N8N ---
-
-# keep
 n8n_POSTGRES_DB_name: "n8n"
 n8n_POSTGRES_USER: "n8n"
 n8n_POSTGRES_NON_ROOT_USER: "n8n"
-
-# generate
 n8n_POSTGRES_NON_ROOT_PASSWORD: "your_n8n_non_root_password_here"
 n8n_POSTGRES_PASSWORD: "your_n8n_postgres_password_here"
 
 # --- Lemmy ---
-
-# replace
 lemmy_db_password: "your_lemmy_db_password_here"
-
-# keep
 lemmy_hostname: "lemmy.example.com"
-
-# replace
 lemmy_pictrs_api_key: "your_pictrs_api_key_here"
-
-# replace
 lemmy_pictrs_store_endpoint: "http://s3-us-west-2.amazonaws.com"
 lemmy_pictrs_store_bucket: "your_pictrs_bucket_name_here"
 lemmy_pictrs_region: "us-west-2"
 lemmy_pictrs_access_key: "your_pictrs_access_key_here"
 lemmy_pictrs_secret_key: "your_pictrs_secret_key_here"
-
-# replace
 lemmy_postgres_user: "lemmy"
 lemmy_postgres_password: "your_lemmy_postgres_password_here"
 lemmy_postgres_db: "lemmy"
-
-# replace
 lemmy_postfix_hostname: "lemmy.example.com"
-
-# replace
 lemmy_email_from_address: "lemmy@example.com"
-
-# replace
 lemmy_port: 4211
 
 # --- Grafana ---
-
-# replace
 grafana_server_root_url: "https://grafana.example.com"
 
 # --- Backup ---
-
-# replace
 backup_path: "/mnt/backup"
 
 # --- Mastodon ---
-
 mastodon_postgres_user: "mastodon"
 mastodon_postgres_password: "your_mastodon_postgres_password_here"
 mastodon_local_domain: "mastodon.example.com"
