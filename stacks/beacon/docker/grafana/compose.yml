@@ -13,6 +13,7 @@ services:
             traefik.http.routers.grafana.middlewares: tinyauth@docker
             traefik.http.routers.grafana.tls.certresolver: cloudflare
             traefik.http.services.grafana.loadbalancer.server.port: 3000
+            traefik.http.routers.grafana.entrypoints: websecure
         networks:
             - proxy
 

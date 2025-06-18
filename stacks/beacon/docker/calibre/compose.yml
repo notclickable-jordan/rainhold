@@ -18,6 +18,7 @@ services:
             traefik.http.routers.calibre.middlewares: tinyauth@docker
             traefik.http.routers.calibre.tls.certresolver: cloudflare
             traefik.http.services.calibre.loadbalancer.server.port: 8083
+            traefik.http.routers.calibre.entrypoints: websecure
         networks:
             - proxy
 

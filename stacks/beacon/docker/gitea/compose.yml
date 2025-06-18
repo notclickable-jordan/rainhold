@@ -24,6 +24,7 @@ services:
             - db
         labels:
             traefik.enable: true
+            traefik.http.routers.gitea.entrypoints: websecure
             traefik.http.routers.gitea.rule: Host(`gitea.notclickable.com`)
             traefik.http.routers.gitea.middlewares: tinyauth@docker
             traefik.http.routers.gitea.tls.certresolver: cloudflare

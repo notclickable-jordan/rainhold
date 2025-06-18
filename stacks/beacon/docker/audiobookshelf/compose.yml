@@ -16,6 +16,7 @@ services:
             traefik.http.routers.audiobookshelf.middlewares: tinyauth@docker
             traefik.http.routers.audiobookshelf.tls.certresolver: cloudflare
             traefik.http.services.audiobookshelf.loadbalancer.server.port: 80
+            traefik.http.routers.audiobookshelf.entrypoints: websecure
         networks:
             - proxy
 

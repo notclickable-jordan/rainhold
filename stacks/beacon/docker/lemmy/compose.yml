@@ -35,6 +35,8 @@ services:
         depends_on:
             - postgres
             - pictrs
+        labels:
+            traefik.http.routers.lemmy.entrypoints: websecure
 
     lemmy-ui:
         image: dessalines/lemmy-ui:0.19.12

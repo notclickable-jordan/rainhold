@@ -17,6 +17,7 @@ services:
             traefik.http.routers.jellyfin.middlewares: tinyauth@docker
             traefik.http.routers.jellyfin.tls.certresolver: cloudflare
             traefik.http.services.jellyfin.loadbalancer.server.port: 8096
+            traefik.http.routers.jellyfin.entrypoints: websecure
         networks:
             - proxy
 

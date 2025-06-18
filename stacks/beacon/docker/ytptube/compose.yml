@@ -16,6 +16,7 @@ services:
             traefik.http.routers.ytptube.rule: Host(`ytptube.notclickable.com`)
             traefik.http.routers.ytptube.middlewares: tinyauth@docker
             traefik.http.routers.ytptube.tls.certresolver: cloudflare
+            traefik.http.routers.ytptube.entrypoints: websecure
             traefik.http.services.ytptube.loadbalancer.server.port: 8081
         networks:
             - proxy
