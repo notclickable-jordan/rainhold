@@ -23,6 +23,11 @@ services:
         networks:
             - gitea
             - proxy
+        healthcheck:
+            test: ["CMD-SHELL", "curl -f http://localhost:3000 || exit 1"]
+            interval: 30s
+            timeout: 10s
+            retries: 3
 
     db:
         image: docker.io/library/postgres:14
