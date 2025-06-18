@@ -22,7 +22,6 @@ services:
             traefik.http.routers.gitea.entrypoints: websecure
             traefik.http.services.gitea.loadbalancer.server.port: 3000
         networks:
-            - gitea
             - proxy
         healthcheck:
             test: ["CMD-SHELL", "curl -f http://localhost:3000 || exit 1"]
@@ -37,7 +36,7 @@ services:
         env_file:
             - .env
         networks:
-            - gitea
+            - proxy
         volumes:
             - db:/var/lib/postgresql/data
 
@@ -48,7 +47,7 @@ services:
             - .env.runner
         restart: unless-stopped
         networks:
-            - gitea
+            - proxy
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock
 
@@ -57,7 +56,5 @@ volumes:
     db:
 
 networks:
-    gitea:
-        external: false
     proxy:
         external: true
