@@ -11,7 +11,7 @@ services:
             traefik.http.routers.tinyauth.tls.certresolver: cloudflare
             traefik.http.middlewares.tinyauth.forwardauth.address: "http://tinyauth:3000"
             traefik.http.middlewares.tinyauth.forwardauth.trustForwardHeader: true
-            traefik.http.middlewares.tinyauth.forwardauth.authResponseHeaders: remote-user remote-email remote-name
+            traefik.http.middlewares.tinyauth.forwardauth.authResponseHeaders: Remote-User Remote-Email Remote-Name
             traefik.http.routers.tinyauth.entrypoints: websecure
         networks:
             - proxy
