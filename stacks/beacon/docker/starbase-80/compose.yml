@@ -3,8 +3,6 @@ services:
         image: jordanroher/starbase-80
         container_name: starbase-80
         restart: unless-stopped
-        ports:
-            - 4205:4173
         environment:
             - TITLE=Not Clickable
             - LOGO=/logo.png

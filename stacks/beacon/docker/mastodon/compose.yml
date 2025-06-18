@@ -54,7 +54,7 @@ services:
             traefik.http.routers.mastodon.entrypoints: https
             traefik.http.routers.mastodon.rule: (Host(`notclickable.social`))
             traefik.http.routers.mastodon.tls: true
-            traefik.http.routers.mastodon.tls.certresolver: http
+            traefik.http.routers.mastodon.tls.certresolver: cloudflare
             traefik.http.routers.mastodon.service: mastodon
             traefik.http.services.mastodon.loadbalancer.server.port: 3000
             traefik.docker.network: proxy
@@ -85,7 +85,7 @@ services:
             traefik.http.routers.mastodon-api.entrypoints: https
             traefik.http.routers.mastodon-api.rule: (Host(`notclickable.social`) && PathPrefix(`/api/v1/streaming`))
             traefik.http.routers.mastodon-api.tls: true
-            traefik.http.routers.mastodon-api.tls.certresolver: http
+            traefik.http.routers.mastodon-api.tls.certresolver: cloudflare
             traefik.http.routers.mastodon-api.service: mastodon-api
             traefik.http.services.mastodon-api.loadbalancer.server.port: 4000
             traefik.docker.network: proxy
