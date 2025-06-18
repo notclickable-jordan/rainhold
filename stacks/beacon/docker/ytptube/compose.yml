@@ -1,6 +1,5 @@
 services:
     ytptube:
-        user: "1000:1000"
         image: ghcr.io/arabcoders/ytptube:latest
         container_name: ytptube
         restart: unless-stopped
