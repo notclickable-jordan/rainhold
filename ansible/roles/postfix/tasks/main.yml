@@ -10,7 +10,7 @@
   lineinfile:
     path: /etc/postfix/main.cf
     regexp: "^relayhost ="
-    line: "relayhost = [{{ mailrise_host }}]:{{ mailrise_port }}"
+    line: "relayhost = [{{ mailrise_hostname }}]:{{ mailrise_port }}"
     create: yes
     backup: yes
 

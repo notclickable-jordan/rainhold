@@ -6,8 +6,8 @@ services:
         volumes:
             - ./mailrise.conf:/etc/mailrise.conf:ro
         labels:
-            traefik.tcp.routers.mailrise.rule: "HostSNI(`*`)"
-            traefik.tcp.routers.mailrise.tls: "true"
+            traefik.tcp.routers.mailrise.rule: HostSNI(`*`)
+            traefik.tcp.routers.mailrise.tls: true
             traefik.tcp.routers.mailrise.tls.certresolver: cloudflare
             traefik.tcp.routers.mailrise.tls.domains[0].main: "mailrise.notclickable.com"
             traefik.tcp.routers.mailrise.tls.domains[0].sans: ""
