@@ -13,9 +13,6 @@ certificatesResolvers:
       storage: "/etc/traefik/acme.json"
       dnsChallenge:
         provider: "cloudflare"
-        resolvers:
-          - "1.1.1.1"
-          - "8.8.8.8"
 
 providers:
   docker:
@@ -41,9 +38,6 @@ middlewares:
 http:
   routers:
     websecure:
-      rule: "Host(`example.mydomain.com`)"
-      entryPoints:
-        - websecure
       service: "cloudflared"
       tls:
         certResolver: "cloudflare"
