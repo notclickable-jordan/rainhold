@@ -105,3 +105,4 @@ volumes:
 
 networks:
     proxy:
+        external: true
