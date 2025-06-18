@@ -3,6 +3,8 @@ services:
         image: jordanroher/starbase-80
         container_name: starbase-80
         restart: unless-stopped
+        networks:
+            - proxy
         environment:
             - TITLE=Not Clickable
             - LOGO=/logo.png
@@ -18,3 +20,7 @@ services:
             traefik.http.routers.starbase-80.rule: Host(`notclickable.com`) || Host(`www.notclickable.com`)
             traefik.http.routers.starbase-80.tls.certresolver: cloudflare
             traefik.http.services.starbase-80.loadbalancer.server.port: 4173
+
+networks:
+    proxy:
+        external: true
