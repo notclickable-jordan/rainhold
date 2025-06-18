@@ -8,7 +8,6 @@ services:
         environment:
             - DOZZLE_ENABLE_ACTIONS=true
             - DOZZLE_ENABLE_SHELL=true
-            - DOZZLE_AUTH_PROVIDER=forward-proxy
         labels:
             traefik.enable: true
             traefik.http.routers.dozzle.rule: Host(`dozzle.notclickable.com`)
