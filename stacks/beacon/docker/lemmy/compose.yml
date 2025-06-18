@@ -20,6 +20,7 @@ services:
             traefik.enable: true
             traefik.http.routers.lemmy.rule: Host(`lemmy.notclickable.com`)
             traefik.http.routers.lemmy.tls.certresolver: cloudflare
+            traefik.http.routers.lemmy.entrypoints: websecure
             traefik.http.services.lemmy.loadbalancer.server.port: 8536
         networks:
             - proxy
