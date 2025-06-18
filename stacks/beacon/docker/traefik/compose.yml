@@ -6,6 +6,8 @@ services:
             - 80:80
             - 443:443
             - 8080:8080
+        env_file:
+            - .env
         volumes:
             - ./traefik.yml:/etc/traefik/traefik.yml
             - /var/run/docker.sock:/var/run/docker.sock:ro

@@ -13,8 +13,6 @@ certificatesResolvers:
       storage: "/etc/traefik/acme.json"
       dnsChallenge:
         provider: "cloudflare"
-        cloudflare_email: "{{ cloudflare_email }}"
-        cloudflare_api_key: "{{ cloudflare_ssl_api_token }}"
 
 providers:
   docker:
