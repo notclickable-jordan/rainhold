@@ -2,6 +2,7 @@ services:
     lldap:
         image: lldap/lldap:stable
         container_name: lldap
+        restart: unless-stopped
         ports:
             - 4201:3890
         volumes:
