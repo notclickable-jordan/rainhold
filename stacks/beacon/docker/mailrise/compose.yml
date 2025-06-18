@@ -5,6 +5,8 @@ services:
         restart: unless-stopped
         volumes:
             - ./mailrise.conf:/etc/mailrise.conf:ro
+        ports:
+            - 8025:8025
         labels:
             traefik.enable: "true"
             traefik.tcp.routers.mailrise.rule: "HostSNI(`*`)"

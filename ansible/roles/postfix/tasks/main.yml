@@ -10,7 +10,7 @@
   lineinfile:
     path: /etc/postfix/main.cf
     regexp: "^relayhost ="
-    line: "relayhost = [{{ mailrise_hostname }}]:{{ mailrise_port }}"
+    line: "relayhost = [{{ mailrise_hostname }}]:8025"
     create: yes
     backup: yes
 
@@ -30,8 +30,7 @@
       smtp_sasl_auth_enable = yes
       smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
       smtp_sasl_security_options = noanonymous
-      smtp_tls_wrappermode = yes
-      smtp_use_tls = yes
+      smtp_tls_security_level = may
 
 - name: Create sasl_passwd file
   template:
