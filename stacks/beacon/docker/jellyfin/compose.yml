@@ -14,7 +14,7 @@ services:
         labels:
             traefik.enable: true
             traefik.http.routers.jellyfin.rule: Host(`jellyfin.notclickable.com`)
-            traefik.http.routers.jellyfin.middlewares: tinyauth
+            traefik.http.routers.jellyfin.middlewares: tinyauth@docker
             traefik.http.routers.jellyfin.tls.certresolver: cloudflare
             traefik.http.services.jellyfin.loadbalancer.server.port: 8096
         networks:
