@@ -38,5 +38,5 @@ ansible-vault encrypt ansible/inventory/host_vars/beacon.yml
 # Running the playbook
 
 ```bash
-ansible-playbook ansible/test.yml --ask-become-pass --user jordan --inventory ansible/inventory/hosts.yml
+ansible-playbook ansible/playbook.yml --ask-become-pass --user jordan --inventory ansible/inventory/hosts.yml
 ```

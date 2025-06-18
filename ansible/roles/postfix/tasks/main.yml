@@ -30,7 +30,6 @@
       smtp_sasl_auth_enable = yes
       smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
       smtp_sasl_security_options = noanonymous
-      smtp_tls_security_level = may
 
 - name: Create sasl_passwd file
   template:
@@ -45,24 +44,11 @@
   args:
     creates: /etc/postfix/sasl_passwd.db
 
-- name: Configure Postfix transport map
-  copy:
-    dest: /etc/postfix/transport
-    content: "* smtp:[{{ mailrise_hostname }}]:{{ mailrise_port }}"
-    owner: root
-    group: root
-    mode: "0644"
-
-- name: Generate hash db for transport map
-  command: postmap /etc/postfix/transport
-  args:
-    creates: /etc/postfix/transport.db
-
-- name: Configure Postfix to use transport map
+- name: Update smtpd_tls_security_level to none
   lineinfile:
     path: /etc/postfix/main.cf
-    regexp: "^transport_maps ="
-    line: "transport_maps = hash:/etc/postfix/transport"
+    regexp: "^smtpd_tls_security_level=may"
+    line: "smtpd_tls_security_level=none"
     create: yes
     backup: yes
 
