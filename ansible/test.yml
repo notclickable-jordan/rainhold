@@ -3,4 +3,5 @@
   become: true
   roles:
     - role: clone-repository
+    - role: create-proxy-network
     - role: docker-start

@@ -5,6 +5,7 @@
     - role: postfix
     - role: nftables-logging
     - role: clone-repository
+    - role: create-proxy-network
     - role: schedule-backup
     - role: docker-start
     - role: apprise

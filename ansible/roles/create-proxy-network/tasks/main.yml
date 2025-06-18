@@ -1,0 +1,7 @@
+---
+# Tasks to create the proxy network
+- name: Create proxy network
+  docker_network:
+    name: proxy
+    driver: bridge
+    state: present
