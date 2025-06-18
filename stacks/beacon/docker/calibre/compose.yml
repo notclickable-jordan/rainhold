@@ -15,7 +15,7 @@ services:
         labels:
             traefik.enable: true
             traefik.http.routers.calibre.rule: Host(`calibre.notclickable.com`)
-            traefik.http.routers.calibre.middlewares: tinyauth
+            traefik.http.routers.calibre.middlewares: tinyauth@docker
             traefik.http.routers.calibre.tls.certresolver: cloudflare
             traefik.http.services.calibre.loadbalancer.server.port: 8083
         networks:
