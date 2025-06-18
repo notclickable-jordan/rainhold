@@ -1,0 +1,6 @@
+- name: Testing config
+  hosts: public
+  become: true
+  roles:
+    - role: docker-start
+    - role: apprise

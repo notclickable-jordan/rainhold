@@ -11,6 +11,10 @@ services:
             - /mnt/media/video/YouTube:/downloads
         tmpfs:
             - /tmp
+        labels:
+            traefik.enable: true
+            traefik.http.routers.ytptube.rule: Host(`ytptube.notclickable.com`)
+            traefik.http.routers.websecure.middlewares: tinyauth
 
 volumes:
     config:

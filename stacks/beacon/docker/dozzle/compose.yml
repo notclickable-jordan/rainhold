@@ -5,9 +5,11 @@ services:
         container_name: dozzle
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock
-        ports:
-            - 4204:8080
         environment:
             - DOZZLE_ENABLE_ACTIONS=true
             - DOZZLE_ENABLE_SHELL=true
             - DOZZLE_AUTH_PROVIDER=forward-proxy
+        labels:
+            traefik.enable: true
+            traefik.http.routers.dozzle.rule: Host(`dozzle.notclickable.com`)
+            traefik.http.routers.websecure.middlewares: tinyauth

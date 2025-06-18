@@ -5,8 +5,6 @@ services:
         restart: always
         env_file:
             - .env
-        ports:
-            - 4210:5678
         links:
             - postgres
         volumes:
@@ -14,6 +12,10 @@ services:
         depends_on:
             postgres:
                 condition: service_healthy
+        labels:
+            traefik.enable: true
+            traefik.http.routers.n8n.rule: Host(`n8n.notclickable.com`)
+            traefik.http.routers.websecure.middlewares: tinyauth
 
     postgres:
         image: postgres:16

@@ -1,0 +1,32 @@
+entryPoints:
+  web:
+    address: ":80"
+  websecure:
+    address: ":443"
+  mailsecure:
+    address: ":465"
+
+certificatesResolvers:
+  cloudflare:
+    acme:
+      email: "{{ cloudflare_email }}"
+      storage: "/etc/traefik/acme.json"
+      dnsChallenge:
+        provider: "cloudflare"
+        cloudflare_email: "{{ cloudflare_email }}"
+        cloudflare_api_key: "{{ cloudflare_ssl_api_token }}"
+
+providers:
+  docker:
+    endpoint: "unix:///var/run/docker.sock"
+    exposedByDefault: false
+
+log:
+  level: "INFO"
+
+accessLog:
+  filePath: "/var/log/traefik/access.log"
+  format: "json"
+
+api:
+  dashboard: true

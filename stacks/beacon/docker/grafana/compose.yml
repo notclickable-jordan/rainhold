@@ -3,12 +3,15 @@ services:
         image: grafana/grafana-enterprise
         container_name: grafana
         restart: unless-stopped
-        ports:
-            - 4213:3000
         volumes:
             - storage:/var/lib/grafana
         env_file:
             - .env
+        labels:
+            traefik.enable: true
+            traefik.http.routers.grafana.rule: Host(`grafana.notclickable.com`)
+            traefik.http.services.grafana.loadbalancer.server.port: 3000
+            traefik.http.routers.websecure.middlewares: tinyauth
 
     loki:
         image: grafana/loki:latest

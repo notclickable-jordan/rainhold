@@ -5,5 +5,7 @@ services:
         restart: unless-stopped
         env_file:
             - .env
-        ports:
-            - 4206:3000
+        labels:
+            traefik.enable: true
+            traefik.http.routers.tinyauth.rule: Host(`tinyauth.notclickable.com`)
+            traefik.http.middlewares.tinyauth.forwardauth.address: http://tinyauth:3000/api/auth/traefik
