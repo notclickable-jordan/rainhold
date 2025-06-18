@@ -13,7 +13,7 @@ services:
         labels:
             traefik.enable: true
             traefik.http.routers.audiobookshelf.rule: Host(`audiobookshelf.notclickable.com`)
-            traefik.http.routers.websecure.middlewares: tinyauth
+            traefik.http.routers.audiobookshelf.middlewares: tinyauth
 
 volumes:
     config:

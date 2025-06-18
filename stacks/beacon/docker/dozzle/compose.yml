@@ -12,4 +12,4 @@ services:
         labels:
             traefik.enable: true
             traefik.http.routers.dozzle.rule: Host(`dozzle.notclickable.com`)
-            traefik.http.routers.websecure.middlewares: tinyauth
+            traefik.http.routers.dozzle.middlewares: tinyauth

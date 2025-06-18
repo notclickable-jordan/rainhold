@@ -24,7 +24,7 @@ services:
             traefik.enable: true
             traefik.http.routers.gitea.rule: Host(`gitea.notclickable.com`)
             traefik.http.services.gitea.loadbalancer.server.port: 3000
-            traefik.http.routers.websecure.middlewares: tinyauth
+            traefik.http.routers.gitea.middlewares: tinyauth
 
     db:
         image: docker.io/library/postgres:14

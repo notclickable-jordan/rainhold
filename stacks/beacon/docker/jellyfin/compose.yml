@@ -14,7 +14,7 @@ services:
         labels:
             traefik.enable: true
             traefik.http.routers.jellyfin.rule: Host(`jellyfin.notclickable.com`)
-            traefik.http.routers.websecure.middlewares: tinyauth
+            traefik.http.routers.jellyfin.middlewares: tinyauth
 
 volumes:
     cache:
