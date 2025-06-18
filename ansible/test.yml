@@ -2,6 +2,7 @@
   hosts: public
   become: true
   roles:
-    - role: clone-repository
-    - role: create-proxy-network
-    - role: docker-start
+    - role: postfix
+    #- role: clone-repository
+    #- role: create-proxy-network
+    #- role: docker-start
