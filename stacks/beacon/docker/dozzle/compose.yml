@@ -9,9 +9,9 @@ services:
             - DOZZLE_ENABLE_ACTIONS=true
             - DOZZLE_ENABLE_SHELL=true
             - DOZZLE_AUTH_PROVIDER=forward-proxy
-            - DOZZLE_AUTH_HEADER_USER=X-Forwarded-User
-            - DOZZLE_AUTH_HEADER_EMAIL=X-Forwarded-User
-            - DOZZLE_AUTH_HEADER_NAME=X-Forwarded-User
+            - DOZZLE_AUTH_HEADER_USER=Remote-User
+            - DOZZLE_AUTH_HEADER_EMAIL=Remote-Email
+            - DOZZLE_AUTH_HEADER_NAME=Remote-Name
         labels:
             traefik.enable: true
             traefik.http.routers.dozzle.rule: Host(`dozzle.notclickable.com`)
