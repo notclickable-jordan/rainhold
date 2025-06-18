@@ -17,6 +17,7 @@ services:
             - .env.postgres
         shm_size: 256mb
         networks:
+            - proxy
             - internal_network
         healthcheck:
             test: ["CMD", "pg_isready", "-U", "mastodon"]
@@ -28,6 +29,7 @@ services:
         container_name: mastodon_redis
         restart: unless-stopped
         networks:
+            - proxy
             - internal_network
         healthcheck:
             test: ["CMD", "redis-cli", "ping"]
@@ -42,6 +44,7 @@ services:
             - .env
         command: bundle exec puma -C config/puma.rb
         networks:
+            - proxy
             - external_network
             - internal_network
         healthcheck:
@@ -74,6 +77,7 @@ services:
             - .env
         command: node ./streaming/index.js
         networks:
+            - proxy
             - external_network
             - internal_network
         healthcheck:
@@ -107,6 +111,7 @@ services:
             - db
             - redis
         networks:
+            - proxy
             - external_network
             - internal_network
         healthcheck:
@@ -115,9 +120,12 @@ services:
             - web:/mastodon/public/system
 
 networks:
-    external_network:
+    proxy:
+        external: true
     internal_network:
-        internal: true
+        driver: bridge
+    external_network:
+        driver: bridge
 
 volumes:
     sidekiq:

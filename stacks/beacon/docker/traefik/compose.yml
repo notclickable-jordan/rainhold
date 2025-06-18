@@ -12,6 +12,12 @@ services:
             - ./traefik.yml:/etc/traefik/traefik.yml
             - /var/run/docker.sock:/var/run/docker.sock:ro
             - letsencrypt:/letsencrypt
+        networks:
+            - proxy
 
 volumes:
     letsencrypt:
+
+networks:
+    proxy:
+        external: true
