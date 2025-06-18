@@ -21,6 +21,8 @@ services:
             traefik.http.routers.lemmy.rule: Host(`lemmy.notclickable.com`)
             traefik.http.routers.lemmy.tls.certresolver: cloudflare
             traefik.http.services.lemmy.loadbalancer.server.port: 8536
+        networks:
+            - proxy
 
     lemmy:
         image: dessalines/lemmy:0.19.12
@@ -37,6 +39,8 @@ services:
             - pictrs
         labels:
             traefik.http.routers.lemmy.entrypoints: websecure
+        networks:
+            - proxy
 
     lemmy-ui:
         image: dessalines/lemmy-ui:0.19.12
@@ -49,6 +53,8 @@ services:
             - lemmy
         restart: unless-stopped
         logging: *default-logging
+        networks:
+            - proxy
 
     pictrs:
         image: asonix/pictrs:0.5.19
@@ -65,6 +71,8 @@ services:
             resources:
                 limits:
                     memory: 690m
+        networks:
+            - proxy
 
     postgres:
         image: postgres:17-alpine
@@ -77,6 +85,8 @@ services:
             - ./postgresql.conf:/etc/postgresql.conf
         restart: unless-stopped
         logging: *default-logging
+        networks:
+            - proxy
 
     postfix:
         image: mwader/postfix-relay
@@ -86,8 +96,13 @@ services:
             - .env.postfix
         restart: "always"
         logging: *default-logging
+        networks:
+            - proxy
 
 volumes:
     extra_themes:
     pictrs:
     postgres:
+
+networks:
+    proxy:
