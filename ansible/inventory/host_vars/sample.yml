@@ -110,7 +110,7 @@ mastodon_s3_access_key: "your_mastodon_s3_access_key_here"
 mastodon_s3_secret_key: "your_mastodon_s3_secret_key_here"
 mastodon_s3_alias_host: "something.cloudfront.net"
 mastodon_smtp_server: "smtp.example.com"
-mastodon_smtp_port: 587
+mastodon_smtp_port: 465
 mastodon_smtp_login: "your_smtp_login_here"
 mastodon_smtp_password: "your_smtp_password_here"
 mastodon_smtp_from_address: "Mastodon <mastodon@example.com>"

@@ -7,13 +7,13 @@ services:
             - ./mailrise.conf:/etc/mailrise.conf:ro
         labels:
             traefik.enable: "true"
-            traefik.tcp.routers.mailrise.rule: HostSNI(`mailrise.notclickable.com`)
+            traefik.tcp.routers.mailrise.rule: "HostSNI(`*`)"
             traefik.tcp.routers.mailrise.entrypoints: "mailsecure"
             traefik.tcp.routers.mailrise.tls: "true"
             traefik.tcp.routers.mailrise.tls.certresolver: "cloudflare"
             traefik.tcp.routers.mailrise.tls.domains[0].main: "mailrise.notclickable.com"
             traefik.tcp.routers.mailrise.service: "mailrise-svc"
-            traefik.tcp.services.mailrise-svc.loadbalancer.server.port: 8025
+            traefik.tcp.services.mailrise-svc.loadbalancer.server.port: "8025"
         networks:
             - proxy
 
