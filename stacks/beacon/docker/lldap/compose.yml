@@ -13,8 +13,8 @@ services:
             traefik.enable: true
             traefik.http.routers.lldap.rule: Host(`ldap.notclickable.com`)
             traefik.http.routers.lldap.tls.certresolver: cloudflare
-            traefik.http.services.lldap.loadbalancer.server.port: 17170
             traefik.http.routers.lldap.entrypoints: websecure
+            traefik.http.services.lldap.loadbalancer.server.port: 17170
         networks:
             - proxy
 
