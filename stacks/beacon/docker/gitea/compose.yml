@@ -21,9 +21,10 @@ services:
         depends_on:
             - db
         labels:
-            - traefik.enable=true
-            - traefik.http.routers.gitea.rule=Host(`gitea.notclickable.com`)
-            - traefik.http.services.gitea.loadbalancer.server.port=3000
+            traefik.enable: true
+            traefik.http.routers.gitea.rule: Host(`gitea.notclickable.com`)
+            traefik.http.services.gitea.loadbalancer.server.port: 3000
+            traefik.http.routers.websecure.middlewares: tinyauth
 
     db:
         image: docker.io/library/postgres:14
@@ -36,7 +37,7 @@ services:
         volumes:
             - db:/var/lib/postgresql/data
         labels:
-            - traefik.enable=false
+            traefik.enable: false
 
     runner:
         image: gitea/act_runner
@@ -49,7 +50,7 @@ services:
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock
         labels:
-            - traefik.enable=false
+            traefik.enable: false
 
 volumes:
     data:

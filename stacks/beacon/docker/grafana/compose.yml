@@ -8,9 +8,10 @@ services:
         env_file:
             - .env
         labels:
-            - traefik.enable=true
-            - traefik.http.routers.grafana.rule=Host(`grafana.notclickable.com`)
-            - "traefik.http.services.grafana.loadbalancer.server.port=3000"
+            traefik.enable: true
+            traefik.http.routers.grafana.rule: Host(`grafana.notclickable.com`)
+            traefik.http.services.grafana.loadbalancer.server.port: 3000
+            traefik.http.routers.websecure.middlewares: tinyauth
 
     loki:
         image: grafana/loki:latest
@@ -35,9 +36,7 @@ services:
         ports:
             - 4215:9090
         labels:
-            - traefik.enable=true
-            - traefik.http.routers.prometheus.rule=Host(`prometheus.notclickable.com`)
-            - "traefik.http.services.prometheus.loadbalancer.server.port=9090"
+            traefik.enable: false
 
 volumes:
     storage:

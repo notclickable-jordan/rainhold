@@ -12,8 +12,9 @@ services:
         environment:
             - JELLYFIN_PublishedServerUrl=https://jellyfin.notclickable.com
         labels:
-            - traefik.enable=true
-            - traefik.http.routers.jellyfin.rule=Host(`jellyfin.notclickable.com`)
+            traefik.enable: true
+            traefik.http.routers.jellyfin.rule: Host(`jellyfin.notclickable.com`)
+            traefik.http.routers.websecure.middlewares: tinyauth
 
 volumes:
     cache:

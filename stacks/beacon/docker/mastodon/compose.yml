@@ -57,9 +57,14 @@ services:
         extra_hosts:
             - "host.docker.internal:host-gateway"
         labels:
-            - traefik.enable=true
-            - traefik.http.routers.mastodon-web.rule=Host(`mastodon.notclickable.social`)
-            - "traefik.http.services.mastodon-web.loadbalancer.server.port=3000"
+            traefik.enable: true
+            traefik.http.routers.mastodon.entrypoints: https
+            traefik.http.routers.mastodon.rule: (Host(`notclickable.social`))
+            traefik.http.routers.mastodon.tls: true
+            traefik.http.routers.mastodon.tls.certresolver: http
+            traefik.http.routers.mastodon.service: mastodon
+            traefik.http.services.mastodon.loadbalancer.server.port: 3000
+            traefik.docker.network: proxy
 
     streaming:
         image: ghcr.io/mastodon/mastodon-streaming:v4.3.8
@@ -82,9 +87,14 @@ services:
         extra_hosts:
             - "host.docker.internal:host-gateway"
         labels:
-            - traefik.enable=true
-            - traefik.http.routers.mastodon-streaming.rule=Host(`streaming.notclickable.social`)
-            - "traefik.http.services.mastodon-streaming.loadbalancer.server.port=4000"
+            traefik.enable: true
+            traefik.http.routers.mastodon-api.entrypoints: https
+            traefik.http.routers.mastodon-api.rule: (Host(`notclickable.social`) && PathPrefix(`/api/v1/streaming`))
+            traefik.http.routers.mastodon-api.tls: true
+            traefik.http.routers.mastodon-api.tls.certresolver: http
+            traefik.http.routers.mastodon-api.service: mastodon-api
+            traefik.http.services.mastodon-api.loadbalancer.server.port: 4000
+            traefik.docker.network: proxy
 
     sidekiq:
         image: ghcr.io/mastodon/mastodon:v4.3.8
@@ -103,8 +113,6 @@ services:
             test: ["CMD-SHELL", "ps aux | grep '[s]idekiq\ 6' || false"]
         volumes:
             - web:/mastodon/public/system
-        labels:
-            - traefik.enable=false
 
 networks:
     external_network:

@@ -15,6 +15,5 @@ services:
             - ./img/favicon.ico:/app/public/favicon.ico:ro
             - ./img:/app/public/img:ro
         labels:
-            - traefik.enable=true
-            - traefik.http.routers.starbase-80.rule=Host(`notclickable.com`)
-            - traefik.http.services.starbase-80.loadbalancer.server.port=4173
+            traefik.enable: true
+            traefik.http.routers.starbase-80.rule: Host(`notclickable.com`)

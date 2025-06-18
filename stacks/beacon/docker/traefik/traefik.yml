@@ -1,0 +1,49 @@
+entryPoints:
+  web:
+    address: ":80"
+  websecure:
+    address: ":443"
+  mailsecure:
+    address: ":465"
+
+certificatesResolvers:
+  cloudflare:
+    acme:
+      email: "{{ cloudflare_email }}"
+      storage: "/etc/traefik/acme.json"
+      dnsChallenge:
+        provider: "cloudflare"
+        resolvers:
+          - "1.1.1.1"
+          - "8.8.8.8"
+
+providers:
+  docker:
+    endpoint: "unix:///var/run/docker.sock"
+    exposedByDefault: false
+
+log:
+  level: "INFO"
+
+accessLog:
+  filePath: "/var/log/traefik/access.log"
+  format: "json"
+
+api:
+  dashboard: true
+
+middlewares:
+  auth:
+    forwardAuth:
+      address: "http://auth-service:8080/api/auth"
+      trustForwardHeader: true
+
+http:
+  routers:
+    websecure:
+      rule: "Host(`example.mydomain.com`)"
+      entryPoints:
+        - websecure
+      service: "cloudflared"
+      tls:
+        certResolver: "cloudflare"

@@ -10,5 +10,6 @@ services:
             - DOZZLE_ENABLE_SHELL=true
             - DOZZLE_AUTH_PROVIDER=forward-proxy
         labels:
-            - traefik.enable=true
-            - traefik.http.routers.dozzle.rule=Host(`dozzle.notclickable.com`)
+            traefik.enable: true
+            traefik.http.routers.dozzle.rule: Host(`dozzle.notclickable.com`)
+            traefik.http.routers.websecure.middlewares: tinyauth

@@ -11,8 +11,9 @@ services:
             - TZ=America/Los_Angeles
         restart: unless-stopped
         labels:
-            - traefik.enable=true
-            - traefik.http.routers.audiobookshelf.rule=Host(`audiobookshelf.notclickable.com`)
+            traefik.enable: true
+            traefik.http.routers.audiobookshelf.rule: Host(`audiobookshelf.notclickable.com`)
+            traefik.http.routers.websecure.middlewares: tinyauth
 
 volumes:
     config:

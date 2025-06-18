@@ -19,8 +19,8 @@ services:
         env_file:
             - .env
         labels:
-            - traefik.enable=true
-            - traefik.http.routers.freshrss.rule=Host(`freshrss.notclickable.com`)
+            traefik.enable: true
+            traefik.http.routers.freshrss.rule: Host(`freshrss.notclickable.com`)
 
 volumes:
     data:

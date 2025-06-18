@@ -17,8 +17,8 @@ services:
             - pictrs
             - lemmy-ui
         labels:
-            - traefik.enable=true
-            - traefik.http.routers.lemmy.rule=Host(`lemmy.notclickable.com`)
+            traefik.enable: true
+            traefik.http.routers.lemmy.rule: Host(`lemmy.notclickable.com`)
 
     lemmy:
         image: dessalines/lemmy:0.19.12

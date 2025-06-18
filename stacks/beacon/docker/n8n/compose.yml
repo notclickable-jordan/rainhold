@@ -13,8 +13,9 @@ services:
             postgres:
                 condition: service_healthy
         labels:
-            - traefik.enable=true
-            - traefik.http.routers.n8n.rule=Host(`n8n.notclickable.com`)
+            traefik.enable: true
+            traefik.http.routers.n8n.rule: Host(`n8n.notclickable.com`)
+            traefik.http.routers.websecure.middlewares: tinyauth
 
     postgres:
         image: postgres:16
@@ -30,8 +31,6 @@ services:
             interval: 5s
             timeout: 5s
             retries: 10
-        labels:
-            - traefik.enable=false
 
 volumes:
     db:

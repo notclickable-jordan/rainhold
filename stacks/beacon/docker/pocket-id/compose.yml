@@ -14,8 +14,8 @@ services:
             retries: 2
             start_period: 10s
         labels:
-            - traefik.enable=true
-            - traefik.http.routers.pocket-id.rule=Host(`pocket-id.notclickable.com`)
+            traefik.enable: true
+            traefik.http.routers.pocket-id.rule: Host(`pocket-id.notclickable.com`)
 
 volumes:
     data:
