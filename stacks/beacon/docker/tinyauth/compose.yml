@@ -9,3 +9,5 @@ services:
             traefik.enable: true
             traefik.http.routers.tinyauth.rule: Host(`tinyauth.notclickable.com`)
             traefik.http.middlewares.tinyauth.forwardauth.address: http://tinyauth:3000/api/auth/traefik
+            traefik.http.routers.tinyauth.tls.certresolver: cloudflare
+            traefik.http.services.tinyauth.loadbalancer.server.port: 3000

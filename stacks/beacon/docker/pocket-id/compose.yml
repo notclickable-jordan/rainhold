@@ -16,6 +16,8 @@ services:
         labels:
             traefik.enable: true
             traefik.http.routers.pocket-id.rule: Host(`pocket-id.notclickable.com`)
+            traefik.http.routers.pocket-id.tls.certresolver: cloudflare
+            traefik.http.services.pocket-id.loadbalancer.server.port: 1411
 
 volumes:
     data:

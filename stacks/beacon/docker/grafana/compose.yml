@@ -10,8 +10,9 @@ services:
         labels:
             traefik.enable: true
             traefik.http.routers.grafana.rule: Host(`grafana.notclickable.com`)
-            traefik.http.services.grafana.loadbalancer.server.port: 3000
             traefik.http.routers.grafana.middlewares: tinyauth
+            traefik.http.routers.grafana.tls.certresolver: cloudflare
+            traefik.http.services.grafana.loadbalancer.server.port: 3000
 
     loki:
         image: grafana/loki:latest

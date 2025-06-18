@@ -19,6 +19,8 @@ services:
         labels:
             traefik.enable: true
             traefik.http.routers.lemmy.rule: Host(`lemmy.notclickable.com`)
+            traefik.http.routers.lemmy.tls.certresolver: cloudflare
+            traefik.http.services.lemmy.loadbalancer.server.port: 8536
 
     lemmy:
         image: dessalines/lemmy:0.19.12
