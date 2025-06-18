@@ -16,7 +16,13 @@ services:
             traefik.http.routers.audiobookshelf.middlewares: tinyauth
             traefik.http.routers.audiobookshelf.tls.certresolver: cloudflare
             traefik.http.services.audiobookshelf.loadbalancer.server.port: 80
+        networks:
+            - proxy
 
 volumes:
     config:
     metadata:
+
+networks:
+    proxy:
+        external: true

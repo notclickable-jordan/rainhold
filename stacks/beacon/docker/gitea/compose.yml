@@ -1,6 +1,8 @@
 networks:
     gitea:
         external: false
+    proxy:
+        external: true
 
 services:
     server:
@@ -11,6 +13,7 @@ services:
         restart: unless-stopped
         networks:
             - gitea
+            - proxy
         volumes:
             - data:/data
             - /etc/timezone:/etc/timezone:ro

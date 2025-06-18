@@ -15,3 +15,8 @@ services:
             traefik.http.routers.dozzle.middlewares: tinyauth
             traefik.http.routers.dozzle.tls.certresolver: cloudflare
             traefik.http.services.dozzle.loadbalancer.server.port: 8080
+        networks:
+            - proxy
+networks:
+    proxy:
+        external: true

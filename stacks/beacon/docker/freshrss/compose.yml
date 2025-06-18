@@ -23,7 +23,13 @@ services:
             traefik.http.routers.freshrss.rule: Host(`freshrss.notclickable.com`)
             traefik.http.routers.freshrss.tls.certresolver: cloudflare
             traefik.http.services.freshrss.loadbalancer.server.port: 80
+        networks:
+            - proxy
 
 volumes:
     data:
     extensions:
+
+networks:
+    proxy:
+        external: true

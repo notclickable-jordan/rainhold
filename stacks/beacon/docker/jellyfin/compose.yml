@@ -17,7 +17,13 @@ services:
             traefik.http.routers.jellyfin.middlewares: tinyauth
             traefik.http.routers.jellyfin.tls.certresolver: cloudflare
             traefik.http.services.jellyfin.loadbalancer.server.port: 8096
+        networks:
+            - proxy
 
 volumes:
     cache:
     config:
+
+networks:
+    proxy:
+        external: true

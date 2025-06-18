@@ -17,6 +17,12 @@ services:
             traefik.http.routers.ytptube.middlewares: tinyauth
             traefik.http.routers.ytptube.tls.certresolver: cloudflare
             traefik.http.services.ytptube.loadbalancer.server.port: 8081
+        networks:
+            - proxy
 
 volumes:
     config:
+
+networks:
+    proxy:
+        external: true

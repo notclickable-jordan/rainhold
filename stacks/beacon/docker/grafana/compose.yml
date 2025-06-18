@@ -13,6 +13,8 @@ services:
             traefik.http.routers.grafana.middlewares: tinyauth
             traefik.http.routers.grafana.tls.certresolver: cloudflare
             traefik.http.services.grafana.loadbalancer.server.port: 3000
+        networks:
+            - proxy
 
     loki:
         image: grafana/loki:latest
@@ -39,3 +41,7 @@ services:
 
 volumes:
     storage:
+
+networks:
+    proxy:
+        external: true

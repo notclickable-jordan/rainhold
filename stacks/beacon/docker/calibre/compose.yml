@@ -18,6 +18,12 @@ services:
             traefik.http.routers.calibre.middlewares: tinyauth
             traefik.http.routers.calibre.tls.certresolver: cloudflare
             traefik.http.services.calibre.loadbalancer.server.port: 8083
+        networks:
+            - proxy
 
 volumes:
     config:
+
+networks:
+    proxy:
+        external: true
