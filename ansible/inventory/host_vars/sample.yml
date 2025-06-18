@@ -62,7 +62,6 @@ network_shares:
 # --- Gitea ---
 GITEA__database__USER: gitea
 GITEA__database__NAME: gitea
-gitea_port: 4208
 GITEA__database__PASSWD: "your_gitea_database_password_here"
 gitea_runner_registration_token: "your_gitea_runner_registration_token_here"
 
