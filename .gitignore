@@ -1,20 +1,15 @@
 .DS_Store
-.env
 
 ansible/inventory/host_vars/*
 !ansible/inventory/host_vars/sample.yml
 
 stacks/*/*.tgz
-
-stacks/*/docker/mailrise/mailrise.crt
-stacks/*/docker/mailrise/mailrise.key
-stacks/*/docker/mailrise/mailrise.csr
-stacks/*/docker/mailrise/mailrise.conf
-stacks/*/docker/caddy/conf/
-stacks/*/docker/gitea/.env.runner
-stacks/*/docker/gitea/app.ini
-stacks/*/docker/lemmy/lemmy.hjson
-stacks/*/docker/grafana/prometheus.yml
-stacks/*/docker/grafana/promtail-config.yml
 stacks/*/docker/*/.env*
 stacks/*/docker/*/*.tgz
+stacks/*/docker/gitea/.env.runner
+stacks/*/docker/gitea/app.ini
+stacks/*/docker/grafana/prometheus.yml
+stacks/*/docker/grafana/promtail-config.yml
+stacks/*/docker/lemmy/lemmy.hjson
+stacks/*/docker/mailrise/mailrise.conf
+stacks/*/docker/traefik/traefik.yml
