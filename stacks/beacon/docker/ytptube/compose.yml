@@ -3,6 +3,7 @@ services:
         image: ghcr.io/arabcoders/ytptube:latest
         container_name: ytptube
         restart: unless-stopped
+        user: "0:0"
         volumes:
             - config:/config
             - /mnt/media/video/YouTube:/downloads
