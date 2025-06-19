@@ -112,7 +112,8 @@
 				"name": "Home Assistant",
 				"uri": "http://homeassistant:8123/",
 				"description": "Home automation",
-				"icon": "/img/home-assistant.svg"
+				"icon": "/img/home-assistant.svg",
+				"bubble": false
 			},
 			{
 				"name": "Synology",
@@ -124,7 +125,8 @@
 				"name": "Rainhold",
 				"uri": "https://rainhold.tail6e07a.ts.net:8006",
 				"description": "Proxmox",
-				"icon": "/img/proxmox.png"
+				"icon": "/img/proxmox.png",
+				"bubble": false
 			}
 		]
 	}
