@@ -87,17 +87,6 @@ services:
         networks:
             - proxy
 
-    postfix:
-        image: mwader/postfix-relay
-        container_name: lemmy-postfix
-        hostname: postfix
-        env_file:
-            - .env.postfix
-        restart: "always"
-        logging: *default-logging
-        networks:
-            - proxy
-
 volumes:
     extra_themes:
     pictrs:
