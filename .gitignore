@@ -14,4 +14,4 @@ stacks/*/docker/lemmy/lemmy.hjson
 stacks/*/docker/mailrise/mailrise.conf
 stacks/*/docker/mailrise/mailrise.crt
 stacks/*/docker/mailrise/mailrise.key
-stacks/*/docker/traefik/traefik.yml
+stacks/*/docker/caddy/Caddyfile

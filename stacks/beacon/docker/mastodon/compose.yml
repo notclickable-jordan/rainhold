@@ -71,15 +71,6 @@ services:
             - redis
         extra_hosts:
             - "host.docker.internal:host-gateway"
-        labels:
-            traefik.enable: true
-            traefik.http.routers.mastodon-api.entrypoints: websecure
-            traefik.http.routers.mastodon-api.rule: (Host(`notclickable.social`) && PathPrefix(`/api/v1/streaming`))
-            traefik.http.routers.mastodon-api.tls: true
-            traefik.http.routers.mastodon-api.tls.certresolver: cloudflare
-            traefik.http.routers.mastodon-api.service: mastodon-api
-            traefik.http.services.mastodon-api.loadbalancer.server.port: 4000
-            traefik.docker.network: proxy
 
     sidekiq:
         image: ghcr.io/mastodon/mastodon:v4.3.8

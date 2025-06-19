@@ -19,7 +19,7 @@ Complete guide to set up a secure, automated server environment. Users are manag
 1. Lightweight LDAP (users and groups)
 2. Pocket ID (Authentication)
 3. Tinyauth (Authorization)
-4. Traefik (Reverse proxy)
+4. Caddy (Reverse proxy)
 
 # Guide
 
