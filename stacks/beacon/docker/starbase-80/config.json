@@ -125,7 +125,7 @@
 				"uri": "https://rainhold.tail6e07a.ts.net:8006",
 				"description": "Proxmox",
 				"icon": "/img/proxmox.png",
-				"bubble": false
+				"iconBubble": false
 			}
 		]
 	}
