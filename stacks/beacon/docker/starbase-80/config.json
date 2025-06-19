@@ -112,7 +112,8 @@
 				"name": "Home Assistant",
 				"uri": "http://homeassistant:8123/",
 				"description": "Home automation",
-				"icon": "/img/home-assistant.png"
+				"icon": "/img/home-assistant.png",
+				"iconBubble": false
 			},
 			{
 				"name": "Synology",
