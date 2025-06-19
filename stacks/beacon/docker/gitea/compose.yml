@@ -10,7 +10,6 @@ services:
             - /etc/timezone:/etc/timezone:ro
             - /etc/localtime:/etc/localtime:ro
         ports:
-            - 4208:3000 # HTTP
             - 4209:22 # SSH
         depends_on:
             - db
