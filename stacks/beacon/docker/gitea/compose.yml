@@ -15,7 +15,7 @@ services:
             - 4208:3000
             - 4209:22
         networks:
-            - caddy
+            - gitea
         healthcheck:
             test: ["CMD-SHELL", "curl -f http://localhost:3000 || exit 1"]
             interval: 30s
@@ -29,7 +29,7 @@ services:
         env_file:
             - .env
         networks:
-            - caddy
+            - gitea
         volumes:
             - db:/var/lib/postgresql/data
 
@@ -40,7 +40,7 @@ services:
             - .env.runner
         restart: unless-stopped
         networks:
-            - caddy
+            - gitea
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock
 
@@ -49,5 +49,5 @@ volumes:
     db:
 
 networks:
-    caddy:
-        external: true
+    gitea:
+        external: false
