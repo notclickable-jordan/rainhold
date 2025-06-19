@@ -2,6 +2,10 @@ configs:
   "*@*":
     urls:
       - mastodons://{{ apprise_mastodon_token }}@{{ apprise_mastodon_host }}?overflow=truncate
+    mailrise:
+      title_template: "${subject}"
+      body_template: "From: ${from}\n---\n${body}"
+      body_format: text
 
 tls:
   mode: off
