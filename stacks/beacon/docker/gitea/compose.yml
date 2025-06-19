@@ -9,19 +9,13 @@ services:
             - data:/data
             - /etc/timezone:/etc/timezone:ro
             - /etc/localtime:/etc/localtime:ro
-        ports:
-            - 4209:22 # SSH
         depends_on:
             - db
-        labels:
-            traefik.enable: true
-            traefik.http.routers.gitea.rule: Host(`gitea.notclickable.com`)
-            traefik.http.routers.gitea.middlewares: tinyauth@docker
-            traefik.http.routers.gitea.tls.certresolver: cloudflare
-            traefik.http.routers.gitea.entrypoints: websecure
-            traefik.http.services.gitea.loadbalancer.server.port: 3000
+        ports:
+            - 4208:3000
+            - 4209:22
         networks:
-            - proxy
+            - caddy
         healthcheck:
             test: ["CMD-SHELL", "curl -f http://localhost:3000 || exit 1"]
             interval: 30s
@@ -35,7 +29,7 @@ services:
         env_file:
             - .env
         networks:
-            - proxy
+            - caddy
         volumes:
             - db:/var/lib/postgresql/data
 
@@ -46,7 +40,7 @@ services:
             - .env.runner
         restart: unless-stopped
         networks:
-            - proxy
+            - caddy
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock
 
@@ -55,5 +49,5 @@ volumes:
     db:
 
 networks:
-    proxy:
+    caddy:
         external: true

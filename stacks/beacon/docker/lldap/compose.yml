@@ -3,25 +3,20 @@ services:
         image: lldap/lldap:stable
         container_name: lldap
         restart: unless-stopped
-        ports:
-            - 4201:3890
         volumes:
             - lldap_data:/data
         env_file:
             - .env
-        labels:
-            traefik.enable: true
-            traefik.http.routers.lldap.rule: Host(`ldap.notclickable.com`)
-            traefik.http.routers.lldap.tls.certresolver: cloudflare
-            traefik.http.routers.lldap.entrypoints: websecure
-            traefik.http.services.lldap.loadbalancer.server.port: 17170
+        ports:
+            - 4201:3890
+            - 4202:17170
         networks:
-            - proxy
+            - caddy
 
 volumes:
     lldap_data:
         driver: local
 
 networks:
-    proxy:
+    caddy:
         external: true

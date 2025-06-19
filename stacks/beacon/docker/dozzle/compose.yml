@@ -9,16 +9,11 @@ services:
         environment:
             - DOZZLE_ENABLE_ACTIONS=true
             - DOZZLE_ENABLE_SHELL=true
-        labels:
-            traefik.enable: true
-            traefik.http.routers.dozzle.rule: Host(`dozzle.notclickable.com`)
-            traefik.http.routers.dozzle.middlewares: tinyauth@docker
-            traefik.http.routers.dozzle.tls.certresolver: cloudflare
-            traefik.http.routers.dozzle.entrypoints: websecure
-            traefik.http.services.dozzle.loadbalancer.server.port: 8080
+        ports:
+            - 4204:8080
         networks:
-            - proxy
+            - caddy
 
 networks:
-    proxy:
+    caddy:
         external: true
