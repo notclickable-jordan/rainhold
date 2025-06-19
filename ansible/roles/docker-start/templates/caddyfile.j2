@@ -15,7 +15,7 @@
 }
 
 ldap.notclickable.com {
-    reverse_proxy caddy:4202
+    reverse_proxy {{ ansible_host }}:4202
     
     tls {
         dns cloudflare {{ cloudflare_ssl_api_token }}
@@ -23,7 +23,7 @@ ldap.notclickable.com {
 }
 
 pocket-id.notclickable.com {
-    reverse_proxy caddy:4203
+    reverse_proxy {{ ansible_host }}:4203
     
     tls {
         dns cloudflare {{ cloudflare_ssl_api_token }}
@@ -31,7 +31,7 @@ pocket-id.notclickable.com {
 }
 
 dozzle.notclickable.com {
-    forward_auth caddy:4206 {
+    forward_auth {{ ansible_host }}:4206 {
         uri /api/auth/caddy
         copy_headers Remote-User Remote-Email Remote-Name Remote-Groups
     }
@@ -40,11 +40,11 @@ dozzle.notclickable.com {
         dns cloudflare {{ cloudflare_ssl_api_token }}
     }
 
-    reverse_proxy caddy:4204
+    reverse_proxy {{ ansible_host }}:4204
 }
 
 notclickable.com {
-    reverse_proxy caddy:4205
+    reverse_proxy {{ ansible_host }}:4205
     
     tls {
         dns cloudflare {{ cloudflare_ssl_api_token }}
@@ -52,7 +52,7 @@ notclickable.com {
 }
 
 www.notclickable.com {
-    reverse_proxy caddy:4205
+    reverse_proxy {{ ansible_host }}:4205
     
     tls {
         dns cloudflare {{ cloudflare_ssl_api_token }}
@@ -60,7 +60,7 @@ www.notclickable.com {
 }
 
 tinyauth.notclickable.com {
-    reverse_proxy caddy:4206
+    reverse_proxy {{ ansible_host }}:4206
     
     tls {
         dns cloudflare {{ cloudflare_ssl_api_token }}
@@ -68,7 +68,7 @@ tinyauth.notclickable.com {
 }
 
 mailrise.notclickable.com:465 {
-    reverse_proxy caddy:465
+    reverse_proxy {{ ansible_host }}:465
     
     tls {
         dns cloudflare {{ cloudflare_ssl_api_token }}
@@ -76,7 +76,7 @@ mailrise.notclickable.com:465 {
 }
 
 gitea.notclickable.com {
-    forward_auth caddy:4206 {
+    forward_auth {{ ansible_host }}:4206 {
         uri /api/auth/caddy
         copy_headers Remote-User Remote-Email Remote-Name Remote-Groups
     }
@@ -85,11 +85,11 @@ gitea.notclickable.com {
         dns cloudflare {{ cloudflare_ssl_api_token }}
     }
 
-    reverse_proxy caddy:4208
+    reverse_proxy {{ ansible_host }}:4208
 }
 
 n8n.notclickable.com {
-    forward_auth caddy:4206 {
+    forward_auth {{ ansible_host }}:4206 {
         uri /api/auth/caddy
         copy_headers Remote-User Remote-Email Remote-Name Remote-Groups
     }
@@ -98,11 +98,11 @@ n8n.notclickable.com {
         dns cloudflare {{ cloudflare_ssl_api_token }}
     }
 
-    reverse_proxy caddy:4210
+    reverse_proxy {{ ansible_host }}:4210
 }
 
 lemmy.notclickable.com {
-    reverse_proxy caddy:4211
+    reverse_proxy {{ ansible_host }}:4211
     
     tls {
         dns cloudflare {{ cloudflare_ssl_api_token }}
@@ -110,7 +110,7 @@ lemmy.notclickable.com {
 }
 
 freshrss.notclickable.com {
-    reverse_proxy caddy:4212
+    reverse_proxy {{ ansible_host }}:4212
     
     tls {
         dns cloudflare {{ cloudflare_ssl_api_token }}
@@ -118,7 +118,7 @@ freshrss.notclickable.com {
 }
 
 grafana.notclickable.com {
-    forward_auth caddy:4206 {
+    forward_auth {{ ansible_host }}:4206 {
         uri /api/auth/caddy
         copy_headers Remote-User Remote-Email Remote-Name Remote-Groups
     }
@@ -127,7 +127,7 @@ grafana.notclickable.com {
         dns cloudflare {{ cloudflare_ssl_api_token }}
     }
 
-    reverse_proxy caddy:4213
+    reverse_proxy {{ ansible_host }}:4213
 }
 
 jellyfin.notclickable.com {
@@ -135,7 +135,7 @@ jellyfin.notclickable.com {
         dns cloudflare {{ cloudflare_ssl_api_token }}
     }
 
-    reverse_proxy caddy:4219
+    reverse_proxy {{ ansible_host }}:4219
 }
 
 notclickable.social, www.notclickable.social {
@@ -176,7 +176,7 @@ notclickable.social, www.notclickable.social {
         }
 
         reverse_proxy @streaming {
-                to caddy:4218
+                to {{ ansible_host }}:4218
                 header_up X-Forwarded-Port 443
                 header_up X-Forwarded-Proto https
 
@@ -187,7 +187,7 @@ notclickable.social, www.notclickable.social {
         }
 
         reverse_proxy {
-                to caddy:4217
+                to {{ ansible_host }}:4217
                 header_up X-Forwarded-Port 443
                 header_up X-Forwarded-Proto https
 
@@ -199,7 +199,7 @@ notclickable.social, www.notclickable.social {
 }
 
 calibre.notclickable.com {
-    forward_auth caddy:4206 {
+    forward_auth {{ ansible_host }}:4206 {
         uri /api/auth/caddy
         copy_headers Remote-User Remote-Email Remote-Name Remote-Groups
     }
@@ -208,11 +208,11 @@ calibre.notclickable.com {
         dns cloudflare {{ cloudflare_ssl_api_token }}
     }
 
-    reverse_proxy caddy:4220
+    reverse_proxy {{ ansible_host }}:4220
 }
 
 ytptube.notclickable.com {
-    forward_auth caddy:4206 {
+    forward_auth {{ ansible_host }}:4206 {
         uri /api/auth/caddy
         copy_headers Remote-User Remote-Email Remote-Name Remote-Groups
     }
@@ -221,11 +221,11 @@ ytptube.notclickable.com {
         dns cloudflare {{ cloudflare_ssl_api_token }}
     }
 
-    reverse_proxy caddy:4221
+    reverse_proxy {{ ansible_host }}:4221
 }
 
 audiobookshelf.notclickable.com {
-    forward_auth caddy:4206 {
+    forward_auth {{ ansible_host }}:4206 {
         uri /api/auth/caddy
         copy_headers Remote-User Remote-Email Remote-Name Remote-Groups
     }
@@ -234,5 +234,5 @@ audiobookshelf.notclickable.com {
         dns cloudflare {{ cloudflare_ssl_api_token }}
     }
 
-    reverse_proxy caddy:4222
+    reverse_proxy {{ ansible_host }}:4222
 }
