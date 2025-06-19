@@ -16,14 +16,10 @@ services:
         depends_on:
             - pictrs
             - lemmy-ui
-        labels:
-            traefik.enable: true
-            traefik.http.routers.lemmy.rule: Host(`lemmy.notclickable.com`)
-            traefik.http.routers.lemmy.tls.certresolver: cloudflare
-            traefik.http.routers.lemmy.entrypoints: websecure
-            traefik.http.services.lemmy.loadbalancer.server.port: 8536
+        ports:
+            - 4211:8536
         networks:
-            - proxy
+            - caddy
 
     lemmy:
         image: dessalines/lemmy:0.19.12
@@ -39,7 +35,7 @@ services:
             - postgres
             - pictrs
         networks:
-            - proxy
+            - caddy
 
     lemmy-ui:
         image: dessalines/lemmy-ui:0.19.12
@@ -53,7 +49,7 @@ services:
         restart: unless-stopped
         logging: *default-logging
         networks:
-            - proxy
+            - caddy
 
     pictrs:
         image: asonix/pictrs:0.5.19
@@ -71,7 +67,7 @@ services:
                 limits:
                     memory: 690m
         networks:
-            - proxy
+            - caddy
 
     postgres:
         image: postgres:17-alpine
@@ -85,7 +81,7 @@ services:
         restart: unless-stopped
         logging: *default-logging
         networks:
-            - proxy
+            - caddy
 
 volumes:
     extra_themes:
@@ -93,5 +89,5 @@ volumes:
     postgres:
 
 networks:
-    proxy:
+    caddy:
         external: true

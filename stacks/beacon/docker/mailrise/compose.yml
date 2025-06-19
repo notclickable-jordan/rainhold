@@ -19,8 +19,8 @@ services:
             traefik.tcp.routers.mailrise.service: "mailrise-svc"
             traefik.tcp.services.mailrise-svc.loadbalancer.server.port: "8025"
         networks:
-            - proxy
+            - caddy
 
 networks:
-    proxy:
+    caddy:
         external: true

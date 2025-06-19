@@ -5,16 +5,10 @@ services:
         restart: unless-stopped
         env_file:
             - .env
-        labels:
-            traefik.enable: true
-            traefik.http.routers.tinyauth.rule: Host(`tinyauth.notclickable.com`)
-            traefik.http.routers.tinyauth.tls.certresolver: cloudflare
-            traefik.http.middlewares.tinyauth.forwardauth.address: "http://tinyauth:3000"
-            traefik.http.middlewares.tinyauth.forwardauth.trustForwardHeader: true
-            traefik.http.middlewares.tinyauth.forwardauth.authResponseHeaders: Remote-User Remote-Email Remote-Name
-            traefik.http.routers.tinyauth.entrypoints: websecure
+        ports:
+            - 4206:3000
         networks:
-            - proxy
+            - caddy
 networks:
-    proxy:
+    caddy:
         external: true

@@ -12,19 +12,14 @@ services:
             - config:/config
             - /mnt/media/books:/books
         restart: unless-stopped
-        labels:
-            traefik.enable: true
-            traefik.http.routers.calibre.rule: Host(`calibre.notclickable.com`)
-            traefik.http.routers.calibre.middlewares: tinyauth@docker
-            traefik.http.routers.calibre.tls.certresolver: cloudflare
-            traefik.http.services.calibre.loadbalancer.server.port: 8083
-            traefik.http.routers.calibre.entrypoints: websecure
+        ports:
+            - 4220:8083
         networks:
-            - proxy
+            - caddy
 
 volumes:
     config:
 
 networks:
-    proxy:
+    caddy:
         external: true

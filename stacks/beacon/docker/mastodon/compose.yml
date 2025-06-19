@@ -7,7 +7,7 @@ services:
             - .env.postgres
         shm_size: 256mb
         networks:
-            - proxy
+            - caddy
             - internal_network
         healthcheck:
             test: ["CMD", "pg_isready", "-U", "mastodon"]
@@ -19,7 +19,7 @@ services:
         container_name: mastodon_redis
         restart: unless-stopped
         networks:
-            - proxy
+            - caddy
             - internal_network
         healthcheck:
             test: ["CMD", "redis-cli", "ping"]
@@ -34,7 +34,7 @@ services:
             - .env
         command: bundle exec puma -C config/puma.rb
         networks:
-            - proxy
+            - caddy
             - external_network
             - internal_network
         healthcheck:
@@ -49,15 +49,6 @@ services:
             - web:/mastodon/public/system
         extra_hosts:
             - "host.docker.internal:host-gateway"
-        labels:
-            traefik.enable: true
-            traefik.http.routers.mastodon.entrypoints: websecure
-            traefik.http.routers.mastodon.rule: (Host(`notclickable.social`))
-            traefik.http.routers.mastodon.tls: true
-            traefik.http.routers.mastodon.tls.certresolver: cloudflare
-            traefik.http.routers.mastodon.service: mastodon
-            traefik.http.services.mastodon.loadbalancer.server.port: 3000
-            traefik.docker.network: proxy
 
     streaming:
         image: ghcr.io/mastodon/mastodon-streaming:v4.3.8
@@ -67,7 +58,7 @@ services:
             - .env
         command: node ./streaming/index.js
         networks:
-            - proxy
+            - caddy
             - external_network
             - internal_network
         healthcheck:
@@ -101,7 +92,7 @@ services:
             - db
             - redis
         networks:
-            - proxy
+            - caddy
             - external_network
             - internal_network
         healthcheck:
@@ -110,7 +101,7 @@ services:
             - web:/mastodon/public/system
 
 networks:
-    proxy:
+    caddy:
         external: true
     internal_network:
         driver: bridge

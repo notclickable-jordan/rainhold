@@ -7,15 +7,10 @@ services:
             - storage:/var/lib/grafana
         env_file:
             - .env
-        labels:
-            traefik.enable: true
-            traefik.http.routers.grafana.rule: Host(`grafana.notclickable.com`)
-            traefik.http.routers.grafana.middlewares: tinyauth@docker
-            traefik.http.routers.grafana.tls.certresolver: cloudflare
-            traefik.http.services.grafana.loadbalancer.server.port: 3000
-            traefik.http.routers.grafana.entrypoints: websecure
+        ports:
+            - 4213:3000
         networks:
-            - proxy
+            - caddy
 
     loki:
         image: grafana/loki:latest
@@ -47,5 +42,5 @@ volumes:
     storage:
 
 networks:
-    proxy:
+    caddy:
         external: true

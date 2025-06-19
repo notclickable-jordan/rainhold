@@ -11,19 +11,15 @@ services:
         restart: unless-stopped
         environment:
             - JELLYFIN_PublishedServerUrl=https://jellyfin.notclickable.com
-        labels:
-            traefik.enable: true
-            traefik.http.routers.jellyfin.rule: Host(`jellyfin.notclickable.com`)
-            traefik.http.routers.jellyfin.tls.certresolver: cloudflare
-            traefik.http.services.jellyfin.loadbalancer.server.port: 8096
-            traefik.http.routers.jellyfin.entrypoints: websecure
+        ports:
+            - 4219:8096
         networks:
-            - proxy
+            - caddy
 
 volumes:
     cache:
     config:
 
 networks:
-    proxy:
+    caddy:
         external: true

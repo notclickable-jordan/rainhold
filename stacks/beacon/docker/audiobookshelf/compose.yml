@@ -7,23 +7,18 @@ services:
             - /mnt/media/podcasts:/podcasts
             - config:/config
             - metadata:/metadata
+        ports:
+            - 4222:80
         environment:
             - TZ=America/Los_Angeles
         restart: unless-stopped
-        labels:
-            traefik.enable: true
-            traefik.http.routers.audiobookshelf.rule: Host(`audiobookshelf.notclickable.com`)
-            traefik.http.routers.audiobookshelf.middlewares: tinyauth@docker
-            traefik.http.routers.audiobookshelf.tls.certresolver: cloudflare
-            traefik.http.services.audiobookshelf.loadbalancer.server.port: 80
-            traefik.http.routers.audiobookshelf.entrypoints: websecure
         networks:
-            - proxy
+            - caddy
 
 volumes:
     config:
     metadata:
 
 networks:
-    proxy:
+    caddy:
         external: true
