@@ -34,10 +34,7 @@ tinyauth_pocket_id_client_secret: "your_pocket_id_client_secret_here"
 
 # --- Mailrise ---
 mailrise_hostname: "mailrise.example.com"
-mailrise_host: "{{ ansible_host }}"
-mailrise_port: 465
-mailrise_username: "your_mailrise_username_here"
-mailrise_password: "your_mailrise_password_here"
+mailrise_port: 8025
 
 # --- Apprise ---
 apprise_repo: "https://github.com/caronc/apprise.git"
