@@ -3,7 +3,6 @@
   become: true
   roles:
     - role: postfix
-    - role: mailrise
     #  - role: clone-repository
     #  - role: create-proxy-network
     - role: docker-start
