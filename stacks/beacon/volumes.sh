@@ -8,6 +8,8 @@ VOLUMES=(
   "calibre_config:/calibre/config"
   "freshrss_data:/freshrss/data"
   "freshrss_extensions:/freshrss/extensions"
+  "gitea_data:/gitea/data"
+  "gitea_db:/gitea/db"
   "grafana_storage:/grafana/storage"
   "jellyfin_cache:/jellyfin/cache"
   "jellyfin_config:/jellyfin/config"
@@ -23,8 +25,6 @@ VOLUMES=(
   "n8n_db:/n8n/db"
   "pocket-id_data:/pocket-id/data"
   "ytptube_config:/ytptube/config"
-  #"gitea_data:/gitea/data"
-  #"gitea_db:/gitea/db"
 )
 
 BACKUP_PATH="/mnt/backup/rainhold/beacon"
