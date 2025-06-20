@@ -5,9 +5,13 @@
 - name: Remove DVD source from apt
   lineinfile:
     path: /etc/apt/sources.list
-    regexp: '^deb cdrom:'
+    regexp: "^deb cdrom:"
     state: absent
 
 - name: Update apt cache
   apt:
     update_cache: yes
+
+- name: Upgrade apt packages
+  apt:
+    upgrade: dist
