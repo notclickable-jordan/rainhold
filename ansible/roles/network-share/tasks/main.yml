@@ -19,7 +19,7 @@
   copy:
     dest: "/root/.smbcredentials"
     content: |
-      linux_first_user_username={{ network_share_username }}
+      username={{ network_share_username }}
       password={{ network_share_password }}
     mode: "0600"
   become: true
