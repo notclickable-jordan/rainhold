@@ -4,30 +4,30 @@
 
 - name: Ensure user exists without sudo rights
   user:
-    name: "{{ username }}"
-    password: "{{ user_password }}"
+    name: "{{ linux_first_user_username }}"
+    password: "{{ linux_first_user_password_new }}"
     shell: /bin/bash
     create_home: yes
     state: present
 
 - name: Change user password to secure password
   user:
-    name: "{{ username }}"
-    password: "{{ user_password }}"
+    name: "{{ linux_first_user_username }}"
+    password: "{{ linux_first_user_password_new }}"
     update_password: always
 
 - name: Create .ssh directory for user
   file:
-    path: "/home/{{ username }}/.ssh"
+    path: "/home/{{ linux_first_user_username }}/.ssh"
     state: directory
-    owner: "{{ username }}"
-    group: "{{ username }}"
-    mode: '0700'
+    owner: "{{ linux_first_user_username }}"
+    group: "{{ linux_first_user_username }}"
+    mode: "0700"
 
 - name: Add authorized public key for user
   copy:
-    dest: "/home/{{ username }}/.ssh/authorized_keys"
-    content: "{{ user_ssh_pubkey }}"
-    owner: "{{ username }}"
-    group: "{{ username }}"
-    mode: '0600'
+    dest: "/home/{{ linux_first_user_username }}/.ssh/authorized_keys"
+    content: "{{ linux_first_user_ssh_public_key }}"
+    owner: "{{ linux_first_user_username }}"
+    group: "{{ linux_first_user_username }}"
+    mode: "0600"

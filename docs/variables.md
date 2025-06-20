@@ -1,6 +1,6 @@
-# Variables
+# Server and user
 
-To begin, come up with a name for your server, and your first username. These are mine:
+Come up with a name for your server, and your first username. These are mine:
 
 -   Server name: `beacon`
 -   First username: `jordan`
@@ -10,22 +10,21 @@ For the sake of replacement, let's pretend these are yours:
 -   Server name: `compy386`
 -   First username: `strongbad`
 
-## Ansible
+# Ansible
 
 1. Open `ansible/inventory/hosts.yml`
 1. Change both instances of `beacon` to your server name
 1. You won't have `ansible_host` yet; come back to that after creating the VM in Proxmox
 
-## Host variables
+# Host variables
 
 1. Make a copy of `host_vars/sample.yml` and give it the name of your server, e.g. `compy386.yml`
-1. This will cause your text editor (and git) to ignore the file. That's normal. It protects you from accidentally committing your secret keys.
-1. Open `comp386.yml` and follow the guide in comments (lines starting with `#`):
-    - `keep` &gt; don't change it unless you know what you're doing
-    - `replace` &gt; replace with your own value/domain/secret
-    - `generate` &gt; follow the instructions below to generate a new secret
+1. This will cause your text editor (and git) to ignore the file
+    - That's normal
+    - It protects you from accidentally committing your secret keys
+1. Open `compy386.yml` and follow the comments
 
-## Generate secrets
+# Generate secrets
 
 Most secrets can be generated using the `openssl` command below:
 
@@ -33,11 +32,11 @@ Most secrets can be generated using the `openssl` command below:
 openssl rand -base64 32
 ```
 
-### username
+## username
 
 Your first username, e.g. `strongbad`
 
-### user_ssh_pubkey
+### linux_first_user_ssh_public_key
 
 Your SSH public key, e.g. `ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC...`
 

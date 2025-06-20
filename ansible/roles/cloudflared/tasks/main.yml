@@ -6,13 +6,13 @@
   file:
     path: /usr/share/keyrings
     state: directory
-    mode: '0755'
+    mode: "0755"
 
 - name: Add Cloudflare GPG key
   ansible.builtin.get_url:
     url: https://pkg.cloudflare.com/cloudflare-main.gpg
     dest: /usr/share/keyrings/cloudflare-main.gpg
-    mode: '0644'
+    mode: "0644"
 
 - name: Add Cloudflared apt repository
   ansible.builtin.apt_repository:
@@ -31,15 +31,15 @@
 
 - name: Create cloudflared config directory
   file:
-    path: "{{ cloudflared_config_path }}"
+    path: "/etc/cloudflared"
     state: directory
-    mode: '0755'
+    mode: "0755"
 
 - name: Deploy cloudflared configuration file
   template:
     src: config.yml.j2
-    dest: "{{ cloudflared_config_path }}/config.yml"
-    mode: '0644'
+    dest: "/etc/cloudflared/config.yml"
+    mode: "0644"
 
 - name: Check if cloudflared is already logged in
   stat:

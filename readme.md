@@ -1,6 +1,6 @@
 # Overview
 
-Complete guide to set up a secure, automated server environment. Users are managed through LDAP and use Passkeys to sign in. Public sites are served from Cloudflare. Private sites go through custom DNS via Tailscale.
+Complete guide to set up a secure, automated server environment. Virtualize multiple servers through Proxmox. Configure servers automatically using Ansible. Easy OAuth user management with LDAP and passkey logins. Servce public sites through Cloudflare and private sites safely through custom DNS via Tailscale and NextDNS.
 
 ## Virtualization stack
 
@@ -40,6 +40,7 @@ Follow these steps in order to set up your server environment:
 -   [Gitea](docs/gitea.md): Get the runner registration token
 -   [Tailscale](docs/tailscale.md): Set up Tailscale for secure private networking
 -   [Grafana](docs/grafana.md): Connect Grafana to Pocket ID for authentication
+-   [Caddy](docs/caddy.md): Configure Caddy for reverse proxy and DNS management
 -   [Backup](docs/backup.md): Backup Docker volumes
 -   [Ports](docs/ports.md): All ports and services used in this setup
 

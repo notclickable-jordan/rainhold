@@ -1,31 +1,27 @@
 # --- Root user ---
-root_old_password: "password1"
-root_new_password: "{{ 'newplaintextpassword' | password_hash('sha512') }}"
+linux_root_password: "password1"
+linux_root_password_new: "{{ 'newplaintextpassword' | password_hash('sha512') }}"
 
-# --- First normal user ---
-username: jordan
-user_password: "{{ 'password2' | password_hash('sha512') }}"
-user_ssh_pubkey: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBExampleKeyGoesHere jordan@rainhold-beacon"
+# --- First user ---
+linux_first_user_username: jordan
+linux_first_user_password_new: "{{ 'password2' | password_hash('sha512') }}"
+linux_first_user_ssh_public_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBExampleKeyGoesHere jordan@rainhold-beacon"
 
 # --- Tailscale ---
-tailscale_keyring_url: "https://pkgs.tailscale.com/stable/debian/bookworm.noarmor.gpg"
-tailscale_repo_url: "https://pkgs.tailscale.com/stable/debian/bookworm.tailscale-keyring.list"
 tailscale_authkey: "tskey-1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef"
 
 # --- Cloudflare ---
 cloudflared_token: "YOUR_CLOUDFLARED_TUNNEL_TOKEN"
-cloudflared_config_path: "/etc/cloudflared"
 cloudflare_email: "your_email_address"
 cloudflare_ssl_api_token: "YOUR_CLOUDFLARE_SSL_API_TOKEN"
 
 # --- Rainhold ---
-rainhold_repo: https://github.com/notclickable-jordan/rainhold
 rainhold_dest: /etc/rainhold
 
 # --- LLDAP ---
-LLDAP_JWT_SECRET: "your_jwt_secret_here"
-LLDAP_KEY_SEED: "your_key_seed_here"
-LLDAP_LDAP_USER_PASS: "your_ldap_user_password_here"
+lldap_jwt_secret: "your_jwt_secret_here"
+lldap_key_seed: "your_key_seed_here"
+lldap_ldap_user_pass: "your_ldap_user_password_here"
 
 # --- Tinyauth ---
 tinyauth_secret: "your_tinyauth_secret_here"
