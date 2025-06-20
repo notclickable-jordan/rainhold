@@ -33,14 +33,11 @@ mailrise_hostname: "mailrise.example.com"
 mailrise_port: 8025
 
 # --- Apprise ---
-apprise_repo: "https://github.com/caronc/apprise.git"
-apprise_clone_dest: "/opt/apprise"
-apprise_venv_dir: /opt/apprise-venv
 apprise_mastodon_token: "your_token"
 apprise_mastodon_host: "mastodon.social"
 
 # --- Network Share ---
-network_share_host: "192.168.1.100"
+network_share_host: "192.168.1.100" # path to your NAS, if applicable
 network_share_username: "your_username"
 network_share_password: "your_password"
 
