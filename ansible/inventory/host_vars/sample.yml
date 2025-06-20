@@ -1,34 +1,37 @@
 # --- Root user ---
-root_old_password: "password1"
-root_new_password: "{{ 'newplaintextpassword' | password_hash('sha512') }}"
+linux_root_password: "password1"
+linux_root_password_new: "{{ 'newplaintextpassword' | password_hash('sha512') }}"
 
-# --- First normal user ---
-username: jordan
-user_password: "{{ 'password2' | password_hash('sha512') }}"
-user_ssh_pubkey: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBExampleKeyGoesHere jordan@rainhold-beacon"
+# --- First user ---
+linux_first_user_username: jordan
+linux_first_user_password_new: "{{ 'password2' | password_hash('sha512') }}"
+# Generate: https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
+# Copy: https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account
+linux_first_user_ssh_public_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBExampleKeyGoesHere jordan@rainhold-beacon"
 
 # --- Tailscale ---
-tailscale_keyring_url: "https://pkgs.tailscale.com/stable/debian/bookworm.noarmor.gpg"
-tailscale_repo_url: "https://pkgs.tailscale.com/stable/debian/bookworm.tailscale-keyring.list"
+# Generate: https://tailscale.com/kb/1085/auth-keys
 tailscale_authkey: "tskey-1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef"
 
 # --- Cloudflare ---
 cloudflared_token: "YOUR_CLOUDFLARED_TUNNEL_TOKEN"
-cloudflared_config_path: "/etc/cloudflared"
 cloudflare_email: "your_email_address"
+# See /docs/cloudflare.md#ssl-api-key for instructions
 cloudflare_ssl_api_token: "YOUR_CLOUDFLARE_SSL_API_TOKEN"
 
 # --- Rainhold ---
-rainhold_repo: https://github.com/notclickable-jordan/rainhold
 rainhold_dest: /etc/rainhold
 
 # --- LLDAP ---
-LLDAP_JWT_SECRET: "your_jwt_secret_here"
-LLDAP_KEY_SEED: "your_key_seed_here"
-LLDAP_LDAP_USER_PASS: "your_ldap_user_password_here"
+lldap_jwt_secret: "your_jwt_secret_here"
+lldap_key_seed: "your_key_seed_here"
+lldap_ldap_user_pass: "your_ldap_user_password_here"
 
 # --- Tinyauth ---
+# Generate: openssl rand -base64 32 | tr -dc 'a-zA-Z0-9' | head -c 32
+# Trim the string so it is exactly 32 characters long
 tinyauth_secret: "your_tinyauth_secret_here"
+# Generate: https://tinyauth.app/docs/guides/pocket-id.html
 tinyauth_pocket_id_client_id: "your_pocket_id_client_id_here"
 tinyauth_pocket_id_client_secret: "your_pocket_id_client_secret_here"
 
@@ -37,14 +40,14 @@ mailrise_hostname: "mailrise.example.com"
 mailrise_port: 8025
 
 # --- Apprise ---
-apprise_repo: "https://github.com/caronc/apprise.git"
-apprise_clone_dest: "/opt/apprise"
-apprise_venv_dir: /opt/apprise-venv
+# Sign in to your Mastodon account, go to **Settings &gt; Development &gt; New Application**, and create a new application with the following settings:
+# Name: Apprise
+# Scopes: write:statuses, write:media, read:accounts
 apprise_mastodon_token: "your_token"
 apprise_mastodon_host: "mastodon.social"
 
 # --- Network Share ---
-network_share_host: "192.168.1.100"
+network_share_host: "192.168.1.100" # path to your NAS, if applicable
 network_share_username: "your_username"
 network_share_password: "your_password"
 
@@ -60,6 +63,9 @@ network_shares:
 GITEA__database__USER: gitea
 GITEA__database__NAME: gitea
 GITEA__database__PASSWD: "your_gitea_database_password_here"
+# Generate in Gitea after installing it
+# Go to **Site Administration > Actions > Runners** and click **Create new Runner**
+# Past the token here and re-run the Ansible playbook to register the runner
 gitea_runner_registration_token: "your_gitea_runner_registration_token_here"
 
 # --- N8N ---

@@ -6,13 +6,13 @@
   lineinfile:
     path: /etc/ssh/sshd_config
     regexp: '^#?PasswordAuthentication\s+.*'
-    line: 'PasswordAuthentication no'
+    line: "PasswordAuthentication no"
 
-- name: Fully disable root SSH login
+- name: Disable root SSH login
   lineinfile:
     path: /etc/ssh/sshd_config
     regexp: '^#?PermitRootLogin\s+.*'
-    line: 'PermitRootLogin no'
+    line: "PermitRootLogin no"
     state: present
 
 - name: Restart SSH daemon

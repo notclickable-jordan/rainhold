@@ -1,6 +1,6 @@
 # Caddy
 
-Why does Caddy use a personal Docker image? Because, in order to get SSL certificates through Cloudflare, I needed to use a custom build of Caddy. You should not use this you're not using Cloudflare.
+Caddy uses a personal Docker image to get SSL certificates through Cloudflare. There was no existing Docker image that did this, so I made one. You should not use this Caddy image you're not using Cloudflare.
 
 ## My Caddy image
 

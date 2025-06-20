@@ -8,7 +8,7 @@
     - role: unattended-upgrades
     - role: ssh-hardening
     - role: root-password
-    - role: user-management
+    - role: linux-first-user
     - role: network-share
     - role: docker-install
     - role: cloudflared
