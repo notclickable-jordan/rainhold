@@ -26,8 +26,8 @@ Complete guide to set up a secure, automated server environment. Virtualize mult
 Follow these steps in order to set up your server environment:
 
 1. [Variables](docs/variables.md): Set up your server name and first username
-1. [Proxmox VE](docs/proxmox.md): Create virtualization platform
-1. [Remote computer](docs/remote.md): Configure VM created on Proxmox
+1. [Proxmox](docs/proxmox.md): Create virtualization platform
+1. [Linux VM](docs/linux-vm.md): Configure VM created on Proxmox
 1. [Cloudflare](docs/cloudflare.md): Manage DNS and SSL for public sites
 1. [Private sites](docs/private.md): Set up private sites with Tailscale and NextDNS
 1. [Ansible](docs/ansible.md): Run Ansible playbooks for automated deployment
@@ -41,7 +41,6 @@ Follow these steps in order to set up your server environment:
 -   [Tailscale](docs/tailscale.md): Set up Tailscale for secure private networking
 -   [Grafana](docs/grafana.md): Connect Grafana to Pocket ID for authentication
 -   [Caddy](docs/caddy.md): Configure Caddy for reverse proxy and DNS management
--   [Backup](docs/backup.md): Backup Docker volumes
 -   [Ports](docs/ports.md): All ports and services used in this setup
 
 # Services used
