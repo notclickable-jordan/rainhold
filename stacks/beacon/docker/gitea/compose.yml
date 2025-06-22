@@ -1,5 +1,5 @@
 services:
-    server:
+    gitea:
         image: docker.gitea.com/gitea:1.23.8
         container_name: gitea
         env_file:
@@ -14,8 +14,6 @@ services:
         ports:
             - 4208:3000
             - 4209:22
-        networks:
-            - gitea
         healthcheck:
             test: ["CMD-SHELL", "curl -f http://localhost:3000 || exit 1"]
             interval: 30s
@@ -28,8 +26,6 @@ services:
         container_name: gitea-db
         env_file:
             - .env
-        networks:
-            - gitea
         volumes:
             - db:/var/lib/postgresql/data
 
@@ -39,15 +35,9 @@ services:
         env_file:
             - .env.runner
         restart: unless-stopped
-        networks:
-            - gitea
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock
 
 volumes:
     data:
     db:
-
-networks:
-    gitea:
-        external: false
