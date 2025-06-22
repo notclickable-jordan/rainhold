@@ -38,8 +38,11 @@ services:
         depends_on:
             - gitea
         volumes:
+            - ./runner.yml:/config.yaml
             - /var/run/docker.sock:/var/run/docker.sock
+            - runner_data:/data
 
 volumes:
     data:
     db:
+    runner_data:
