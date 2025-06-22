@@ -21,9 +21,9 @@
 				"description": "Container logs"
 			},
 			{
-				"name": "FreshRSS",
-				"uri": "https://freshrss.notclickable.com",
-				"icon": "/img/freshrss.jpg",
+				"name": "Miniflux",
+				"uri": "https://miniflux.notclickable.com",
+				"icon": "/img/miniflux.jpg",
 				"description": "RSS feed aggregator"
 			},
 			{

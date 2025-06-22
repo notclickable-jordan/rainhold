@@ -1,22 +1,21 @@
 {
     admin 0.0.0.0:2019
-    
-	log {
-		output file /var/log/caddy/access.log {
-			roll_size 10MiB
-			roll_keep 7
-			roll_keep_for 7d
-		}
-		format json
-	}
-	servers {
-		metrics
-	}
+
+    log {
+        output file /var/log/caddy/access.log {
+            roll_size 10MiB
+            roll_keep 7
+            roll_keep_for 7d
+        }
+        format json
+    }
+
+    metrics
 }
 
 ldap.notclickable.com {
     reverse_proxy {{ ansible_host }}:4202
-    
+
     tls {
         dns cloudflare {{ cloudflare_ssl_api_token }}
     }
@@ -24,7 +23,7 @@ ldap.notclickable.com {
 
 pocket-id.notclickable.com {
     reverse_proxy {{ ansible_host }}:4203
-    
+
     tls {
         dns cloudflare {{ cloudflare_ssl_api_token }}
     }
@@ -35,7 +34,7 @@ dozzle.notclickable.com {
         uri /api/auth/caddy
         copy_headers Remote-User Remote-Email Remote-Name Remote-Groups
     }
-    
+
     tls {
         dns cloudflare {{ cloudflare_ssl_api_token }}
     }
@@ -45,7 +44,7 @@ dozzle.notclickable.com {
 
 notclickable.com {
     reverse_proxy {{ ansible_host }}:4205
-    
+
     tls {
         dns cloudflare {{ cloudflare_ssl_api_token }}
     }
@@ -53,7 +52,7 @@ notclickable.com {
 
 www.notclickable.com {
     reverse_proxy {{ ansible_host }}:4205
-    
+
     tls {
         dns cloudflare {{ cloudflare_ssl_api_token }}
     }
@@ -61,7 +60,7 @@ www.notclickable.com {
 
 tinyauth.notclickable.com {
     reverse_proxy {{ ansible_host }}:4206
-    
+
     tls {
         dns cloudflare {{ cloudflare_ssl_api_token }}
     }
@@ -69,7 +68,7 @@ tinyauth.notclickable.com {
 
 mailrise.notclickable.com:465 {
     reverse_proxy {{ ansible_host }}:465
-    
+
     tls {
         dns cloudflare {{ cloudflare_ssl_api_token }}
     }
@@ -80,7 +79,7 @@ gitea.notclickable.com {
         uri /api/auth/caddy
         copy_headers Remote-User Remote-Email Remote-Name Remote-Groups
     }
-    
+
     tls {
         dns cloudflare {{ cloudflare_ssl_api_token }}
     }
@@ -93,7 +92,7 @@ n8n.notclickable.com {
         uri /api/auth/caddy
         copy_headers Remote-User Remote-Email Remote-Name Remote-Groups
     }
-    
+
     tls {
         dns cloudflare {{ cloudflare_ssl_api_token }}
     }
@@ -103,15 +102,15 @@ n8n.notclickable.com {
 
 lemmy.notclickable.com {
     reverse_proxy {{ ansible_host }}:4211
-    
+
     tls {
         dns cloudflare {{ cloudflare_ssl_api_token }}
     }
 }
 
-freshrss.notclickable.com {
+miniflux.notclickable.com {
     reverse_proxy {{ ansible_host }}:4212
-    
+
     tls {
         dns cloudflare {{ cloudflare_ssl_api_token }}
     }
@@ -122,7 +121,7 @@ grafana.notclickable.com {
         uri /api/auth/caddy
         copy_headers Remote-User Remote-Email Remote-Name Remote-Groups
     }
-    
+
     tls {
         dns cloudflare {{ cloudflare_ssl_api_token }}
     }
@@ -203,7 +202,7 @@ calibre.notclickable.com {
         uri /api/auth/caddy
         copy_headers Remote-User Remote-Email Remote-Name Remote-Groups
     }
-    
+
     tls {
         dns cloudflare {{ cloudflare_ssl_api_token }}
     }
@@ -216,7 +215,7 @@ ytptube.notclickable.com {
         uri /api/auth/caddy
         copy_headers Remote-User Remote-Email Remote-Name Remote-Groups
     }
-    
+
     tls {
         dns cloudflare {{ cloudflare_ssl_api_token }}
     }
@@ -229,7 +228,7 @@ audiobookshelf.notclickable.com {
         uri /api/auth/caddy
         copy_headers Remote-User Remote-Email Remote-Name Remote-Groups
     }
-    
+
     tls {
         dns cloudflare {{ cloudflare_ssl_api_token }}
     }
@@ -237,6 +236,6 @@ audiobookshelf.notclickable.com {
     reverse_proxy {{ ansible_host }}:4222
 }
 
-starbase80.dev {
+starbase80.dev, www.starbase80.dev {
     redir https://github.com/notclickable-jordan/starbase-80
 }

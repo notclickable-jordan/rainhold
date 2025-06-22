@@ -1,0 +1,30 @@
+services:
+    miniflux:
+        image: miniflux/miniflux
+        container_name: miniflux
+        healthcheck:
+            test: ["CMD", "/usr/bin/miniflux", "-healthcheck", "auto"]
+        env_file:
+            - .env
+        restart: unless-stopped
+        ports:
+            - 4212:8080
+        depends_on:
+            db:
+                condition: service_healthy
+
+    db:
+        image: postgres:17-alpine
+        container_name: miniflux-db
+        env_file:
+            - .env
+        restart: unless-stopped
+        healthcheck:
+            test: ["CMD", "pg_isready", "-U", "miniflux"]
+            interval: 10s
+            start_period: 30s
+        volumes:
+            - db:/var/lib/postgresql/data
+
+volumes:
+    db:

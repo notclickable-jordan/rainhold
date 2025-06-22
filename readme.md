@@ -49,7 +49,7 @@ Follow these steps in order to set up your server environment:
 -   [Caddy Cloudflare DNS](https://github.com/notclickable-jordan/caddy-cloudflare-dns)
 -   [Debian](https://www.debian.org)
 -   [Dozzle](https://dozzle.dev)
--   [FreshRSS](https://freshrss.org)
+-   [Miniflux](https://miniflux.app)
 -   [Gitea](https://about.gitea.com)
 -   [Grafana](https://grafana.com)
 -   [Lemmy](https://join-lemmy.org)

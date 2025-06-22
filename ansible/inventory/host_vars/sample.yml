@@ -119,3 +119,9 @@ mastodon_smtp_from_address: "Mastodon <mastodon@example.com>"
 mastodon_active_record_encryption_deterministic_key: "your_mastodon_active_record_encryption_deterministic_key_here"
 mastodon_active_record_encryption_key_derivation_salt: "your_mastodon_active_record_encryption_key_derivation_salt_here"
 mastodon_active_record_encryption_primary_key: "your_mastodon_active_record_encryption_primary_key_here"
+
+# --- Miniflux ---
+miniflux_admin_username: "admin"
+miniflux_admin_password: "your_miniflux_admin_password_here"
+miniflux_db_user: "miniflux"
+miniflux_db_password: "your_miniflux_db_password_here"
