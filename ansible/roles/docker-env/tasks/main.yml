@@ -119,6 +119,14 @@
     owner: root
     group: root
 
+- name: Generate env for Miniflux database
+  template:
+    src: miniflux.env.db.j2
+    dest: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/miniflux/.env.db"
+    mode: "0600"
+    owner: root
+    group: root
+
 - name: Generate env for Grafana
   template:
     src: grafana.env.j2
