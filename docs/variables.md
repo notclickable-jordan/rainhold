@@ -23,3 +23,9 @@ For the sake of replacement, let's pretend these are yours:
     - That's normal
     - It protects you from accidentally committing your secret keys
 1. Open `compy386.yml` and follow the comments
+
+Generate alphanumeric secrets using OpenSSL:
+
+```bash
+openssl rand -base64 32
+```

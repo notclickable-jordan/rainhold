@@ -2,41 +2,32 @@
 
 Ansible is used to automate the deployment and configuration of your server environment.
 
-# Mac setup
+## Mac setup
 
-## Install Homebrew
-
-Run:
-
-```bash
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-```
-
-## Install Python 3
-
-Run:
-
-```bash
-brew install python
-pip3 install --user 'passlib[bcrypt]'
-```
-
-## Install Ansible
-
-Run:
-
-```bash
-pip3.9 install ansible
-```
-
-# Encrypting variables
-
-```bash
-ansible-vault encrypt ansible/inventory/host_vars/beacon.yml
-```
+1. Install [Homebrew](https://brew.sh/)
+    ```bash
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    ```
+1. Install Python 3
+    ```bash
+    brew install python
+    pip3 install --user 'passlib[bcrypt]'
+    ```
+1. Install Ansible
+    ```bash
+    pip3.9 install ansible
+    ```
 
 # Running the playbook
+
+This will configure your Debian VM with all the necessary services and settings. The playbook will prompt you for your user's (e.g. `strongbad`) password.
 
 ```bash
 ansible-playbook ansible/playbook.yml --ask-become-pass --user strongbad --inventory ansible/inventory/hosts.yml
 ```
+
+This will take a long time to run. Once it's done, use [Cloudflare](./cloudflare.md) to set up your public sites and Tailscale/NextDNS for [private sites](./private.md).
+
+## Troubleshooting
+
+If the Tailscale Ansible role fails, disable manual device approval in the Tailscale admin console.

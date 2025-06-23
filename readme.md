@@ -1,36 +1,23 @@
 # Overview
 
-Complete guide to set up a secure, automated server environment. Virtualize multiple servers through Proxmox. Configure servers automatically using Ansible. Easy OAuth user management with LDAP and passkey logins. Servce public sites through Cloudflare and private sites safely through custom DNS via Tailscale and NextDNS.
+Complete guide to set up a secure, automated server environment.
 
-## Virtualization stack
-
-1. Proxmox VE
-2. Debian 12 (Bookworm)
-3. Docker
-
-## Connectivity stack
-
-1. Tailscale
-2. Cloudflare
-3. NextDNS
-
-## Authentication stack
-
-1. Lightweight LDAP (users and groups)
-2. Pocket ID (Authentication)
-3. Tinyauth (Authorization)
-4. Caddy (Reverse proxy)
+-   Virtualize multiple servers through Proxmox
+-   Configure servers automatically using Ansible
+-   Mnaage users using OAuth with LDAP and passkey logins
+-   Host public sites through Cloudflare
+-   Serve private sites safely through custom DNS via Tailscale and NextDNS
 
 # Guide
 
-Follow these steps in order to set up your server environment:
+Follow these steps in order to set up your server environment.
 
-1. [Variables](docs/variables.md): Set up your server name and first username
-1. [Proxmox](docs/proxmox.md): Create virtualization platform
-1. [Linux VM](docs/linux-vm.md): Configure VM created on Proxmox
-1. [Cloudflare](docs/cloudflare.md): Manage DNS and SSL for public sites
-1. [Private sites](docs/private.md): Set up private sites with Tailscale and NextDNS
-1. [Ansible](docs/ansible.md): Run Ansible playbooks for automated deployment
+1. [Set variables](docs/variables.md) like your server name, first username, and application secrets
+1. [Create a Proxmox hypervisor](docs/proxmox.md) and configure it for Tailscale and SSL
+1. [Create a Linux VM](docs/linux-vm.md) in Proxmox and configure it for Ansible
+1. [Use Ansible](docs/ansible.md) to configure the Debian VM and its Docker containers
+1. [Configure Cloudflare](docs/cloudflare.md) tunnels and DNS for public sites
+1. [Shield private sites](docs/private.md) with Tailscale and NextDNS
 
 # Additional documentation
 
@@ -38,7 +25,6 @@ Follow these steps in order to set up your server environment:
 -   [Apprise](docs/apprise.md): Send notifications to Mastodon and other services
 -   [Network share](docs/network-share.md): Mount a network shared folder using SMB/CIFS
 -   [Gitea](docs/gitea.md): Get the runner registration token
--   [Tailscale](docs/tailscale.md): Set up Tailscale for secure private networking
 -   [Grafana](docs/grafana.md): Connect Grafana to Pocket ID for authentication
 -   [Caddy](docs/caddy.md): Configure Caddy for reverse proxy and DNS management
 -   [Ports](docs/ports.md): All ports and services used in this setup

@@ -1,13 +1,25 @@
 # Linux virtual machine
 
+In Proxmox:
+
+1. Download Debian ISO
+    - Go to `Datacenter > compy386 > local > ISO Images`
+    - Add from URL (or latest from [Debian](https://www.debian.org/distrib/)):
+      `https://cdimage.debian.org/debian-cd/current/amd64/iso-dvd/debian-12.11.0-amd64-DVD-1.iso`
+1. Create VM and install
+    - Use the server name and first username you set in [variables](docs/variables.md)
+    - Once it's installed, get the IP address of your Debian VM from your router. Proxmox does not tell you the IP address of the VM. You'll need this for the Ansible step below.
+
 After creating a Debian VM in Proxmox, you need to configure it so Ansible can reach it.
 
-## Put SSH key in authorized_keys
+# Configure the Debian VM for Ansible
+
+## Put your SSH key in authorized_keys
 
 Run:
 
 ```bash
-ssh-copy-id strongbad@ip.address
+ssh-copy-id strongbad@compy386
 ```
 
 ## Install sudo
@@ -15,7 +27,7 @@ ssh-copy-id strongbad@ip.address
 Run:
 
 ```bash
-ssh strongbad@ip.address
+ssh strongbad@compy386
 su -
 apt update
 apt install sudo
@@ -29,3 +41,8 @@ Run:
 su -
 addusers strongbad sudo
 ```
+
+# Update Ansible inventory
+
+1. Open `ansible/inventory/hosts.yml`
+1. Update `ansible_host` to your Debian VM's IP address

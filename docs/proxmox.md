@@ -2,33 +2,17 @@
 
 1. Install Proxmox from USB
     - **Hostname:** `compy386.domain.com` (the `compy386` part becomes the node name in Tailscale, so consider it carefully)
-    - **IP Address:** `ip.address/24`
+    - **IP Address:** `ip.address/24` (ip.address should be what you want to use for your Proxmox server)
     - **Gateway:** `router.ip.address`
     - **DNS Server:** `router.ip.address`
 2. Repositories
     - Navigate to `Datacenter > compy386 > Repositories`
     - Disable all repositories starting with `enterprise.proxmox`
-3. Download Debian ISO
-    - Go to `Datacenter > example > local > ISO Images`
-    - Add from URL:
-      `https://cdimage.debian.org/debian-cd/current/amd64/iso-dvd/debian-12.11.0-amd64-DVD-1.iso`
-4. Create VM and install
-
-# System Updates
-
-1. Connect to your server:
-    ```bash
-    ssh strongbad@ip.address
-    apt update
-    apt upgrade
-    ```
 
 # Tailscale
 
-## Setup
-
 1. Install Tailscale
-    - Navigate to `Datacenter > example > Shell`
+    - Navigate to `Datacenter > compy386 > Shell`
     - Run:
         ```bash
         curl -fsSL https://pkgs.tailscale.com/stable/debian/bookworm.noarmor.gpg | tee /usr/share/keyrings/tailscale-archive-keyring.gpg >/dev/null
@@ -41,11 +25,20 @@
     tailscale up
     ```
 
+# System Updates
+
+1. Connect to your server:
+    ```bash
+    ssh strongbad@compy386
+    apt update
+    apt upgrade
+    ```
+
 ## SSL
 
 1. Install jq for JSON parsing:
     ```bash
-    apt-get install jq
+    apt install jq
     ```
 1. Create script at `/root/tailscale-ssl.sh`:
     ```bash
