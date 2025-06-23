@@ -31,3 +31,8 @@ This will take a long time to run. Once it's done, use [Cloudflare](./cloudflare
 ## Troubleshooting
 
 If the Tailscale Ansible role fails, disable manual device approval in the Tailscale admin console.
+
+---
+
+-   **Previous step:** [Create a Linux VM](./linux-vm.md) in Proxmox and configure it for Ansible
+-   **Next step:** [Set up Cloudflare](./cloudflare.md) tunnels and DNS for public sites

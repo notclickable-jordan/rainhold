@@ -46,3 +46,8 @@ addusers strongbad sudo
 
 1. Open `ansible/inventory/hosts.yml`
 1. Update `ansible_host` to your Debian VM's IP address
+
+---
+
+-   **Previous step:** [Create a Proxmox hypervisor](./proxmox.md) and configure it for Tailscale and SSL
+-   **Next step:** [Use Ansible](./ansible.md) to configure the Linux VM and its Docker containers

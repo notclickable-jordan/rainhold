@@ -129,3 +129,8 @@ Getting stuck on "waiting for /dev to be a fully populated" during installation?
 1. Press `Ctrl + X` to boot with this option
 
 This should allow the installation to proceed without issues.
+
+---
+
+-   **Previous step:** [Set variables](./variables.md) like your server name, first username, and application secrets
+-   **Next step:** [Create a Linux VM](./linux-vm.md) in Proxmox and configure it for Ansible

@@ -29,3 +29,7 @@ Generate alphanumeric secrets using OpenSSL:
 ```bash
 openssl rand -base64 32
 ```
+
+---
+
+-   **Next step:** [Create a Proxmox hypervisor](./proxmox.md) and configure it for Tailscale and SSL

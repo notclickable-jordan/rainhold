@@ -31,3 +31,7 @@ private.example.com {
     }
 }
 ```
+
+---
+
+-   **Previous step:** [Set up Cloudflare](./cloudflare.md) tunnels and DNS for public sites
