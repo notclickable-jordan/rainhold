@@ -166,3 +166,11 @@
     mode: "0600"
     owner: root
     group: root
+
+- name: Generate env for Watchtower
+  template:
+    src: watchtower.env.j2
+    dest: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/watchtower/.env"
+    mode: "0600"
+    owner: root
+    group: root

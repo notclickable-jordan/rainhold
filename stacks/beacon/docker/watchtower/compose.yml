@@ -9,5 +9,7 @@ services:
             timeout: 10s
             retries: 3
             start_period: 5s
+        env_file:
+            - .env
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock
