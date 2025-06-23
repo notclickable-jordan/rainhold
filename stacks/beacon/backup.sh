@@ -73,7 +73,7 @@ else
 fi
 
 DATE_FOLDER="$(date '+%Y-%m-%d')"
-TARGET_FOLDER="$BACKUP_PATH/$DATE_FOLDER"
+TARGET_FOLDER="$BACKUP_PATH"
 
 # Create the target folder if it doesn't exist
 mkdir -p "$TARGET_FOLDER"
