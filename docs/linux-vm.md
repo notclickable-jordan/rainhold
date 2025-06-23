@@ -5,7 +5,9 @@ In Proxmox:
 1. Download Debian ISO
     - Go to `Datacenter > compy386 > local > ISO Images`
     - Add from URL (or latest from [Debian](https://www.debian.org/distrib/)):
-      `https://cdimage.debian.org/debian-cd/current/amd64/iso-dvd/debian-12.11.0-amd64-DVD-1.iso`
+        ```
+        https://cdimage.debian.org/debian-cd/current/amd64/iso-dvd/debian-12.11.0-amd64-DVD-1.iso
+        ```
 1. Create VM and install
     - Use the server name and first username you set in [variables](docs/variables.md)
     - Once it's installed, get the IP address of your Debian VM from your router. Proxmox does not tell you the IP address of the VM. You'll need this for the Ansible step below.

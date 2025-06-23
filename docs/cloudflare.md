@@ -9,10 +9,6 @@ Public hostnames should be configured as:
 -   TLS > Origin server name: subdomain.example.com
 -   No TLS verify (checked)
 
-## Private sites
-
-See [private sites](docs/private.md) for details on how to set up private hostnames using Tailscale and NextDNS.
-
 ## SSL API key
 
 To get SSL certificates through Cloudflare, you need to set up an API key. This is done in the Cloudflare dashboard:
