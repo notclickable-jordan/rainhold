@@ -14,6 +14,9 @@ DATE="$(date '+%Y-%m-%d %H:%M:%S')"
 DATE_SUFFIX="$(date '+%Y-%m-%d')"
 BACKUP_FILE="${SERVER_NAME}-${DATE_SUFFIX}.tgz"
 
+# Redirect general output to a log file, but allow mail command to work
+exec > "$BACKUP_PATH/backup.log" 2>&1
+
 # Get the number of entries in the VOLUMES variable
 SERVICE_COUNT=${#VOLUMES[@]}
 
@@ -93,5 +96,8 @@ echo "[Backup] Empty folders cleaned up."
 # Compose email body
 MAIL_BODY="Backup completed on $HUMAN_DATE\nTime elapsed: $ELAPSED_STR\n\nFile: $BACKUP_FILE\nSize: $BACKUP_SIZE\nVolumes: $SERVICE_COUNT\n"
 
-echo -e "$MAIL_BODY" | mail -s "${SERVER_NAME} backup complete" "$EMAIL"
+{
+  echo -e "$MAIL_BODY" | mail -s "${SERVER_NAME} backup complete" "$EMAIL"
+} 2>&1
+
 echo "[Backup] Notification email sent to $EMAIL"
