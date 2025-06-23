@@ -3,31 +3,30 @@
 Complete guide to set up a secure, automated server environment.
 
 -   Virtualize multiple servers through Proxmox
--   Configure servers automatically using Ansible
--   Mnaage users using OAuth with LDAP and passkey logins
+-   Automatic server setup using Ansible
+-   Manage users using OAuth with LDAP and passkey logins
 -   Host public sites through Cloudflare
--   Serve private sites safely through custom DNS via Tailscale and NextDNS
+-   Serve private sites through custom DNS via Tailscale and NextDNS
 
 # Guide
 
-Follow these steps in order to set up your server environment.
+Follow these steps to set up your server environment.
 
 1. [Set variables](docs/variables.md) like your server name, first username, and application secrets
 1. [Create a Proxmox hypervisor](docs/proxmox.md) and configure it for Tailscale and SSL
 1. [Create a Linux VM](docs/linux-vm.md) in Proxmox and configure it for Ansible
-1. [Use Ansible](docs/ansible.md) to configure the Debian VM and its Docker containers
-1. [Configure Cloudflare](docs/cloudflare.md) tunnels and DNS for public sites
+1. [Use Ansible](docs/ansible.md) to configure the Linux VM and its Docker containers
+1. [Set up Cloudflare](docs/cloudflare.md) tunnels and DNS for public sites
 1. [Shield private sites](docs/private.md) with Tailscale and NextDNS
 
-# Additional documentation
+# Further documentation
 
--   [Pocket ID](docs/pocket-id.md): Automatic login to sites using Pocket ID and LLDAP
--   [Apprise](docs/apprise.md): Send notifications to Mastodon and other services
--   [Network share](docs/network-share.md): Mount a network shared folder using SMB/CIFS
--   [Gitea](docs/gitea.md): Get the runner registration token
--   [Grafana](docs/grafana.md): Connect Grafana to Pocket ID for authentication
--   [Caddy](docs/caddy.md): Configure Caddy for reverse proxy and DNS management
--   [Ports](docs/ports.md): All ports and services used in this setup
+-   [Pocket ID](docs/pocket-id.md) provides automatic login to sites using OAuth and LLDAP
+-   [Apprise](docs/apprise.md) sends notifications to Mastodon
+-   [Network share](docs/network-share.md) instructions for backups and file sharing
+-   [Gitea](docs/gitea.md) needs a runner registration token
+-   [Caddy](docs/caddy.md) uses a custom image for Cloudflare DNS
+-   [Ports](docs/ports.md) lists all ports numbers used in this setup
 
 # Services used
 
