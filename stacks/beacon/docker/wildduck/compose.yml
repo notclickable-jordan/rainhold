@@ -11,6 +11,8 @@ services:
             - redis
         volumes:
             - ./config/wildduck:/wildduck/config
+        networks:
+            - caddy
 
     wildduck-webmail:
         image: nodemailer/wildduck-webmail:latest
@@ -24,6 +26,8 @@ services:
             - wildduck
         volumes:
             - ./config/wildduck-webmail:/app/config
+        networks:
+            - caddy
 
     zonemta:
         image: ghcr.io/zone-eu/zonemta-wildduck:1.32.20
@@ -36,6 +40,8 @@ services:
             - redis
         volumes:
             - ./config/zone-mta:/app/config
+        networks:
+            - caddy
 
     haraka:
         image: ghcr.io/zone-eu/haraka-plugin-wildduck:5.8.22
@@ -51,6 +57,8 @@ services:
             - ./config/haraka:/app/config
             - ./certs/HOSTNAME-key.pem:/app/config/tls_key.pem
             - ./certs/HOSTNAME.pem:/app/config/tls_cert.pem
+        networks:
+            - caddy
 
     rspamd:
         image: nodemailer/rspamd
@@ -62,6 +70,8 @@ services:
             - ./config/rspamd/override.d:/etc/rspamd/override.d
             - ./config/rspamd/worker-normal.conf:/etc/rspamd/worker-normal.conf
             - ./config/rspamd/local.d:/etc/rspamd/local.d
+        networks:
+            - caddy
 
     mongo:
         image: mongo
@@ -69,6 +79,8 @@ services:
         restart: unless-stopped
         volumes:
             - mongo:/data/db
+        networks:
+            - caddy
 
     redis:
         image: redis:alpine
@@ -76,6 +88,8 @@ services:
         restart: unless-stopped
         volumes:
             - redis:/data
+        networks:
+            - caddy
 
 volumes:
     mongo:
