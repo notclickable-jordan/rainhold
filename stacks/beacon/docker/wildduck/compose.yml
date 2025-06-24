@@ -1,0 +1,87 @@
+services:
+    wildduck:
+        image: ghcr.io/zone-eu/wildduck:1.45.5
+        container_name: wildduck
+        restart: unless-stopped
+        ports:
+            - 4217:8080
+            - 143:143
+        depends_on:
+            - mongo
+            - redis
+        volumes:
+            - ./config/wildduck:/wildduck/config
+
+    wildduck-webmail:
+        image: nodemailer/wildduck-webmail:latest
+        container_name: wildduck-webmail
+        restart: unless-stopped
+        command:
+            - ""
+        depends_on:
+            - mongo
+            - redis
+            - wildduck
+        volumes:
+            - ./config/wildduck-webmail:/app/config
+
+    zonemta:
+        image: ghcr.io/zone-eu/zonemta-wildduck:1.32.20
+        container_name: wildduck-zonemta
+        restart: unless-stopped
+        # ports:
+        #   - "587:587" # for local testing
+        depends_on:
+            - mongo
+            - redis
+        volumes:
+            - ./config/zone-mta:/app/config
+
+    haraka:
+        image: ghcr.io/zone-eu/haraka-plugin-wildduck:5.8.22
+        container_name: wildduck-haraka
+        restart: unless-stopped
+        ports:
+            - 25:25
+        depends_on:
+            - mongo
+            - redis
+            - rspamd
+        volumes:
+            - ./config/haraka:/app/config
+            - ./certs/HOSTNAME-key.pem:/app/config/tls_key.pem
+            - ./certs/HOSTNAME.pem:/app/config/tls_cert.pem
+
+    rspamd:
+        image: nodemailer/rspamd
+        container_name: wildduck-rspamd
+        restart: unless-stopped
+        depends_on:
+            - redis
+        volumes:
+            - ./config/rspamd/override.d:/etc/rspamd/override.d
+            - ./config/rspamd/worker-normal.conf:/etc/rspamd/worker-normal.conf
+            - ./config/rspamd/local.d:/etc/rspamd/local.d
+
+    mongo:
+        image: mongo
+        container_name: wildduck-mongo
+        restart: unless-stopped
+        volumes:
+            - mongo:/data/db
+
+    redis:
+        image: redis:alpine
+        container_name: wildduck-redis
+        restart: unless-stopped
+        volumes:
+            - redis:/data
+
+volumes:
+    mongo:
+    redis:
+    traefik:
+
+networks:
+    caddy:
+        external: true

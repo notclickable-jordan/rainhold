@@ -239,3 +239,19 @@ vaultwarden.notclickable.com {
 starbase80.dev, www.starbase80.dev {
     redir https://github.com/notclickable-jordan/starbase-80
 }
+
+mail.notclickable.com {
+    tls {
+        dns cloudflare {{ cloudflare_ssl_api_token }}
+    }
+
+    reverse_proxy http://wildduck-webmail:3000
+}
+
+admin.mail.notclickable.com {
+    tls {
+        dns cloudflare {{ cloudflare_ssl_api_token }}
+    }
+
+    reverse_proxy http://wildduck:8080
+}
