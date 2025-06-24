@@ -7,8 +7,8 @@ services:
         env_file:
             - .env
         restart: unless-stopped
-        ports:
-            - 4212:8080
+        networks:
+            - caddy
         depends_on:
             db:
                 condition: service_healthy
@@ -23,8 +23,14 @@ services:
             test: ["CMD", "pg_isready", "-U", "miniflux"]
             interval: 10s
             start_period: 30s
+        networks:
+            - caddy
         volumes:
             - db:/var/lib/postgresql/data
 
 volumes:
     db:
+
+networks:
+    caddy:
+        external: true
