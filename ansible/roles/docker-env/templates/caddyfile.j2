@@ -30,7 +30,7 @@ pocket-id.notclickable.com {
 }
 
 dozzle.notclickable.com {
-    forward_auth {{ ansible_host }}:4206 {
+    forward_auth http://tinyauth:3000 {
         uri /api/auth/caddy
         copy_headers Remote-User Remote-Email Remote-Name Remote-Groups
     }
@@ -67,7 +67,7 @@ mailrise.notclickable.com {
 }
 
 gitea.notclickable.com {
-    forward_auth {{ ansible_host }}:4206 {
+    forward_auth http://tinyauth:3000 {
         uri /api/auth/caddy
         copy_headers Remote-User Remote-Email Remote-Name Remote-Groups
     }
@@ -80,7 +80,7 @@ gitea.notclickable.com {
 }
 
 n8n.notclickable.com {
-    forward_auth {{ ansible_host }}:4206 {
+    forward_auth http://tinyauth:3000 {
         uri /api/auth/caddy
         copy_headers Remote-User Remote-Email Remote-Name Remote-Groups
     }
@@ -97,7 +97,7 @@ lemmy.notclickable.com {
         dns cloudflare {{ cloudflare_ssl_api_token }}
     }
 
-    reverse_proxy http://lemmy:8536
+    reverse_proxy http://lemmy-nginx:8536
 }
 
 miniflux.notclickable.com {
@@ -109,7 +109,7 @@ miniflux.notclickable.com {
 }
 
 grafana.notclickable.com {
-    forward_auth {{ ansible_host }}:4206 {
+    forward_auth http://tinyauth:3000 {
         uri /api/auth/caddy
         copy_headers Remote-User Remote-Email Remote-Name Remote-Groups
     }
@@ -190,7 +190,7 @@ notclickable.social, www.notclickable.social {
 }
 
 calibre.notclickable.com {
-    forward_auth {{ ansible_host }}:4206 {
+    forward_auth http://tinyauth:3000 {
         uri /api/auth/caddy
         copy_headers Remote-User Remote-Email Remote-Name Remote-Groups
     }
@@ -203,7 +203,7 @@ calibre.notclickable.com {
 }
 
 ytptube.notclickable.com {
-    forward_auth {{ ansible_host }}:4206 {
+    forward_auth http://tinyauth:3000 {
         uri /api/auth/caddy
         copy_headers Remote-User Remote-Email Remote-Name Remote-Groups
     }
@@ -216,7 +216,7 @@ ytptube.notclickable.com {
 }
 
 audiobookshelf.notclickable.com {
-    forward_auth {{ ansible_host }}:4206 {
+    forward_auth http://tinyauth:3000 {
         uri /api/auth/caddy
         copy_headers Remote-User Remote-Email Remote-Name Remote-Groups
     }
