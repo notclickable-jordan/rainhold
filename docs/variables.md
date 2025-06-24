@@ -1,3 +1,9 @@
+# Clone this repository
+
+```bash
+git clone https://github.com/notclickable-jordan/rainhold.git
+```
+
 # Server and user
 
 Come up with a name for your server, and your first username. These are mine:
