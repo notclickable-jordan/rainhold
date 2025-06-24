@@ -174,3 +174,11 @@
     mode: "0600"
     owner: root
     group: root
+
+- name: Generate env for Vaultwarden
+  template:
+    src: vaultwarden.env.j2
+    dest: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/vaultwarden/.env"
+    mode: "0600"
+    owner: root
+    group: root

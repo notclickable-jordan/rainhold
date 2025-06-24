@@ -23,6 +23,7 @@ VOLUMES=(
   "n8n_app:/n8n/app"
   "n8n_db:/n8n/db"
   "pocket-id_data:/pocket-id/data"
+  "vaultwarden_data:/vaultwarden/data"
   "ytptube_config:/ytptube/config"
 )
 

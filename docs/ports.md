@@ -25,3 +25,4 @@
 | 4220    | Calibre            | E-book management                  |
 | 4221    | YTPTube            | YouTube video downloader           |
 | 4222    | AudioBookshelf     | Audiobook management               |
+| 4223    | Vaultwarden        | Password management                |

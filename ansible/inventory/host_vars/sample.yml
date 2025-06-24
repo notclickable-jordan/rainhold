@@ -125,3 +125,6 @@ miniflux_admin_username: "admin"
 miniflux_admin_password: "your_miniflux_admin_password_here"
 miniflux_db_user: "miniflux"
 miniflux_db_password: "your_miniflux_db_password_here"
+
+# --- Vaultwarden ---
+vaultwarden_admin_token: "your_vaultwarden_admin_token_here"

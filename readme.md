@@ -27,6 +27,7 @@ Follow these steps to set up your server environment.
 -   [Gitea](docs/gitea.md) needs a runner registration token
 -   [Caddy](docs/caddy.md) uses a custom image for Cloudflare DNS
 -   [Ports](docs/ports.md) lists all ports numbers used in this setup
+-   [Vaultwarden](docs/vaultwarden.md) password management with Bitwarden compatibility
 
 # Services used
 
@@ -56,5 +57,6 @@ Follow these steps to set up your server environment.
 -   [Starbase 80](https://github.com/notclickable-jordan/starbase-80)
 -   [Tailscale](https://tailscale.com)
 -   [Tinyauth](https://tinyauth.app)
+-   [Vaultwarden](https://github.com/dani-garcia/vaultwarden)
 -   [Watchtower](https://github.com/containrrr/watchtower)
 -   [YTPTube](https://github.com/arabcoders/ytptube)
