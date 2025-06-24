@@ -42,7 +42,7 @@ services:
         container_name: wildduck-haraka
         restart: unless-stopped
         ports:
-            - 25:25
+            - 2525:25
         depends_on:
             - mongo
             - redis
