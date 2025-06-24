@@ -13,6 +13,8 @@ services:
             - db
         ports:
             - 4209:22
+        networks:
+            - caddy
         healthcheck:
             test: ["CMD-SHELL", "curl -f http://localhost:3000 || exit 1"]
             interval: 30s
@@ -23,6 +25,8 @@ services:
         image: docker.io/library/postgres:14
         restart: unless-stopped
         container_name: gitea-db
+        networks:
+            - caddy
         env_file:
             - .env
         volumes:
@@ -31,6 +35,8 @@ services:
     runner:
         image: gitea/act_runner
         container_name: gitea-runner
+        networks:
+            - caddy
         env_file:
             - .env.runner
         restart: unless-stopped
@@ -45,3 +51,7 @@ volumes:
     data:
     db:
     runner_data:
+
+networks:
+    caddy:
+        external: true
