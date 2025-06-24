@@ -12,7 +12,6 @@ services:
         depends_on:
             - db
         ports:
-            - 4208:3000
             - 4209:22
         healthcheck:
             test: ["CMD-SHELL", "curl -f http://localhost:3000 || exit 1"]

@@ -5,10 +5,14 @@ services:
         restart: unless-stopped
         env_file:
             - .env
-        ports:
-            - 4223:80
         volumes:
             - data:/data
+        networks:
+            - caddy
 
 volumes:
     data:
+
+networks:
+    caddy:
+        external: true

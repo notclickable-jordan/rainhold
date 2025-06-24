@@ -14,19 +14,19 @@
 }
 
 ldap.notclickable.com {
-    reverse_proxy {{ ansible_host }}:4202
-
     tls {
         dns cloudflare {{ cloudflare_ssl_api_token }}
     }
+
+    reverse_proxy http://lldap:17170
 }
 
 pocket-id.notclickable.com {
-    reverse_proxy {{ ansible_host }}:4203
-
     tls {
         dns cloudflare {{ cloudflare_ssl_api_token }}
     }
+
+    reverse_proxy http://pocket-id:1411
 }
 
 dozzle.notclickable.com {
@@ -39,39 +39,31 @@ dozzle.notclickable.com {
         dns cloudflare {{ cloudflare_ssl_api_token }}
     }
 
-    reverse_proxy {{ ansible_host }}:4204
+    reverse_proxy http://dozzle:8080
 }
 
-notclickable.com {
-    reverse_proxy {{ ansible_host }}:4205
-
+notclickable.com, www.notclickable.com {
     tls {
         dns cloudflare {{ cloudflare_ssl_api_token }}
     }
-}
-
-www.notclickable.com {
-    reverse_proxy {{ ansible_host }}:4205
-
-    tls {
-        dns cloudflare {{ cloudflare_ssl_api_token }}
-    }
+    
+    reverse_proxy http://starbase-80:4173
 }
 
 tinyauth.notclickable.com {
-    reverse_proxy {{ ansible_host }}:4206
-
     tls {
         dns cloudflare {{ cloudflare_ssl_api_token }}
     }
+
+    reverse_proxy http://tinyauth:3000
 }
 
-mailrise.notclickable.com:465 {
-    reverse_proxy {{ ansible_host }}:465
-
+mailrise.notclickable.com {
     tls {
         dns cloudflare {{ cloudflare_ssl_api_token }}
     }
+
+    reverse_proxy http://mailrise:8025
 }
 
 gitea.notclickable.com {
@@ -84,7 +76,7 @@ gitea.notclickable.com {
         dns cloudflare {{ cloudflare_ssl_api_token }}
     }
 
-    reverse_proxy {{ ansible_host }}:4208
+    reverse_proxy http://gitea:3000
 }
 
 n8n.notclickable.com {
@@ -101,19 +93,19 @@ n8n.notclickable.com {
 }
 
 lemmy.notclickable.com {
-    reverse_proxy {{ ansible_host }}:4211
-
     tls {
         dns cloudflare {{ cloudflare_ssl_api_token }}
     }
+
+    reverse_proxy http://lemmy:8536
 }
 
 miniflux.notclickable.com {
-    reverse_proxy {{ ansible_host }}:4212
-
     tls {
         dns cloudflare {{ cloudflare_ssl_api_token }}
     }
+
+    reverse_proxy http://miniflux:8080
 }
 
 grafana.notclickable.com {
@@ -126,7 +118,7 @@ grafana.notclickable.com {
         dns cloudflare {{ cloudflare_ssl_api_token }}
     }
 
-    reverse_proxy {{ ansible_host }}:4213
+    reverse_proxy http://grafana:3000
 }
 
 jellyfin.notclickable.com {
@@ -134,7 +126,7 @@ jellyfin.notclickable.com {
         dns cloudflare {{ cloudflare_ssl_api_token }}
     }
 
-    reverse_proxy {{ ansible_host }}:4219
+    reverse_proxy http://jellyfin:8096
 }
 
 notclickable.social, www.notclickable.social {
@@ -175,7 +167,7 @@ notclickable.social, www.notclickable.social {
         }
 
         reverse_proxy @streaming {
-                to {{ ansible_host }}:4218
+                to http://mastodon_streaming:4000
                 header_up X-Forwarded-Port 443
                 header_up X-Forwarded-Proto https
 
@@ -186,7 +178,7 @@ notclickable.social, www.notclickable.social {
         }
 
         reverse_proxy {
-                to {{ ansible_host }}:4217
+                to http://mastodon_web:3000
                 header_up X-Forwarded-Port 443
                 header_up X-Forwarded-Proto https
 
@@ -207,7 +199,7 @@ calibre.notclickable.com {
         dns cloudflare {{ cloudflare_ssl_api_token }}
     }
 
-    reverse_proxy {{ ansible_host }}:4220
+    reverse_proxy http://calibre:8083
 }
 
 ytptube.notclickable.com {
@@ -220,7 +212,7 @@ ytptube.notclickable.com {
         dns cloudflare {{ cloudflare_ssl_api_token }}
     }
 
-    reverse_proxy {{ ansible_host }}:4221
+    reverse_proxy http://ytptube:8081
 }
 
 audiobookshelf.notclickable.com {
@@ -233,7 +225,7 @@ audiobookshelf.notclickable.com {
         dns cloudflare {{ cloudflare_ssl_api_token }}
     }
 
-    reverse_proxy {{ ansible_host }}:4222
+    reverse_proxy http://audiobookshelf:80
 }
 
 vaultwarden.notclickable.com {
@@ -241,7 +233,7 @@ vaultwarden.notclickable.com {
         dns cloudflare {{ cloudflare_ssl_api_token }}
     }
 
-    reverse_proxy {{ ansible_host }}:4223
+    reverse_proxy http://vaultwarden:80
 }
 
 starbase80.dev, www.starbase80.dev {

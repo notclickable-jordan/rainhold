@@ -9,7 +9,6 @@ services:
             - .env
         ports:
             - 4201:3890
-            - 4202:17170
         networks:
             - caddy
 

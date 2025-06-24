@@ -11,8 +11,6 @@ services:
         restart: unless-stopped
         environment:
             - JELLYFIN_PublishedServerUrl=https://jellyfin.notclickable.com
-        ports:
-            - 4219:8096
         networks:
             - caddy
 

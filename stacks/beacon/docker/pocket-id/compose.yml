@@ -13,8 +13,6 @@ services:
             timeout: 5s
             retries: 2
             start_period: 10s
-        ports:
-            - 4203:1411
         networks:
             - caddy
 

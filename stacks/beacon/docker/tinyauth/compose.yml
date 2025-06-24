@@ -5,10 +5,9 @@ services:
         restart: unless-stopped
         env_file:
             - .env
-        ports:
-            - 4206:3000
         networks:
             - caddy
+
 networks:
     caddy:
         external: true

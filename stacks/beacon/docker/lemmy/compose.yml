@@ -16,8 +16,6 @@ services:
         depends_on:
             - pictrs
             - lemmy-ui
-        ports:
-            - 4211:8536
         networks:
             - caddy
 

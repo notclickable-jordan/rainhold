@@ -7,8 +7,6 @@ services:
             - /mnt/media/podcasts:/podcasts
             - config:/config
             - metadata:/metadata
-        ports:
-            - 4222:80
         environment:
             - TZ=America/Los_Angeles
         restart: unless-stopped

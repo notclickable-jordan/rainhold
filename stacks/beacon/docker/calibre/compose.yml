@@ -12,8 +12,6 @@ services:
             - config:/config
             - /mnt/media/books:/books
         restart: unless-stopped
-        ports:
-            - 4220:8083
         networks:
             - caddy
 

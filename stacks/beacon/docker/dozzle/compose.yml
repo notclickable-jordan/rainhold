@@ -9,8 +9,6 @@ services:
         environment:
             - DOZZLE_ENABLE_ACTIONS=true
             - DOZZLE_ENABLE_SHELL=true
-        ports:
-            - 4204:8080
         networks:
             - caddy
 

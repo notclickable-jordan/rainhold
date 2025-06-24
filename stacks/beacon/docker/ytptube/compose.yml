@@ -9,8 +9,6 @@ services:
             - /mnt/media/video/YouTube:/downloads
         tmpfs:
             - /tmp
-        ports:
-            - 4221:8081
         networks:
             - caddy
 
