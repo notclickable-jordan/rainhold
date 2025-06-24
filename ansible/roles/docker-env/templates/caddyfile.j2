@@ -97,7 +97,7 @@ n8n.notclickable.com {
         dns cloudflare {{ cloudflare_ssl_api_token }}
     }
 
-    reverse_proxy {{ ansible_host }}:4210
+    reverse_proxy http://n8n:5678
 }
 
 lemmy.notclickable.com {
