@@ -66,7 +66,7 @@
     mode: "0755"
     recurse: yes
 
-- name: Ensure proper permissions on config files
+- name: Ensure proper permissions on certs files
   file:
     path: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/wildduck/certs"
     state: directory
