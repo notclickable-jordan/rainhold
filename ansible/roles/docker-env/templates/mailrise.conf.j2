@@ -1,14 +1,11 @@
 configs:
-  "alerts@notclickable.com":
+  "*@*":
     urls:
       - mastodons://{{ apprise_mastodon_token }}@{{ apprise_mastodon_host }}?overflow=truncate
     mailrise:
       title_template: "${subject}"
       body_template: "From: ${from}\n\n\n${body}"
       body_format: text
-  "*@*":
-    urls:
-      - mailto://jordan:{{ wildduck_password }}@mail.notclickable.com:2525?smtp=mail.notclickable.com:2525&to=jordan@mail.notclickable.com
 
 tls:
   mode: off

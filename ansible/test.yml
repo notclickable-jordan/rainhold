@@ -2,5 +2,4 @@
   hosts: public
   become: true
   roles:
-    #- role: wildduck
     - role: docker-env

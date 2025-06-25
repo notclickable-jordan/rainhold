@@ -15,5 +15,3 @@ stacks/*/docker/mailrise/mailrise.conf
 stacks/*/docker/mailrise/mailrise.crt
 stacks/*/docker/mailrise/mailrise.key
 stacks/*/docker/caddy/Caddyfile
-stacks/*/docker/wildduck/config
-stacks/*/docker/wildduck/certs

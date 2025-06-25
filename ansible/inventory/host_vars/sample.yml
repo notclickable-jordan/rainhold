@@ -128,6 +128,3 @@ miniflux_db_password: "your_miniflux_db_password_here"
 
 # --- Vaultwarden ---
 vaultwarden_admin_token: "your_vaultwarden_admin_token_here"
-
-# --- Wildduck ---
-wildduck_password: "your_wildduck_password_here"
