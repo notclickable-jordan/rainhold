@@ -59,6 +59,23 @@
     directory_mode: yes
     mode: preserve
 
+- name: Ensure proper permissions on certs files
+  file:
+    path: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/wildduck/certs"
+    state: directory
+    mode: "0755"
+    recurse: yes
+
+- name: Move files from certs/certs to certs
+  shell: |
+    mv {{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/wildduck/certs/certs/* {{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/wildduck/certs/ 2>/dev/null || true
+  ignore_errors: true
+
+- name: Remove certs/certs directory if it exists
+  file:
+    path: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/wildduck/certs/certs"
+    state: absent
+
 - name: Ensure proper permissions on config files
   file:
     path: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/wildduck/config"
@@ -66,9 +83,12 @@
     mode: "0755"
     recurse: yes
 
-- name: Ensure proper permissions on certs files
+- name: Move files from config/config-generated to config
+  shell: |
+    mv {{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/wildduck/config/config-generated/* {{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/wildduck/config/ 2>/dev/null || true
+  ignore_errors: true
+
+- name: Remove config/config-generated directory if it exists
   file:
-    path: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/wildduck/certs"
-    state: directory
-    mode: "0755"
-    recurse: yes
+    path: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/wildduck/config/config-generated"
+    state: absent
