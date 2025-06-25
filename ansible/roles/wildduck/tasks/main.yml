@@ -1,0 +1,65 @@
+---
+# Wildduck email server setup role
+
+- name: Clone Wildduck dockerized repository
+  git:
+    repo: https://github.com/nodemailer/wildduck-dockerized
+    dest: /etc/wildduck-dockerized
+    version: master
+    force: yes
+
+- name: Make setup script executable
+  file:
+    path: /etc/wildduck-dockerized/setup.sh
+    mode: "0755"
+
+- name: Ensure target config directory exists
+  file:
+    path: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/wildduck/config"
+    state: directory
+    mode: "0755"
+    recurse: yes
+
+- name: Run setup script with expect to handle interactive prompts
+  expect:
+    command: /etc/wildduck-dockerized/setup.sh mail.notclickable.com notclickable.com true
+    responses:
+      "set up self-signed certs for development\\? \\(Y/n\\)": "y"
+      "set up the DNS\\? \\[Y/n\\]": "n"
+    timeout: 300
+  register: setup_result
+
+- name: Debug setup script output
+  debug:
+    var: setup_result.stdout_lines
+
+- name: Wait for config generation to complete
+  wait_for:
+    path: /etc/wildduck-dockerized/config-generated
+    state: present
+    delay: 5
+    timeout: 300
+
+- name: Find all files in config-generated directory
+  find:
+    paths: /etc/wildduck-dockerized/config-generated
+    recurse: yes
+    file_type: any
+    excludes: docker-compose.yml
+  register: config_files
+
+- name: Copy config files to target directory
+  copy:
+    src: "{{ item.path }}"
+    dest: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/wildduck/config/{{ item.path | regex_replace('^/etc/wildduck-dockerized/config-generated/', '') }}"
+    remote_src: yes
+    directory_mode: yes
+  with_items: "{{ config_files.files }}"
+  when: item.path | basename != 'docker-compose.yml'
+
+- name: Ensure proper permissions on config files
+  file:
+    path: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/wildduck/config"
+    state: directory
+    mode: "0755"
+    recurse: yes
