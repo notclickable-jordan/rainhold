@@ -1,4 +1,12 @@
 ---
+- name: Generate config file for Mailrise
+  template:
+    src: mailrise.conf.j2
+    dest: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/mailrise/mailrise.conf"
+    mode: "0644"
+    owner: root
+    group: root
+
 - name: Generate .env file for LLDAP
   template:
     src: lldap.env.j2
@@ -59,14 +67,6 @@
   template:
     src: caddyfile.j2
     dest: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/caddy/conf/Caddyfile"
-    mode: "0644"
-    owner: root
-    group: root
-
-- name: Generate config file for Mailrise
-  template:
-    src: mailrise.conf.j2
-    dest: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/mailrise/mailrise.conf"
     mode: "0644"
     owner: root
     group: root

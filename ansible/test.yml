@@ -2,6 +2,5 @@
   hosts: public
   become: true
   roles:
-    #- role: docker-network
-    #- role: docker-env
-    - role: wildduck
+    #- role: wildduck
+    - role: docker-env

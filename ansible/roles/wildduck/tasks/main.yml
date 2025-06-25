@@ -29,7 +29,7 @@
 
 - name: Run setup script with expect to handle interactive prompts
   expect:
-    command: sudo ./setup.sh mail.notclickable.com notclickable.com true
+    command: sudo ./setup.sh mail.notclickable.com mail.notclickable.com true
     responses:
       "set up self-signed certs for development\\? \\(Y/n\\)": "y"
       "set up the DNS\\? \\[Y/n\\]": "n"

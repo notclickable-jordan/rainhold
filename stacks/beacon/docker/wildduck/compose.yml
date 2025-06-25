@@ -54,8 +54,8 @@ services:
             - rspamd
         volumes:
             - ./config/haraka:/app/config
-            - ./certs/notclickable.com-key.pem:/app/config/tls_key.pem
-            - ./certs/notclickable.com.pem:/app/config/tls_cert.pem
+            - ./certs/mail.notclickable.com-key.pem:/app/config/tls_key.pem
+            - ./certs/mail.notclickable.com.pem:/app/config/tls_cert.pem
         networks:
             - caddy
 
