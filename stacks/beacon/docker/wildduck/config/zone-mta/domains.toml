@@ -1,7 +1,0 @@
-# Add domain specific settings here
-
-[default]
-maxConnections=5
-
-["gmail.com"]
-maxConnections=10

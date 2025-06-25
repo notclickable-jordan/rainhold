@@ -1,5 +1,0 @@
-["modules/zonemta-avast"]
-enabled=false # not enabled by default
-#enabled=["receiver", "main", "sender"]
-interfaces=['*']
-socket="/var/run/avast/scan.sock"
