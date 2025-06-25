@@ -10,7 +10,7 @@ services:
         networks:
             - caddy
         depends_on:
-            db:
+            miniflux-db:
                 condition: service_healthy
 
     miniflux-db:
