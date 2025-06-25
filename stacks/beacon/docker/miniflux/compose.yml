@@ -13,7 +13,7 @@ services:
             db:
                 condition: service_healthy
 
-    db:
+    miniflux-db:
         image: postgres:17-alpine
         container_name: miniflux-db
         env_file:
