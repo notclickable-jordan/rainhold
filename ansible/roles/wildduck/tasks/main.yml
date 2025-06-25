@@ -20,46 +20,48 @@
     mode: "0755"
     recurse: yes
 
+- name: Ensure python3-pexpect is installed for expect module
+  apt:
+    name: python3-pexpect
+    state: present
+    update_cache: yes
+  become: true
+
 - name: Run setup script with expect to handle interactive prompts
   expect:
-    command: /etc/wildduck-dockerized/setup.sh mail.notclickable.com notclickable.com true
+    command: sudo ./setup.sh mail.notclickable.com notclickable.com true
     responses:
       "set up self-signed certs for development\\? \\(Y/n\\)": "y"
       "set up the DNS\\? \\[Y/n\\]": "n"
     timeout: 300
+  args:
+    chdir: /etc/wildduck-dockerized
   register: setup_result
+  become: true
 
 - name: Debug setup script output
   debug:
     var: setup_result.stdout_lines
 
-- name: Wait for config generation to complete
-  wait_for:
-    path: /etc/wildduck-dockerized/config-generated
-    state: present
-    delay: 5
-    timeout: 300
-
-- name: Find all files in config-generated directory
-  find:
-    paths: /etc/wildduck-dockerized/config-generated
-    recurse: yes
-    file_type: any
-    excludes: docker-compose.yml
-  register: config_files
-
-- name: Copy config files to target directory
+- name: Copy config directory to target
   copy:
-    src: "{{ item.path }}"
-    dest: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/wildduck/config/{{ item.path | regex_replace('^/etc/wildduck-dockerized/config-generated/', '') }}"
+    src: /etc/wildduck-dockerized/config-generated/config-generated
+    dest: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/wildduck/config"
     remote_src: yes
     directory_mode: yes
-  with_items: "{{ config_files.files }}"
-  when: item.path | basename != 'docker-compose.yml'
+    mode: preserve
+
+- name: Copy certs directory to target
+  copy:
+    src: /etc/wildduck-dockerized/config-generated/certs
+    dest: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/wildduck/certs"
+    remote_src: yes
+    directory_mode: yes
+    mode: preserve
 
 - name: Ensure proper permissions on config files
   file:
     path: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/wildduck/config"
     state: directory
-    mode: "0755"
+    mode: "0644"
     recurse: yes
