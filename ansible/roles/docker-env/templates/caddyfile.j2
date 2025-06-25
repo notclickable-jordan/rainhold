@@ -247,11 +247,3 @@ mail.notclickable.com {
 
     reverse_proxy http://wildduck-webmail:3000
 }
-
-admin.mail.notclickable.com {
-    tls {
-        dns cloudflare {{ cloudflare_ssl_api_token }}
-    }
-
-    reverse_proxy http://wildduck:8080
-}
