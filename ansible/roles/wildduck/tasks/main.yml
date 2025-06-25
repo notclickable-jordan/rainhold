@@ -43,21 +43,23 @@
   debug:
     var: setup_result.stdout_lines
 
+- name: Remove config files that are directories but should be files
+  file:
+    path: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/wildduck/config/rspamd/worker-normal.conf"
+    state: absent
+    force: yes
+
 - name: Copy config directory to target
   copy:
     src: /etc/wildduck-dockerized/config-generated/config-generated
     dest: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/wildduck/config"
     remote_src: yes
-    directory_mode: yes
-    mode: preserve
 
 - name: Copy certs directory to target
   copy:
     src: /etc/wildduck-dockerized/config-generated/certs
     dest: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/wildduck/certs"
     remote_src: yes
-    directory_mode: yes
-    mode: preserve
 
 - name: Ensure proper permissions on certs files
   file:
