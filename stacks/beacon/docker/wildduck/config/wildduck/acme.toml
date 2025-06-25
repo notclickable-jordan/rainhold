@@ -2,12 +2,12 @@
 # ACME production settings
 key = "production"                                              # variable to identify account settings for specified directory url
 directoryUrl = "https://acme-v02.api.letsencrypt.org/directory"
-email = "domainadmin@example.com"                               # must be valid email address
+email = "domainadmin@notclickable.com"                               # must be valid email address
 
 # ACME development settings
 #key = "devel" # variable to identify account settings for specified directory url
 #directoryUrl = "https://acme-staging-v02.api.letsencrypt.org/directory"
-#email = "domainadmin@example.com" # must be valid email address
+#email = "domainadmin@notclickable.com" # must be valid email address
 
 # If hostname has a CAA record set then match it against this list
 # CAA check is done before WildDuck tries to request certificate from ACME
@@ -29,9 +29,9 @@ enabled = false
 #   Additionally, there must be at least 1 email account with "@{domain}" address.
 #   If there is no match, then TLS certificate is not generated.
 
-# imap = ["imap.example.com"]
-# smtp = ["smtp.example.com"]
-# pop3 = ["imap.example.com"]
+# imap = ["imap.notclickable.com"]
+# smtp = ["smtp.notclickable.com"]
+# pop3 = ["imap.notclickable.com"]
 
 [agent]
 # If enabled then starts a HTTP server that listens for ACME verification requests

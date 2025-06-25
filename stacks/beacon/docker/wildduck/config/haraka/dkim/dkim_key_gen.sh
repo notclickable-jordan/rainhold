@@ -5,7 +5,7 @@ SMTPD="$2"
 
 usage()
 {
-    echo "   usage: ${0} <example.com> [haraka username]" 2>&1
+    echo "   usage: ${0} <notclickable.com> [haraka username]" 2>&1
     echo 2>&1
     exit 1
 }

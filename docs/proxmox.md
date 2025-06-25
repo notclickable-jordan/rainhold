@@ -111,6 +111,34 @@
     APT::Periodic::AutocleanInterval "21";
     ```
 
+# Custom CPU for Wildduck
+
+If you intend to use Wildduck, you need to set a custom CPU type for your Proxmox VM so MongoDB can run properly.
+
+1. Login to Proxmox using SSH
+    ```bash
+    ssh strongbad@compy386
+    ```
+1. Edit the cpu-models file:
+    ```bash
+    sudo nano /etc/pve/virtual-guest/cpu-models.conf
+    ```
+1. Add this definition:
+    ```conf
+    cpu-model: x86-64-v2-AES-AVX
+        flags +avx;+avx2;+xsave;+aes;+popcnt;+ssse3;+sse4_1;+sse4_2
+        phys-bits host
+        hidden 0
+        hv-vendor-id proxmox
+        reported-model kvm64
+    ```
+1. Save and exit the file
+1. Go to the Proxmox web interface and select your Linux VM
+1. Navigate to `Hardware > CPU`
+1. Change the CPU type to `x86-64-v2-AES-AVX`
+1. Click `OK` to save the changes
+1. Shutdown the VM and start it again
+
 # Synology NAS (optional)
 
 1. Navigate to `Datacenter > Storage`

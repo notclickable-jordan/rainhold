@@ -4,7 +4,6 @@ services:
         container_name: wildduck
         restart: unless-stopped
         ports:
-            - 4217:8080
             - 143:143
         depends_on:
             - mongo

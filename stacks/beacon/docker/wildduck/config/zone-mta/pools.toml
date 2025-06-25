@@ -4,7 +4,7 @@
 
 [[default]]
 address = "0.0.0.0"
-name="example.com"
+name="notclickable.com"
 #
 #[[default]]
 #address="1.2.3.5"

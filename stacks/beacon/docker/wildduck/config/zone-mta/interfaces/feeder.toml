@@ -31,5 +31,5 @@ secure = false
 
 # define keys for STARTTLS/TLS. These paths are relative to CWD
 # NB! Keys must be accessible by process user or SMTP authentication will fail.
-# key="./keys/example.com-key.pem"
-# cert="./keys/example.com-cert.pem"
+# key="./keys/notclickable.com-key.pem"
+# cert="./keys/notclickable.com-cert.pem"

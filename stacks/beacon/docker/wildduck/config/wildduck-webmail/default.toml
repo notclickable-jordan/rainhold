@@ -4,7 +4,7 @@ title="wildduck-www"
 
 [service]
     # email domain for new users
-    domain="example.com"
+    domain="notclickable.com"
     # default quotas for new users
     quota=1024
     recipients=2000
@@ -14,7 +14,7 @@ title="wildduck-www"
     allowJoin=true
     enableSpecial=false # if true the allow creating addresses with special usernames
     # allowed domains for new addresses
-    domains=["example.com"]
+    domains=["notclickable.com"]
 
     generalNotification="" # static notification to show on top of the page
 
@@ -60,7 +60,7 @@ title="wildduck-www"
     # set to false if not using HTTPS
     enabled=true
     # must be https url or use default
-    appId="https://example.com"
+    appId="https://notclickable.com"
 
 [log]
     level="silly"
@@ -69,14 +69,14 @@ title="wildduck-www"
 [setup]
     # these values are shown in the configuration help page
     [setup.imap]
-        hostname="example.com"
+        hostname="notclickable.com"
         secure=true
         port=993
     [setup.pop3]
-        hostname="example.com"
+        hostname="notclickable.com"
         secure=true
         port=995
     [setup.smtp]
-        hostname="example.com"
+        hostname="notclickable.com"
         secure=true
         port=465
