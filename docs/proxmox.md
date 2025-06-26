@@ -27,63 +27,41 @@
 
 # System Updates
 
-1. Connect to your server:
+1. Connect to your server
     ```bash
-    ssh strongbad@compy386
+    ssh root@compy386
+    <enter root password>
+    ```
+2. Update the system
+    ```bash
     apt update
     apt upgrade
     ```
 
-## SSL
-
-1. Install jq for JSON parsing:
-    ```bash
-    apt install jq
-    ```
-1. Create script at `/root/tailscale-ssl.sh`:
-    ```bash
-    #!/bin/bash
-    NAME="$(tailscale status --json | jq '.Self.DNSName | .[:-1]' -r)"
-    tailscale cert "${NAME}"
-    pvenode cert set "${NAME}.crt" "${NAME}.key" --force --restart
-    ```
-1. Run this once manually, then make it executable and schedule via cron:
-    ```bash
-    chmod +x ./tailscale-ssl.sh
-    sudo ./tailscale-ssl.sh
-    crontab -e
-    ```
-1. Add to crontab:
-    ```cron
-    0 1 * * * /root/tailscale-ssl.sh
-    ```
-1. Check Proxmox URL (example):  
-   `https://compy386.tail1e02a.ts.net:8006`
-
 # User Setup
 
-1. Create personal user:
-    ```bash
-    adduser strongbad
-    ```
-1. Install sudo:
+1. Install sudo
     ```bash
     apt install sudo
+    ```
+1. Create personal user
+    ```bash
+    adduser strongbad
     adduser strongbad sudo
     ```
 1. Exit your session
     ```bash
     exit
     ```
-1. Set up SSH key login:
+1. Set up SSH key login
     ```bash
     ssh-copy-id strongbad@server
     ```
-1. Log in with your SSH key:
+1. Log in with your SSH key
     ```bash
     ssh strongbad@compy386
     ```
-1. Disable password authentication:
+1. Disable password authentication
     - Edit `/etc/ssh/sshd_config`
     - Search for `PasswordAuthentication`, uncomment and set to `no`
     - Restart SSH:
@@ -91,15 +69,41 @@
         systemctl restart sshd
         ```
 
+## SSL
+
+1. Install jq for JSON parsing
+    ```bash
+    apt install jq
+    ```
+1. Create script at `/root/tailscale-ssl.sh`
+    ```bash
+    #!/bin/bash
+    NAME="$(tailscale status --json | jq '.Self.DNSName | .[:-1]' -r)"
+    tailscale cert "${NAME}"
+    pvenode cert set "${NAME}.crt" "${NAME}.key" --force --restart
+    ```
+1. Make it executable, run it once manually, then schedule via cron
+    ```bash
+    chmod +x ./tailscale-ssl.sh
+    sudo ./tailscale-ssl.sh
+    crontab -e
+    ```
+1. Add to crontab
+    ```cron
+    0 1 * * * /root/tailscale-ssl.sh
+    ```
+1. Check Proxmox URL (example)
+   `https://compy386.tail1e02a.ts.net:8006`
+
 # Enable Automatic Updates
 
-1. Install unattended upgrades:
+1. Install unattended upgrades
     ```bash
     apt update
     apt install unattended-upgrades
     dpkg-reconfigure --priority=low unattended-upgrades
     ```
-2. Edit auto-clean interval:
+2. Edit auto-clean interval
 
     ```bash
     nano /etc/apt/apt.conf.d/20auto-upgrades
@@ -114,7 +118,7 @@
 # Synology NAS (optional)
 
 1. Navigate to `Datacenter > Storage`
-2. Add SMB/CIFS with the following:
+2. Add SMB/CIFS with the following
     - **Server:** `ip.address`
     - **Share:** `home` (or other shared folder)
     - **Content:** `VZDump backup file`

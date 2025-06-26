@@ -13,7 +13,7 @@ Complete guide to set up a secure, automated server environment.
 Follow these steps to set up your server environment.
 
 1. [Set variables](docs/variables.md) like your server name, first username, and application secrets
-1. [Create a Proxmox hypervisor](docs/proxmox.md) and configure it for Tailscale and SSL
+1. [Install a Proxmox hypervisor](docs/proxmox.md) and configure it for Tailscale and SSL
 1. [Create a Linux VM](docs/linux-vm.md) in Proxmox and configure it for Ansible
 1. [Use Ansible](docs/ansible.md) to configure the Linux VM and its Docker containers
 1. [Set up Cloudflare](docs/cloudflare.md) tunnels and DNS for public sites

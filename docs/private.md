@@ -24,11 +24,11 @@ Keep the site configuration in `Caddyfile` as is, e.g.
 
 ```caddyfile
 private.example.com {
-    reverse_proxy ip.address:port
-
     tls {
         dns cloudflare {{ cloudflare_ssl_api_token }}
     }
+
+    reverse_proxy http://service:port
 }
 ```
 
