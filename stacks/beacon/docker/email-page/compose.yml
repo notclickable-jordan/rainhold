@@ -6,6 +6,12 @@ services:
             - .env
         volumes:
             - data:/etc/email-page/data
+        networks:
+            - caddy
 
 volumes:
     data:
+
+networks:
+    caddy:
+        external: true
