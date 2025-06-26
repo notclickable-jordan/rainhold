@@ -1,0 +1,11 @@
+services:
+    email-page:
+        image: jordanroher/email-page:latest
+        container_name: email-page
+        env_file:
+            - .env
+        volumes:
+            - data:/etc/email-page/data
+
+volumes:
+    data:

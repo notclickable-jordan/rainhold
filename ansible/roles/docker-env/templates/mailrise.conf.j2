@@ -1,14 +1,13 @@
 configs:
-  "*@*":
+  "notify@notclickable.com":
     urls:
       - mastodons://{{ apprise_mastodon_token }}@{{ apprise_mastodon_host }}?overflow=truncate
-    mailrise:
-      title_template: "${subject}"
-      body_template: "From: ${from}\n\n\n${body}"
-      body_format: text
+  "*@*":
+    urls:
+      - jsons://{{ email_page_domain }}/new
 
 tls:
   mode: off
 
 smtp:
-  hostname: {{ mailrise_hostname}}
+  hostname: {{ mailrise_hostname }}

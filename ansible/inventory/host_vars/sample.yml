@@ -128,3 +128,6 @@ miniflux_db_password: "your_miniflux_db_password_here"
 
 # --- Vaultwarden ---
 vaultwarden_admin_token: "your_vaultwarden_admin_token_here"
+
+# --- Email Page ---
+email_page_domain: "email-page.example.com"

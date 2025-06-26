@@ -25,6 +25,7 @@ VOLUMES=(
   "pocket-id_data:/pocket-id/data"
   "vaultwarden_data:/vaultwarden/data"
   "ytptube_config:/ytptube/config"
+  "email-page_data:/email-page/data"
 )
 
 BACKUP_PATH="/mnt/backup/rainhold/beacon"
