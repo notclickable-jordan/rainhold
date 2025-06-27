@@ -2,7 +2,7 @@ services:
     gitlab:
         image: gitlab/gitlab-ce:latest
         container_name: gitlab
-        restart: always
+        restart: unless-stopped
         hostname: "gitlab.notclickable.com"
         environment:
             GITLAB_OMNIBUS_CONFIG: "from_file('/gitlab.rb')"
@@ -21,7 +21,7 @@ services:
     runner:
         image: gitlab/gitlab-runner:latest
         container_name: gitlab-runner
-        restart: always
+        restart: unless-stopped
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock
             - runner:/etc/gitlab-runner
