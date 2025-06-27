@@ -1,4 +1,12 @@
 ---
+- name: Generate config file for GitLab
+  template:
+    src: gitlab.rb.j2
+    dest: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/gitlab/gitlab.rb"
+    mode: "0644"
+    owner: root
+    group: root
+
 - name: Generate .env file for Email Page
   template:
     src: email-page.env.j2

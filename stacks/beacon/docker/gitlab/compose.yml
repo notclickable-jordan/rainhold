@@ -1,0 +1,39 @@
+services:
+    gitlab:
+        image: gitlab/gitlab-ce:latest
+        container_name: gitlab
+        restart: always
+        hostname: "gitlab.notclickable.com"
+        environment:
+            GITLAB_OMNIBUS_CONFIG: "from_file('/gitlab.rb')"
+        ports:
+            - 4217:22
+        volumes:
+            - config:/etc/gitlab
+            - logs:/var/log/gitlab
+            - data:/var/opt/gitlab
+            - runner:/etc/gitlab-runner:ro
+            - ./gitlab.rb:/gitlab.rb:ro
+        shm_size: "256m"
+        networks:
+            - caddy
+
+    runner:
+        image: gitlab/gitlab-runner:latest
+        container_name: gitlab_runner
+        restart: always
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+            - runner:/etc/gitlab-runner
+        networks:
+            - caddy
+
+volumes:
+    config:
+    logs:
+    data:
+    runner:
+
+networks:
+    caddy:
+        external: true

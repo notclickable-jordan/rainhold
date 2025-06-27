@@ -247,3 +247,11 @@ email-page.notclickable.com {
 
     reverse_proxy http://email-page:3000
 }
+
+gitlab.notclickable.com {
+    tls {
+        dns cloudflare {{ cloudflare_ssl_api_token }}
+    }
+
+    reverse_proxy http://gitlab:80
+}
