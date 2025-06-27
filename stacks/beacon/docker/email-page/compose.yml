@@ -2,6 +2,7 @@ services:
     email-page:
         image: jordanroher/email-page:latest
         container_name: email-page
+        restart: unless-stopped
         env_file:
             - .env
         volumes:
