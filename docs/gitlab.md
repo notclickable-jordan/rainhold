@@ -10,24 +10,30 @@ After creating the container, the root login won't work. Go into the container m
 
 To launch a short-lived gitlab-runner container to register the container you created during installation:
 
-1. `docker run --rm -it -v gitlab_runner:/etc/gitlab-runner gitlab/gitlab-runner:latest register`
-2. GitLab instance URL: `http://192.168.1.34:8280`
-3. Entered registration token and name
+1. Run:
+    ```bash
+    sudo docker run --rm -it \
+    --network caddy \
+    -v gitlab-runner:/etc/gitlab-runner \
+    gitlab/gitlab-runner:latest register
+    ```
+2. GitLab instance URL: `http://gitlab`
+3. Enter registration token and name ("runner" is fine)
 4. Executor: `docker`
-5. Default image: `node:16`
+5. Default image: `node:22`
 
 # Runner clone failure
 
 Got an error from a pipeline job while trying to clone the repository. To solve this, I had to edit the runner container's config.toml.
 
-1. `docker exec -it gitlab_runner /bin/bash`
+1. `docker exec -it gitlab-runner /bin/bash`
 2. `apt-get update`
 3. `apt-get install nano`
 4. `cd /etc/gitlab-runner`
 5. `nano config.toml`
 6. Add this clone_url below url
     ```
-    clone_url = "http://192.168.1.15:8280"
+    clone_url = "http://gitlab"
     ```
 7. Restart the container
     ```
