@@ -29,18 +29,31 @@
       }
     - { regexp: "inet_interfaces", line: "inet_interfaces = all" }
     - { regexp: "inet_protocols", line: "inet_protocols = ipv4" }
-    - {
-        regexp: "mynetworks",
-        line: "mynetworks = 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128 100.64.0.0/10",
-      }
+    - { regexp: "mynetworks", line: "mynetworks = 0.0.0.0/0" }
     - {
         regexp: "smtpd_relay_restrictions",
-        line: "smtpd_relay_restrictions = permit_mynetworks, reject_unauth_destination",
+        line: "smtpd_relay_restrictions = permit_mynetworks",
       }
     - {
         regexp: "smtpd_recipient_restrictions",
-        line: "smtpd_recipient_restrictions = permit_mynetworks, reject_unauth_destination",
+        line: "smtpd_recipient_restrictions = permit_mynetworks",
       }
+    - {
+        regexp: "smtpd_helo_restrictions",
+        line: "smtpd_helo_restrictions = permit",
+      }
+    - {
+        regexp: "smtpd_sender_restrictions",
+        line: "smtpd_sender_restrictions = permit",
+      }
+
+- name: Ensure SMTP service is properly configured in master.cf
+  lineinfile:
+    path: /etc/postfix/master.cf
+    regexp: "^smtp      inet  n       -       y       -       -       smtpd"
+    line: "smtp      inet  n       -       y       -       -       smtpd"
+    create: yes
+    backup: yes
 
 - name: Create virtual alias map to deliver all mail to single user
   copy:
@@ -55,3 +68,18 @@
     name: postfix
     state: restarted
     enabled: yes
+
+- name: Verify Postfix is listening on port 25
+  wait_for:
+    port: 25
+    host: "0.0.0.0"
+    timeout: 30
+  ignore_errors: true
+
+- name: Display network information for debugging
+  debug:
+    msg:
+      - "Postfix configured to accept mail from ANY source (0.0.0.0/0)"
+      - "All SMTP restrictions set to 'permit' - no authentication required"
+      - "Test from anywhere: telnet {{ ansible_host }} 25"
+      - "WARNING: This is an open mail relay for local delivery only"

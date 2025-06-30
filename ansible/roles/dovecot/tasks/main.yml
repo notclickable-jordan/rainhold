@@ -28,36 +28,6 @@
     - "new"
     - "tmp"
 
-- name: Set Postfix main configuration
-  lineinfile:
-    path: /etc/postfix/main.cf
-    regexp: "^{{ item.regexp }}"
-    line: "{{ item.line }}"
-    create: yes
-  loop:
-    - { regexp: "home_mailbox", line: "home_mailbox = Maildir/" }
-    - {
-        regexp: "mydestination",
-        line: "mydestination = $myhostname, localhost.$mydomain, localhost",
-      }
-    - {
-        regexp: "virtual_alias_maps",
-        line: "virtual_alias_maps = regexp:/etc/postfix/virtual",
-      }
-
-- name: Create virtual alias map
-  copy:
-    dest: /etc/postfix/virtual
-    content: |
-      /^.*@.*$/ {{ dovecot_mail_user }}
-    backup: yes
-
-- name: Run postmap on virtual file
-  command: postmap /etc/postfix/virtual
-  args:
-    creates: /etc/postfix/virtual.db
-  notify: Restart Postfix
-
 - name: Set mail_location in Dovecot
   lineinfile:
     path: /etc/dovecot/conf.d/10-mail.conf
