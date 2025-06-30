@@ -6,19 +6,11 @@
     state: present
     update_cache: yes
 
-- name: Configure Postfix relayhost
-  lineinfile:
-    path: /etc/postfix/main.cf
-    regexp: "^relayhost ="
-    line: "relayhost = [{{ mailrise_hostname }}]:{{ mailrise_port }}"
-    create: yes
-    backup: yes
-
-- name: Disable local delivery (force all mail through relayhost)
+- name: Enable local delivery
   lineinfile:
     path: /etc/postfix/main.cf
     regexp: "^mydestination ="
-    line: "mydestination ="
+    line: "mydestination = $myhostname, localhost.$mydomain, localhost"
     create: yes
     backup: yes
 
@@ -27,6 +19,14 @@
     path: /etc/postfix/main.cf
     regexp: "^smtpd_tls_security_level=may"
     line: "smtpd_tls_security_level=none"
+    create: yes
+    backup: yes
+
+- name: Configure Postfix to deliver to Maildir
+  lineinfile:
+    path: /etc/postfix/main.cf
+    regexp: "^home_mailbox ="
+    line: "home_mailbox = Maildir/"
     create: yes
     backup: yes
 
