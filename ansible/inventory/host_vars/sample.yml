@@ -131,3 +131,8 @@ vaultwarden_admin_token: "your_vaultwarden_admin_token_here"
 
 # --- Email Page ---
 email_page_domain: "email-page.example.com"
+
+# --- Dovecot ---
+dovecot_mail_user: mailuser
+dovecot_mail_user_password_raw: supersecret
+dovecot_mail_domain: example.com

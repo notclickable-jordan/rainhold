@@ -1,0 +1,71 @@
+- name: Install mail packages
+  apt:
+    name:
+      - postfix
+      - dovecot-imapd
+      - dovecot-pop3d
+    state: present
+    update_cache: yes
+
+- name: Ensure mail user exists
+  user:
+    name: "{{ dovecot_mail_user }}"
+    shell: /usr/sbin/nologin
+    home: "/home/{{ dovecot_mail_user }}"
+    create_home: yes
+    password: "{{ dovecot_mail_user_password_raw | password_hash('sha512') }}"
+
+- name: Set Postfix main configuration
+  lineinfile:
+    path: /etc/postfix/main.cf
+    regexp: "^{{ item.regexp }}"
+    line: "{{ item.line }}"
+    create: yes
+  loop:
+    - { regexp: "home_mailbox", line: "home_mailbox = Maildir/" }
+    - {
+        regexp: "mydestination",
+        line: "mydestination = $myhostname, localhost.$mydomain, localhost",
+      }
+    - {
+        regexp: "virtual_alias_maps",
+        line: "virtual_alias_maps = hash:/etc/postfix/virtual",
+      }
+
+- name: Create virtual alias map
+  copy:
+    dest: /etc/postfix/virtual
+    content: |
+      @{{ dovecot_mail_domain }} {{ dovecot_mail_user }}
+
+- name: Run postmap on virtual file
+  command: postmap /etc/postfix/virtual
+  args:
+    creates: /etc/postfix/virtual.db
+  notify: Restart Postfix
+
+- name: Set mail_location in Dovecot
+  lineinfile:
+    path: /etc/dovecot/conf.d/10-mail.conf
+    regexp: "^mail_location ="
+    line: "mail_location = maildir:~/Maildir"
+  notify: Restart Dovecot
+
+- name: Allow plaintext auth (local only)
+  lineinfile:
+    path: /etc/dovecot/conf.d/10-auth.conf
+    regexp: "^disable_plaintext_auth ="
+    line: "disable_plaintext_auth = no"
+  notify: Restart Dovecot
+
+- name: Ensure IMAP listener is enabled on port 143
+  blockinfile:
+    path: /etc/dovecot/conf.d/10-master.conf
+    marker: "# {mark} ANSIBLE MANAGED BLOCK: IMAP LISTENER"
+    block: |
+      service imap-login {
+        inet_listener imap {
+          port = 143
+        }
+      }
+  notify: Restart Dovecot

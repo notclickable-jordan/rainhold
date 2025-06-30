@@ -4,6 +4,7 @@
   roles:
     - role: apprise
     - role: postfix
+    - role: dovecot
     - role: nftables-logging
     - role: clone-repository
     - role: schedule-backup
