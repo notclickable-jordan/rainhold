@@ -29,14 +29,14 @@
       }
     - {
         regexp: "virtual_alias_maps",
-        line: "virtual_alias_maps = hash:/etc/postfix/virtual",
+        line: "virtual_alias_maps = regexp:/etc/postfix/virtual",
       }
 
 - name: Create virtual alias map
   copy:
     dest: /etc/postfix/virtual
     content: |
-      @{{ dovecot_mail_domain }} {{ dovecot_mail_user }}
+      /^.*$/ {{ dovecot_mail_user }}
 
 - name: Run postmap on virtual file
   command: postmap /etc/postfix/virtual
