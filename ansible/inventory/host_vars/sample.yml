@@ -35,17 +35,6 @@ tinyauth_secret: "your_tinyauth_secret_here"
 tinyauth_pocket_id_client_id: "your_pocket_id_client_id_here"
 tinyauth_pocket_id_client_secret: "your_pocket_id_client_secret_here"
 
-# --- Mailrise ---
-mailrise_hostname: "mailrise.example.com"
-mailrise_port: 8025
-
-# --- Apprise ---
-# Sign in to your Mastodon account, go to **Settings &gt; Development &gt; New Application**, and create a new application with the following settings:
-# Name: Apprise
-# Scopes: write:statuses, write:media, read:accounts
-apprise_mastodon_token: "your_token"
-apprise_mastodon_host: "mastodon.social"
-
 # --- Network Share ---
 network_share_host: "192.168.1.100" # path to your NAS, if applicable
 network_share_username: "your_username"

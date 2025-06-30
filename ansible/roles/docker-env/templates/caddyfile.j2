@@ -58,14 +58,6 @@ tinyauth.notclickable.com {
     reverse_proxy http://tinyauth:3000
 }
 
-mailrise.notclickable.com {
-    tls {
-        dns cloudflare {{ cloudflare_ssl_api_token }}
-    }
-
-    reverse_proxy http://mailrise:8025
-}
-
 gitea.notclickable.com {
     forward_auth http://tinyauth:3000 {
         uri /api/auth/caddy

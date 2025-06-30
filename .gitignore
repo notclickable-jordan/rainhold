@@ -11,8 +11,5 @@ stacks/*/docker/gitea/app.ini
 stacks/*/docker/grafana/prometheus.yml
 stacks/*/docker/grafana/promtail-config.yml
 stacks/*/docker/lemmy/lemmy.hjson
-stacks/*/docker/mailrise/mailrise.conf
-stacks/*/docker/mailrise/mailrise.crt
-stacks/*/docker/mailrise/mailrise.key
 stacks/*/docker/caddy/Caddyfile
 stacks/*/docker/gitlab/gitlab.rb

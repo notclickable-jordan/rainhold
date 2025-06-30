@@ -2,7 +2,6 @@
   hosts: public
   become: true
   roles:
-    - role: apprise
     - role: postfix
     - role: dovecot
     - role: nftables-logging
