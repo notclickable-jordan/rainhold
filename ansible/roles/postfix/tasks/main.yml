@@ -6,31 +6,43 @@
     state: present
     update_cache: yes
 
-- name: Enable local delivery
+- name: Configure Postfix main settings for local delivery with virtual aliases
   lineinfile:
     path: /etc/postfix/main.cf
-    regexp: "^mydestination ="
-    line: "mydestination = $myhostname, localhost.$mydomain, localhost"
+    regexp: "^{{ item.regexp }}"
+    line: "{{ item.line }}"
     create: yes
     backup: yes
+  loop:
+    - {
+        regexp: "mydestination",
+        line: "mydestination = $myhostname, localhost.$mydomain, localhost",
+      }
+    - { regexp: "home_mailbox", line: "home_mailbox = Maildir/" }
+    - {
+        regexp: "virtual_alias_maps",
+        line: "virtual_alias_maps = regexp:/etc/postfix/virtual",
+      }
+    - {
+        regexp: "smtpd_tls_security_level",
+        line: "smtpd_tls_security_level = none",
+      }
+    - { regexp: "inet_interfaces", line: "inet_interfaces = all" }
+    - { regexp: "inet_protocols", line: "inet_protocols = ipv4" }
+    - {
+        regexp: "mynetworks",
+        line: "mynetworks = 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128",
+      }
 
-- name: Update smtpd_tls_security_level to none
-  lineinfile:
-    path: /etc/postfix/main.cf
-    regexp: "^smtpd_tls_security_level=may"
-    line: "smtpd_tls_security_level=none"
-    create: yes
+- name: Create virtual alias map to deliver all mail to single user
+  copy:
+    dest: /etc/postfix/virtual
+    content: |
+      /^.*@.*$/ {{ dovecot_mail_user }}
     backup: yes
+  notify: Update postfix virtual maps
 
-- name: Configure Postfix to deliver to Maildir
-  lineinfile:
-    path: /etc/postfix/main.cf
-    regexp: "^home_mailbox ="
-    line: "home_mailbox = Maildir/"
-    create: yes
-    backup: yes
-
-- name: Restart Postfix
+- name: Restart and enable Postfix
   service:
     name: postfix
     state: restarted

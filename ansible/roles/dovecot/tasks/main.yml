@@ -15,6 +15,19 @@
     create_home: yes
     password: "{{ dovecot_mail_user_password_raw | password_hash('sha512') }}"
 
+- name: Create Maildir structure for mail user
+  file:
+    path: "/home/{{ dovecot_mail_user }}/Maildir/{{ item }}"
+    state: directory
+    owner: "{{ dovecot_mail_user }}"
+    group: "{{ dovecot_mail_user }}"
+    mode: "0700"
+  loop:
+    - ""
+    - "cur"
+    - "new"
+    - "tmp"
+
 - name: Set Postfix main configuration
   lineinfile:
     path: /etc/postfix/main.cf
@@ -36,7 +49,8 @@
   copy:
     dest: /etc/postfix/virtual
     content: |
-      /^.*$/ {{ dovecot_mail_user }}
+      /^.*@.*$/ {{ dovecot_mail_user }}
+    backup: yes
 
 - name: Run postmap on virtual file
   command: postmap /etc/postfix/virtual
@@ -68,4 +82,18 @@
           port = 143
         }
       }
+  notify: Restart Dovecot
+
+- name: Configure Dovecot auth to use system users
+  lineinfile:
+    path: /etc/dovecot/conf.d/10-auth.conf
+    regexp: "^#?auth_mechanisms ="
+    line: "auth_mechanisms = plain login"
+  notify: Restart Dovecot
+
+- name: Enable system user authentication
+  lineinfile:
+    path: /etc/dovecot/conf.d/10-auth.conf
+    regexp: "^#?!include auth-system.conf.ext"
+    line: "!include auth-system.conf.ext"
   notify: Restart Dovecot
