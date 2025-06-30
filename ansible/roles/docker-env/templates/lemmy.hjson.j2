@@ -9,7 +9,7 @@
     api_key: "{{ lemmy_pictrs_api_key }}"
   }
   email: {
-    smtp_server: "{{ mailrise_hostname }}:{{ mailrise_port }}"
+    smtp_server: "{{ ansible_host }}:{{ postfix_port }}"
     smtp_from_address: "{{ lemmy_email_from_address }}"
     tls_type: "none"
   }
