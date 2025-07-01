@@ -58,19 +58,6 @@ tinyauth.notclickable.com {
     reverse_proxy http://tinyauth:3000
 }
 
-gitea.notclickable.com {
-    forward_auth http://tinyauth:3000 {
-        uri /api/auth/caddy
-        copy_headers Remote-User Remote-Email Remote-Name Remote-Groups
-    }
-
-    tls {
-        dns cloudflare {{ cloudflare_ssl_api_token }}
-    }
-
-    reverse_proxy http://gitea:3000
-}
-
 n8n.notclickable.com {
     forward_auth http://tinyauth:3000 {
         uri /api/auth/caddy
@@ -233,6 +220,11 @@ starbase80.dev, www.starbase80.dev {
 }
 
 gitlab.notclickable.com {
+    forward_auth http://tinyauth:3000 {
+        uri /api/auth/caddy
+        copy_headers Remote-User Remote-Email Remote-Name Remote-Groups
+    }
+    
     tls {
         dns cloudflare {{ cloudflare_ssl_api_token }}
     }

@@ -6,8 +6,6 @@ ansible/inventory/host_vars/*
 stacks/*/*.tgz
 stacks/*/docker/*/.env*
 stacks/*/docker/*/*.tgz
-stacks/*/docker/gitea/.env.runner
-stacks/*/docker/gitea/app.ini
 stacks/*/docker/grafana/prometheus.yml
 stacks/*/docker/grafana/promtail-config.yml
 stacks/*/docker/lemmy/lemmy.hjson
