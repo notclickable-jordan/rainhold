@@ -21,6 +21,7 @@ Follow these steps to set up your server environment.
 
 # Further documentation
 
+-   [Email](docs/email.md) covers how Postfix and Dovecot create a local email server
 -   [Pocket ID](docs/pocket-id.md) provides automatic login to sites using OAuth and LLDAP
 -   [Network share](docs/network-share.md) instructions for backups and file sharing
 -   [Gitea](docs/gitea.md) needs a runner registration token
