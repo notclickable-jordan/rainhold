@@ -8,3 +8,8 @@
     name: postfix
     state: restarted
     enabled: yes
+
+- name: restart rsyslog
+  service:
+    name: rsyslog
+    state: restarted

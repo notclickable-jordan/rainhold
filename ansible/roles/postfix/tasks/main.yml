@@ -3,8 +3,49 @@
     name:
       - postfix
       - mailutils
+      - rsyslog
     state: present
     update_cache: yes
+
+- name: Configure rsyslog for mail logging
+  lineinfile:
+    path: /etc/rsyslog.conf
+    regexp: "^#?mail\\.\\*"
+    line: "mail.*                          /var/log/mail.log"
+    create: yes
+    backup: yes
+  notify: restart rsyslog
+
+- name: Check if syslog user exists
+  getent:
+    database: passwd
+    key: syslog
+  register: syslog_user_check
+  ignore_errors: true
+
+- name: Ensure mail.log file exists with proper permissions
+  file:
+    path: /var/log/mail.log
+    state: touch
+    owner: "{{ 'syslog' if syslog_user_check is succeeded else 'root' }}"
+    group: "{{ 'adm' if syslog_user_check is succeeded else 'root' }}"
+    mode: "0644"
+
+- name: Configure Postfix to use syslog facility
+  lineinfile:
+    path: /etc/postfix/main.cf
+    regexp: "^syslog_facility"
+    line: "syslog_facility = mail"
+    create: yes
+    backup: yes
+
+- name: Enable verbose logging in Postfix
+  lineinfile:
+    path: /etc/postfix/main.cf
+    regexp: "^syslog_name"
+    line: "syslog_name = postfix"
+    create: yes
+    backup: yes
 
 - name: Configure Postfix main settings for local delivery with virtual aliases
   lineinfile:
@@ -32,11 +73,11 @@
     - { regexp: "mynetworks", line: "mynetworks = 0.0.0.0/0" }
     - {
         regexp: "smtpd_relay_restrictions",
-        line: "smtpd_relay_restrictions = permit_mynetworks",
+        line: "smtpd_relay_restrictions = permit_mynetworks, reject_unauth_destination",
       }
     - {
         regexp: "smtpd_recipient_restrictions",
-        line: "smtpd_recipient_restrictions = permit_mynetworks",
+        line: "smtpd_recipient_restrictions = permit_mynetworks, reject_unauth_destination",
       }
     - {
         regexp: "smtpd_helo_restrictions",
@@ -45,6 +86,15 @@
     - {
         regexp: "smtpd_sender_restrictions",
         line: "smtpd_sender_restrictions = permit",
+      }
+    - { regexp: "debug_peer_level", line: "debug_peer_level = 2" }
+    - {
+        regexp: "debug_peer_list",
+        line: "debug_peer_list = 172.17.0.0/16, 100.64.0.0/10, 0.0.0.0/0",
+      }
+    - {
+        regexp: "smtpd_banner",
+        line: "smtpd_banner = $myhostname ESMTP Postfix (Debug Mode)",
       }
 
 - name: Ensure SMTP service is properly configured in master.cf
@@ -69,6 +119,32 @@
     state: restarted
     enabled: yes
 
+- name: Restart rsyslog to enable mail logging
+  service:
+    name: rsyslog
+    state: restarted
+    enabled: yes
+
+- name: Wait for services to start and verify logging
+  pause:
+    seconds: 3
+
+- name: Create a test log entry to verify logging works
+  shell: |
+    echo "Test log entry from Ansible: $(date)" | logger -p mail.info -t postfix-test
+
+- name: Verify mail.log is being written to
+  stat:
+    path: /var/log/mail.log
+  register: mail_log_stat
+
+- name: Display mail log status
+  debug:
+    msg:
+      - "Mail log file exists: {{ mail_log_stat.stat.exists }}"
+      - "Mail log size: {{ mail_log_stat.stat.size | default('unknown') }} bytes"
+      - "Last modified: {{ mail_log_stat.stat.mtime | default('unknown') }}"
+
 - name: Verify Postfix is listening on port 25
   wait_for:
     port: 25
@@ -83,3 +159,149 @@
       - "All SMTP restrictions set to 'permit' - no authentication required"
       - "Test from anywhere: telnet {{ ansible_host }} 25"
       - "WARNING: This is an open mail relay for local delivery only"
+      - "LOGGING: Verbose logging enabled - check /var/log/mail.log for details"
+      - "MONITORING: Run 'sudo tail -f /var/log/mail.log' to watch live email attempts"
+
+- name: Create log monitoring script
+  copy:
+    dest: /usr/local/bin/watch-postfix-logs
+    mode: "0755"
+    content: |
+      #!/bin/bash
+      echo "=== Watching Postfix logs in real-time ==="
+      echo "Press Ctrl+C to stop"
+      echo "Looking for connection attempts, rejections, and deliveries..."
+      echo ""
+
+      if [ ! -f /var/log/mail.log ]; then
+        echo "ERROR: /var/log/mail.log does not exist!"
+        echo "Run this to fix logging:"
+        echo "  sudo systemctl restart rsyslog"
+        echo "  sudo systemctl restart postfix"
+        echo "Then try again."
+        exit 1
+      fi
+
+      tail -f /var/log/mail.log | grep --line-buffered postfix
+
+- name: Create comprehensive email debugging script
+  copy:
+    dest: /usr/local/bin/debug-postfix
+    mode: "0755"
+    content: |
+      #!/bin/bash
+      echo "=== POSTFIX DEBUG INFORMATION ==="
+      echo
+
+      echo "1. Postfix Status:"
+      systemctl status postfix --no-pager -l
+      echo
+
+      echo "2. Postfix listening on port 25:"
+      ss -tulnp | grep :25 || netstat -tulnp 2>/dev/null | grep :25 || echo "No process listening on port 25"
+      echo
+
+      echo "3. Mail log file status:"
+      if [ -f /var/log/mail.log ]; then
+        echo "✓ /var/log/mail.log exists"
+        echo "File size: $(wc -c < /var/log/mail.log) bytes"
+        echo "Last modified: $(stat -c %y /var/log/mail.log)"
+        echo
+        echo "Recent Postfix log entries (last 20 lines):"
+        tail -20 /var/log/mail.log | grep postfix || echo "No postfix entries found in recent logs"
+      else
+        echo "✗ /var/log/mail.log does not exist!"
+        echo "Check rsyslog configuration: sudo grep mail /etc/rsyslog.conf"
+        echo "Restart rsyslog: sudo systemctl restart rsyslog"
+      fi
+      echo
+
+      echo "4. Connection attempts in recent logs:"
+      if [ -f /var/log/mail.log ]; then
+        tail -100 /var/log/mail.log | grep -E "(connect|disconnect|connection)" | tail -10 || echo "No connection entries found"
+      else
+        echo "Mail log not available"
+      fi
+      echo
+
+      echo "5. Any rejections in recent logs:"
+      if [ -f /var/log/mail.log ]; then
+        tail -100 /var/log/mail.log | grep -i reject | tail -10 || echo "No rejection entries found"
+      else
+        echo "Mail log not available"
+      fi
+      echo
+
+      echo "6. Postfix configuration (main.cf key settings):"
+      echo "mynetworks = $(postconf mynetworks)"
+      echo "inet_interfaces = $(postconf inet_interfaces)" 
+      echo "smtpd_relay_restrictions = $(postconf smtpd_relay_restrictions)"
+      echo "smtpd_recipient_restrictions = $(postconf smtpd_recipient_restrictions)"
+      echo "debug_peer_level = $(postconf debug_peer_level)"
+      echo "syslog_facility = $(postconf syslog_facility)"
+      echo
+
+      echo "7. Test connectivity from localhost:"
+      timeout 5 bash -c 'echo "QUIT" | nc localhost 25' 2>/dev/null && echo "✓ Local SMTP connection successful" || echo "✗ Local SMTP connection failed"
+
+      echo
+      echo "8. Rsyslog status:"
+      systemctl is-active rsyslog && echo "✓ Rsyslog is running" || echo "✗ Rsyslog is not running"
+
+- name: Create simple email test script
+  copy:
+    dest: /usr/local/bin/test-email
+    mode: "0755"
+    content: |
+      #!/bin/bash
+      echo "=== TESTING EMAIL DELIVERY ==="
+      echo
+
+      if [ $# -eq 0 ]; then
+        echo "Usage: $0 <test-message> [from-address]"
+        echo "Example: $0 'Test message from script' test@example.com"
+        exit 1
+      fi
+
+      MESSAGE="$1"
+      FROM="${2:-testscript@localhost}"
+      TO="{{ dovecot_mail_user }}"
+
+      echo "Sending test email..."
+      echo "From: $FROM"
+      echo "To: $TO"
+      echo "Message: $MESSAGE"
+      echo
+
+      # Send email using local sendmail
+      (
+        echo "From: $FROM"
+        echo "To: $TO"
+        echo "Subject: Test Email - $(date)"
+        echo ""
+        echo "$MESSAGE"
+        echo ""
+        echo "Sent at: $(date)"
+      ) | sendmail "$TO"
+
+      if [ $? -eq 0 ]; then
+        echo "✓ Email sent successfully to local Postfix"
+        echo "Check logs: sudo tail -f /var/log/mail.log"
+        echo "Check mailbox: sudo ls -la /home/{{ dovecot_mail_user }}/Maildir/new/"
+      else
+        echo "✗ Failed to send email"
+      fi
+
+- name: Display comprehensive debugging instructions
+  debug:
+    msg:
+      - "=== COMPREHENSIVE DEBUGGING TOOLS INSTALLED ==="
+      - ""
+      - "📧 POSTFIX DEBUG: sudo /usr/local/bin/debug-postfix"
+      - "📨 TEST EMAIL: sudo /usr/local/bin/test-email 'Hello World'"
+      - "📊 LIVE LOGS: sudo /usr/local/bin/watch-postfix-logs"
+      - ""
+      - "🔍 QUICK LOG CHECKS:"
+      - "  sudo grep 'connect from' /var/log/mail.log | tail -10"
+      - "  sudo grep 'reject' /var/log/mail.log | tail -10"
+      - "  sudo grep 'delivered' /var/log/mail.log | tail -10"
