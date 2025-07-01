@@ -27,6 +27,12 @@
 				"description": "RSS feed aggregator"
 			},
 			{
+				"name": "Gitea",
+				"uri": "https://gitea.notclickable.com",
+				"icon": "/img/gitea.jpg",
+				"description": "Source code repository"
+			},
+			{
 				"name": "GitLab",
 				"uri": "https://gitlab.notclickable.com",
 				"icon": "/img/gitlab.jpg",
