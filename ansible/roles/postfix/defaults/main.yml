@@ -1,0 +1,6 @@
+---
+# Default mail user for Postfix integration with Dovecot
+dovecot_mail_user: "{{ dovecot_mail_user | default('mailuser') }}"
+
+# Default SMTP port for Postfix
+postfix_port: 25

@@ -1,4 +1,0 @@
----
-apprise_repo: "https://github.com/caronc/apprise.git"
-apprise_clone_dest: "/opt/apprise"
-apprise_venv_dir: "/opt/apprise-venv"

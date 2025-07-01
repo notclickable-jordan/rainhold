@@ -1,0 +1,15 @@
+---
+- name: Update postfix virtual maps
+  command: postmap /etc/postfix/virtual
+  notify: Restart Postfix
+
+- name: Restart Postfix
+  service:
+    name: postfix
+    state: restarted
+    enabled: yes
+
+- name: restart rsyslog
+  service:
+    name: rsyslog
+    state: restarted

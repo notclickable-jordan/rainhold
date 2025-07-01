@@ -58,14 +58,6 @@ tinyauth.notclickable.com {
     reverse_proxy http://tinyauth:3000
 }
 
-mailrise.notclickable.com {
-    tls {
-        dns cloudflare {{ cloudflare_ssl_api_token }}
-    }
-
-    reverse_proxy http://mailrise:8025
-}
-
 gitea.notclickable.com {
     forward_auth http://tinyauth:3000 {
         uri /api/auth/caddy
@@ -238,14 +230,6 @@ vaultwarden.notclickable.com {
 
 starbase80.dev, www.starbase80.dev {
     redir https://github.com/notclickable-jordan/starbase-80
-}
-
-email-page.notclickable.com {
-    tls {
-        dns cloudflare {{ cloudflare_ssl_api_token }}
-    }
-
-    reverse_proxy http://email-page:3000
 }
 
 gitlab.notclickable.com {

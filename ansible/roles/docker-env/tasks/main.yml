@@ -7,22 +7,6 @@
     owner: root
     group: root
 
-- name: Generate .env file for Email Page
-  template:
-    src: email-page.env.j2
-    dest: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/email-page/.env"
-    mode: "0600"
-    owner: root
-    group: root
-
-- name: Generate config file for Mailrise
-  template:
-    src: mailrise.conf.j2
-    dest: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/mailrise/mailrise.conf"
-    mode: "0644"
-    owner: root
-    group: root
-
 - name: Generate .env file for LLDAP
   template:
     src: lldap.env.j2

@@ -21,8 +21,8 @@ Follow these steps to set up your server environment.
 
 # Further documentation
 
+-   [Email](docs/email.md) covers how Postfix and Dovecot create a local email server
 -   [Pocket ID](docs/pocket-id.md) provides automatic login to sites using OAuth and LLDAP
--   [Apprise](docs/apprise.md) sends notifications to Mastodon
 -   [Network share](docs/network-share.md) instructions for backups and file sharing
 -   [Gitea](docs/gitea.md) needs a runner registration token
 -   [GitLab](docs/gitlab.md) has things that need to be set manually
@@ -32,7 +32,6 @@ Follow these steps to set up your server environment.
 # Services used
 
 -   [Ansible](https://www.ansible.com)
--   [Apprise](https://github.com/caronc/apprise)
 -   [Audiobookshelf](https://www.audiobookshelf.org)
 -   [Caddy Cloudflare DNS](https://github.com/notclickable-jordan/caddy-cloudflare-dns)
 -   [Calibre](https://github.com/janeczku/calibre-web)
@@ -46,7 +45,6 @@ Follow these steps to set up your server environment.
 -   [Lemmy](https://join-lemmy.org)
 -   [LLDAP](https://github.com/lldap/lldap)
 -   [Loki](https://grafana.com/oss/loki/)
--   [Mailrise](https://github.com/yoryan/mailrise)
 -   [Mastodon](https://joinmastodon.org)
 -   [Miniflux](https://miniflux.app)
 -   [N8N](https://n8n.io)

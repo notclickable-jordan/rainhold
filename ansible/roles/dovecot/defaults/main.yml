@@ -1,0 +1,4 @@
+mail_user: "{{ lookup('env', 'MAIL_USER') | default('mailuser', true) }}"
+mail_user_password_raw: "{{ lookup('env', 'MAIL_USER_PASSWORD') | default('supersecret', true) }}"
+mail_user_password: "{{ mail_user_password_raw | password_hash('sha512') }}"
+mail_domain: "{{ lookup('env', 'MAIL_DOMAIN') | default('yourdomain.com', true) }}"

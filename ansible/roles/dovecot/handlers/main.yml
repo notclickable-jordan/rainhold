@@ -1,0 +1,11 @@
+- name: Restart Postfix
+  service:
+    name: postfix
+    state: restarted
+    enabled: yes
+
+- name: Restart Dovecot
+  service:
+    name: dovecot
+    state: restarted
+    enabled: yes
