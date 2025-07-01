@@ -1,0 +1,37 @@
+concurrent = 4
+
+[[runners]]
+  name = "shell"
+  url = "http://gitlab"
+  token = "TOKEN"
+  limit = 2
+  executor = "shell"
+  builds_dir = ""
+  shell = "bash"
+
+[[runners]]
+  name = "ruby-3.1-docker"
+  url = "http://gitlab"
+  token = "TOKEN"
+  limit = 0
+  executor = "docker"
+  builds_dir = ""
+  [runners.docker]
+    host = ""
+    image = "ruby:3.1"
+    privileged = false
+    disable_cache = false
+    cache_dir = ""
+
+[[runners]]
+  name = "production-server"
+  url = "http://gitlab"
+  token = "TOKEN"
+  limit = 0
+  executor = "ssh"
+  builds_dir = ""
+  [runners.ssh]
+    host = "gitlab"
+    port = "22"
+    user = "root"
+    password = "{{ gitlab_root_password}}"

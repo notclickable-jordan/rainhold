@@ -113,3 +113,6 @@ vaultwarden_admin_token: "your_vaultwarden_admin_token_here"
 dovecot_mail_user: mailuser
 dovecot_mail_user_password_raw: supersecret
 dovecot_mail_domain: example.com
+
+# --- GitLab ---
+gitlab_root_password: "your_gitlab_root_password_here"
