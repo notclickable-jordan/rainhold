@@ -56,5 +56,4 @@ Follow these steps to set up your server environment.
 -   [Tailscale](https://tailscale.com)
 -   [Tinyauth](https://tinyauth.app)
 -   [Vaultwarden](https://github.com/dani-garcia/vaultwarden)
--   [Watchtower](https://github.com/containrrr/watchtower)
 -   [YTPTube](https://github.com/arabcoders/ytptube)
