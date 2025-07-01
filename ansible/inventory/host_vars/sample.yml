@@ -109,7 +109,8 @@ miniflux_db_password: "your_miniflux_db_password_here"
 # --- Vaultwarden ---
 vaultwarden_admin_token: "your_vaultwarden_admin_token_here"
 
-# --- Dovecot ---
+# --- Postfix and Dovecot ---
+postfix_port: 25
 dovecot_mail_user: mailuser
 dovecot_mail_user_password_raw: supersecret
 dovecot_mail_domain: example.com
