@@ -4,6 +4,8 @@
 
 You won't have the host variable `gitea_runner_registration_token` until you create the Gitea instance. Run the playbook to create the Gitea instance, get the token and set it in your version of `sample.yml`. Then re-run the Ansible playbook.
 
+Due to how I backup Gitea, I reduced the number of days that the Gitea runner artifacts are retained to 1 day. This is done by setting the environment variable `GITEA__actions__ARTIFACT_RETENTION_DAYS=1` in the [gitea.env.j2](/ansible/roles/docker-env/templates/gitea.env.j2) file. You might want to remove this line to restore the default behavior.
+
 ## Authentication source
 
 Gitea can authenticate with Pocket ID.
