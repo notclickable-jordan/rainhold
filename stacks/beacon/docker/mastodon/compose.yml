@@ -27,7 +27,7 @@ services:
             - redis:/data
 
     web:
-        image: ghcr.io/mastodon/mastodon:v4.3.8
+        image: ghcr.io/mastodon/mastodon:v4.3.9
         container_name: mastodon_web
         restart: unless-stopped
         env_file:
@@ -49,7 +49,7 @@ services:
             - "host.docker.internal:host-gateway"
 
     streaming:
-        image: ghcr.io/mastodon/mastodon-streaming:v4.3.8
+        image: ghcr.io/mastodon/mastodon-streaming:v4.3.9
         container_name: mastodon_streaming
         restart: unless-stopped
         env_file:
@@ -69,7 +69,7 @@ services:
             - "host.docker.internal:host-gateway"
 
     sidekiq:
-        image: ghcr.io/mastodon/mastodon:v4.3.8
+        image: ghcr.io/mastodon/mastodon:v4.3.9
         container_name: mastodon_sidekiq
         restart: unless-stopped
         env_file:
