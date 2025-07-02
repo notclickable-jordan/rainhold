@@ -17,7 +17,7 @@ services:
 
     postgres:
         image: postgres:16
-        container_name: db
+        container_name: n8n-db
         restart: always
         env_file:
             - .env
