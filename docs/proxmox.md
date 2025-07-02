@@ -1,18 +1,18 @@
 # Proxmox installation
 
 1. Install Proxmox from USB
-    - **Hostname:** `compy386.domain.com` (the `compy386` part becomes the node name in Tailscale, so consider it carefully)
+    - **Hostname:** `strongserver.domain.com` (the `strongserver` part becomes the node name in Tailscale, so consider it carefully)
     - **IP Address:** `ip.address/24` (ip.address should be what you want to use for your Proxmox server)
     - **Gateway:** `router.ip.address`
     - **DNS Server:** `router.ip.address`
 2. Repositories
-    - Navigate to `Datacenter > compy386 > Repositories`
+    - Navigate to `Datacenter > strongserver > Repositories`
     - Disable all repositories starting with `enterprise.proxmox`
 
 # Tailscale
 
 1. Install Tailscale
-    - Navigate to `Datacenter > compy386 > Shell`
+    - Navigate to `Datacenter > strongserver > Shell`
     - Run:
         ```bash
         curl -fsSL https://pkgs.tailscale.com/stable/debian/bookworm.noarmor.gpg | tee /usr/share/keyrings/tailscale-archive-keyring.gpg >/dev/null
@@ -25,11 +25,11 @@
     tailscale up
     ```
 
-# System Updates
+# System updates
 
 1. Connect to your server
     ```bash
-    ssh root@compy386
+    ssh root@strongserver
     <enter root password>
     ```
 2. Update the system
@@ -38,7 +38,9 @@
     apt upgrade
     ```
 
-# User Setup
+# User setup (optional)
+
+You might not need a personal user if you don't plan to do much with your server after creating the Debian VM. However, it's a good practice to have a personal user for security and management purposes.
 
 1. Install sudo
     ```bash
@@ -55,11 +57,11 @@
     ```
 1. Set up SSH key login
     ```bash
-    ssh-copy-id strongbad@server
+    ssh-copy-id strongbad@strongserver
     ```
 1. Log in with your SSH key
     ```bash
-    ssh strongbad@compy386
+    ssh strongbad@strongserver
     ```
 1. Disable password authentication
     - Edit `/etc/ssh/sshd_config`
@@ -93,7 +95,7 @@
     0 1 * * * /root/tailscale-ssl.sh
     ```
 1. Check Proxmox URL (example)
-   `https://compy386.tail1e02a.ts.net:8006`
+   `https://strongserver.tail1e02a.ts.net:8006`
 
 # Enable Automatic Updates
 

@@ -20,7 +20,7 @@ Ansible is used to automate the deployment and configuration of your server envi
 
 # Running the playbook
 
-This will configure your Debian VM with all the necessary services and settings. The playbook will prompt you for your user's (e.g. `strongbad`) password.
+This will configure your Linux VM with all the necessary services and settings. The playbook will prompt you for your user's (e.g. `strongbad`) password.
 
 ```bash
 ansible-playbook ansible/playbook.yml --ask-become-pass --user strongbad --inventory ansible/inventory/hosts.yml
