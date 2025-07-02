@@ -24,6 +24,7 @@ Follow these steps to set up your server environment.
 -   [Email](docs/email.md) covers how Postfix and Dovecot create a local email server
 -   [Pocket ID](docs/pocket-id.md) provides automatic login to sites using OAuth and LLDAP
 -   [Network share](docs/network-share.md) instructions for backups and file sharing
+-   [Gitea](docs/gitea.md) needs a runner registration token
 -   [GitLab](docs/gitlab.md) has things that need to be set manually
 -   [Caddy](docs/caddy.md) uses a custom image for Cloudflare DNS
 -   [Ports](docs/ports.md) lists all ports numbers used in this setup
@@ -38,7 +39,7 @@ Follow these steps to set up your server environment.
 -   [Debian](https://www.debian.org)
 -   [Docker](https://www.docker.com)
 -   [Dozzle](https://dozzle.dev)
--   [GitLab](https://about.gitlab.com)
+-   [Gitea](https://about.gitea.com)
 -   [Grafana](https://grafana.com)
 -   [Jellyfin](https://jellyfin.org)
 -   [Lemmy](https://join-lemmy.org)

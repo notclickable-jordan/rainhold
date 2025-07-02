@@ -48,6 +48,15 @@ network_shares:
   - name: "video"
     mount_point: "/mnt/video"
 
+# --- Gitea ---
+GITEA__database__USER: gitea
+GITEA__database__NAME: gitea
+GITEA__database__PASSWD: "your_gitea_database_password_here"
+# Generate in Gitea after installing it
+# Go to **Site Administration > Actions > Runners** and click **Create new Runner**
+# Past the token here and re-run the Ansible playbook to register the runner
+gitea_runner_registration_token: "your_gitea_runner_registration_token_here"
+
 # --- N8N ---
 n8n_POSTGRES_DB_name: "n8n"
 n8n_POSTGRES_USER: "n8n"

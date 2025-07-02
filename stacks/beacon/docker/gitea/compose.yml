@@ -1,0 +1,57 @@
+services:
+    gitea:
+        image: docker.gitea.com/gitea:1.23.8
+        container_name: gitea
+        env_file:
+            - .env
+        restart: unless-stopped
+        volumes:
+            - data:/data
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        depends_on:
+            - db
+        ports:
+            - 4209:22
+        networks:
+            - caddy
+        healthcheck:
+            test: ["CMD-SHELL", "curl -f http://localhost:3000 || exit 1"]
+            interval: 30s
+            timeout: 10s
+            retries: 3
+
+    db:
+        image: docker.io/library/postgres:14
+        restart: unless-stopped
+        container_name: gitea-db
+        networks:
+            - caddy
+        env_file:
+            - .env
+        volumes:
+            - db:/var/lib/postgresql/data
+
+    runner:
+        image: gitea/act_runner
+        container_name: gitea-runner
+        networks:
+            - caddy
+        env_file:
+            - .env.runner
+        restart: unless-stopped
+        depends_on:
+            - gitea
+        volumes:
+            - ./runner.yml:/config.yaml
+            - /var/run/docker.sock:/var/run/docker.sock
+            - runner_data:/data
+
+volumes:
+    data:
+    db:
+    runner_data:
+
+networks:
+    caddy:
+        external: true
