@@ -25,7 +25,6 @@ Follow these steps to set up your server environment.
 -   [Pocket ID](docs/pocket-id.md) provides automatic login to sites using OAuth and LLDAP
 -   [Network share](docs/network-share.md) instructions for backups and file sharing
 -   [Gitea](docs/gitea.md) needs a runner registration token
--   [GitLab](docs/gitlab.md) has things that need to be set manually
 -   [Caddy](docs/caddy.md) uses a custom image for Cloudflare DNS
 -   [Ports](docs/ports.md) lists all ports numbers used in this setup
 

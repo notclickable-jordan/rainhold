@@ -12,5 +12,3 @@ stacks/*/docker/grafana/prometheus.yml
 stacks/*/docker/grafana/promtail-config.yml
 stacks/*/docker/lemmy/lemmy.hjson
 stacks/*/docker/caddy/conf
-stacks/*/docker/gitlab/gitlab.rb
-stacks/*/docker/gitlab/config.toml

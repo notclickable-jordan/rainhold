@@ -123,6 +123,3 @@ postfix_port: 25
 dovecot_mail_user: mailuser
 dovecot_mail_user_password_raw: supersecret
 dovecot_mail_domain: example.com
-
-# --- GitLab ---
-gitlab_root_password: "your_gitlab_root_password_here"

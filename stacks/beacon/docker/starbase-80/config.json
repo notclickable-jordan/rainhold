@@ -33,12 +33,6 @@
 				"description": "Source code repository"
 			},
 			{
-				"name": "GitLab",
-				"uri": "https://gitlab.notclickable.com",
-				"icon": "/img/gitlab.jpg",
-				"description": "Source code repository"
-			},
-			{
 				"name": "Grafana",
 				"uri": "https://grafana.notclickable.com",
 				"icon": "/img/grafana.jpg",
