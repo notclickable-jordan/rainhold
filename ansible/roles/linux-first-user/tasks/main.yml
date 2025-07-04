@@ -10,12 +10,6 @@
     create_home: yes
     state: present
 
-- name: Change user password to secure password
-  user:
-    name: "{{ linux_first_user_username }}"
-    password: "{{ linux_first_user_password_new }}"
-    update_password: always
-
 - name: Create .ssh directory for user
   file:
     path: "/home/{{ linux_first_user_username }}/.ssh"

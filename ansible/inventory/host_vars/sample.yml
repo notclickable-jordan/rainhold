@@ -4,7 +4,6 @@ linux_root_password_new: "{{ 'newplaintextpassword' | password_hash('sha512') }}
 
 # --- First user ---
 linux_first_user_username: jordan
-linux_first_user_password_new: "{{ 'password2' | password_hash('sha512') }}"
 # Generate: https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
 # Copy: https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account
 linux_first_user_ssh_public_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBExampleKeyGoesHere jordan@rainhold-beacon"
