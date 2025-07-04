@@ -63,7 +63,7 @@
 				"description": "Automation platform"
 			},
 			{
-				"name": "Vaulwarden",
+				"name": "Vaultwarden",
 				"uri": "https://vaultwarden.notclickable.com",
 				"icon": "vaultwarden",
 				"description": "Password manager"
