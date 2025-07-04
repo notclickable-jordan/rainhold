@@ -86,8 +86,8 @@ You might not need a personal user if you don't plan to do much with your server
     ```
 1. Make it executable, run it once manually, then schedule via cron
     ```bash
-    chmod +x ./tailscale-ssl.sh
-    sudo ./tailscale-ssl.sh
+    sudo chmod +x /root/tailscale-ssl.sh
+    sudo /root/tailscale-ssl.sh
     crontab -e
     ```
 1. Add to crontab
@@ -101,14 +101,15 @@ You might not need a personal user if you don't plan to do much with your server
 
 1. Install unattended upgrades
     ```bash
-    apt update
-    apt install unattended-upgrades
-    dpkg-reconfigure --priority=low unattended-upgrades
+    sudo apt update
+    sudo apt install unattended-upgrades
+    sudo dpkg-reconfigure --priority=low unattended-upgrades
     ```
-2. Edit auto-clean interval
+1. Answer `Yes`
+1. Edit auto-clean interval
 
     ```bash
-    nano /etc/apt/apt.conf.d/20auto-upgrades
+    sudo nano /etc/apt/apt.conf.d/20auto-upgrades
     ```
 
     Add:

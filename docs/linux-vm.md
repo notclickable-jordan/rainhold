@@ -21,7 +21,7 @@ After creating a Linux VM in Proxmox, you need to configure it so Ansible can re
 Run:
 
 ```bash
-ssh-copy-id strongbad@compy386
+ssh-copy-id strongbad@ip.address
 ```
 
 ## Install sudo
@@ -29,7 +29,7 @@ ssh-copy-id strongbad@compy386
 Run:
 
 ```bash
-ssh strongbad@compy386
+ssh strongbad@ip.address
 su -
 apt update
 apt install sudo
@@ -41,7 +41,7 @@ Run:
 
 ```bash
 su -
-addusers strongbad sudo
+adduser strongbad sudo
 ```
 
 # Update Ansible inventory
