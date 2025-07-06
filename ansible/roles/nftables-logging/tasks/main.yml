@@ -28,14 +28,63 @@
   failed_when: false
   changed_when: nft_output_chain_result.rc == 0
 
-- name: Ensure nftables logging is enabled for dropped packets only
+- name: Clear existing nftables rules to avoid conflicts
   become: true
-  command: >
-    nft add rule inet filter input counter drop log prefix "nftables-input-drop"
+  command: nft flush chain inet filter input
   ignore_errors: true
 
-- name: Ensure nftables logging is enabled for suspicious connections
+- name: Allow established and related connections
   become: true
   command: >
-    nft add rule inet filter input tcp flags syn tcp dport 22 limit rate 10/minute log prefix "nftables-ssh-attempt"
+    nft add rule inet filter input ct state established,related accept
+  ignore_errors: true
+
+- name: Allow loopback traffic
+  become: true
+  command: >
+    nft add rule inet filter input iif lo accept
+  ignore_errors: true
+
+- name: Log and allow SSH connections with rate limiting
+  become: true
+  command: >
+    nft add rule inet filter input tcp dport 22 limit rate 10/minute log prefix "nftables-ssh-attempt" accept
+  ignore_errors: true
+
+- name: Allow SSH without rate limiting (for established connections)
+  become: true
+  command: >
+    nft add rule inet filter input tcp dport 22 accept
+  ignore_errors: true
+
+- name: Allow HTTP and HTTPS
+  become: true
+  command: >
+    nft add rule inet filter input tcp dport {80, 443} accept
+  ignore_errors: true
+
+- name: Allow other common services
+  become: true
+  command: >
+    nft add rule inet filter input tcp dport {25, 143, 389, 4209, 4214, 4215, 4216} accept
+  ignore_errors: true
+
+- name: Log dropped packets (only new connections)
+  become: true
+  command: >
+    nft add rule inet filter input ct state new log prefix "nftables-drop" limit rate 5/minute counter drop
+  ignore_errors: true
+
+- name: Save nftables configuration
+  become: true
+  shell: nft list ruleset > /etc/nftables.conf
+  ignore_errors: true
+
+- name: Enable and restart nftables service
+  become: true
+  systemd:
+    name: nftables
+    enabled: yes
+    state: restarted
+    daemon_reload: yes
   ignore_errors: true
