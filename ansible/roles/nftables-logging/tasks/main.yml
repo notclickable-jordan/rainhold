@@ -28,20 +28,14 @@
   failed_when: false
   changed_when: nft_output_chain_result.rc == 0
 
-- name: Ensure nftables logging is enabled for input chain
+- name: Ensure nftables logging is enabled for dropped packets only
   become: true
   command: >
-    nft add rule inet filter input log prefix "nftables-input" flags all
+    nft add rule inet filter input counter drop log prefix "nftables-input-drop"
   ignore_errors: true
 
-- name: Ensure nftables logging is enabled for forward chain
+- name: Ensure nftables logging is enabled for suspicious connections
   become: true
   command: >
-    nft add rule inet filter forward log prefix "nftables-forward" flags all
-  ignore_errors: true
-
-- name: Ensure nftables logging is enabled for output chain
-  become: true
-  command: >
-    nft add rule inet filter output log prefix "nftables-output" flags all
+    nft add rule inet filter input tcp flags syn tcp dport 22 limit rate 10/minute log prefix "nftables-ssh-attempt"
   ignore_errors: true

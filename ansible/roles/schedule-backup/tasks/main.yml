@@ -6,6 +6,13 @@
     state: file
     mode: "0755"
 
+# Ensure the monitor.sh file is executable
+- name: Make monitor.sh executable
+  file:
+    path: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/monitor.sh"
+    state: file
+    mode: "0755"
+
 # Schedule a cron job to run backup.sh every day at 1 AM
 - name: Schedule backup.sh in cron
   cron:
@@ -13,3 +20,10 @@
     minute: "0"
     hour: "1"
     job: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/backup.sh"
+
+# Schedule system monitoring every hour
+- name: Schedule system monitoring
+  cron:
+    name: "System monitoring"
+    minute: "0"
+    job: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/monitor.sh"

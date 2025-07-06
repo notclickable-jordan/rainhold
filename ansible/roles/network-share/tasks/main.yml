@@ -27,7 +27,7 @@
 - name: Ensure fstab entries for network shares
   lineinfile:
     path: /etc/fstab
-    line: "//{{ network_share_host }}/{{ item.name }} {{ item.mount_point }} cifs vers=3.0,credentials=/root/.smbcredentials,uid={{ item.uid | default(1000) }},gid={{ item.gid | default(1000) }} 0 0"
+    line: "//{{ network_share_host }}/{{ item.name }} {{ item.mount_point }} cifs vers=3.0,credentials=/root/.smbcredentials,uid={{ item.uid | default(1000) }},gid={{ item.gid | default(1000) }},noauto,x-systemd.automount,x-systemd.device-timeout=10,x-systemd.mount-timeout=30,_netdev 0 0"
     state: present
     create: yes
     backup: yes
@@ -40,6 +40,46 @@
   command: systemctl daemon-reload
   become: true
 
+- name: Wait for network to be ready
+  wait_for:
+    host: "{{ network_share_host }}"
+    port: 445
+    delay: 5
+    timeout: 60
+  become: true
+
 - name: Run mount -a to activate all fstab mounts
   command: mount -a
+  become: true
+  retries: 3
+  delay: 10
+  register: mount_result
+  until: mount_result.rc == 0
+  ignore_errors: true
+
+- name: Create systemd mount retry service
+  copy:
+    dest: /etc/systemd/system/mount-network-shares.service
+    content: |
+      [Unit]
+      Description=Mount network shares with retry
+      After=network-online.target
+      Wants=network-online.target
+
+      [Service]
+      Type=oneshot
+      ExecStart=/bin/bash -c 'for i in {1..5}; do mount -a && break || sleep 10; done'
+      RemainAfterExit=yes
+
+      [Install]
+      WantedBy=multi-user.target
+    mode: "0644"
+  become: true
+
+- name: Enable and start mount retry service
+  systemd:
+    name: mount-network-shares
+    enabled: yes
+    state: started
+    daemon_reload: yes
   become: true
