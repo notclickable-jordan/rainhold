@@ -11,6 +11,7 @@ In Proxmox:
 1. Create VM and install
     - Use the Linux VM name and first username you set in [variables](docs/variables.md)
     - If it asks if you want to install mirrors, select `Yes`
+    - For software selection, uncheck everything except `SSH server` and `standard system utilities`
     - Once it's installed, get the IP address of your Linux VM from your router. Proxmox does not tell you the IP address of the VM. You'll need this for the Ansible step below.
 
 After creating a Linux VM in Proxmox, you need to configure it so Ansible can reach it.
