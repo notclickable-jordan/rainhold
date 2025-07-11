@@ -162,7 +162,7 @@ for entry in "${VOLUMES[@]}"; do
       printf " Copying..."
       
       # Check system load before copying large files
-      local file_size_mb=$(du -m "$TMPDIR/$BACKUP_FILE" 2>/dev/null | awk '{print $1}' || echo "0")
+      file_size_mb=$(du -m "$TMPDIR/$BACKUP_FILE" 2>/dev/null | awk '{print $1}' || echo "0")
       
       # Skip extremely large files that might cause system lockup (>5GB)
       if [ $file_size_mb -gt 5120 ]; then
