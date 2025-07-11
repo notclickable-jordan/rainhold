@@ -45,13 +45,21 @@ safe_copy_with_retry() {
   local max_attempts=3
   local attempt=1
   
+  # Calculate timeout based on file size (minimum 60 seconds, 1 second per MB)
+  local file_size_mb=$(du -m "$source" 2>/dev/null | awk '{print $1}' || echo "0")
+  local timeout_seconds=$((file_size_mb + 60))
+  # Cap the timeout at 20 minutes for very large files
+  if [ $timeout_seconds -gt 1200 ]; then
+    timeout_seconds=1200
+  fi
+  
   while [ $attempt -le $max_attempts ]; do
-    if timeout 30 cp "$source" "$target_dir/" 2>/dev/null; then
+    if timeout $timeout_seconds cp "$source" "$target_dir/" 2>/dev/null; then
       return 0
     else
       attempt=$((attempt + 1))
       if [ $attempt -le $max_attempts ]; then
-        sleep 2
+        sleep 5  # Increased sleep time between retries
       fi
     fi
   done
