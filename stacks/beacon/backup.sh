@@ -32,18 +32,30 @@ for entry in "${VOLUMES[@]}"; do
   MOUNT_ARGS+=" --mount type=volume,source=$VOLUME,target=$MOUNT_PATH,readonly "
 done
 
-echo "[Backup] Running backup container to archive each volume"
-# Use alpine:3.17.2 for tar support and compatibility with restore
+echo "[Backup] Running backup container to copy each volume using rsync"
+# Use ubuntu image which has rsync built-in for better file copying
 # Track start time
 START_TIME=$(date +%s)
-docker run --rm $MOUNT_ARGS -v "$TMPDIR:/backup" alpine:3.17.2 sh -c '
+docker run --rm $MOUNT_ARGS -v "$TMPDIR:/backup" ubuntu:22.04 sh -c '
   total=$#
   i=1
   for entry in "$@"; do
     VOLUME="${entry%%:*}"
     MOUNT_PATH="${entry#*:}"
     echo "[$i/$total] $VOLUME from $MOUNT_PATH"
-    tar -czf "/backup/${VOLUME}.tgz" -C "$MOUNT_PATH" .
+    
+    # Create volume directory in backup location
+    mkdir -p "/backup/${VOLUME}"
+    
+    # Use rsync to copy files with better handling of permissions, links, etc.
+    rsync -av --delete "$MOUNT_PATH/" "/backup/${VOLUME}/"
+    
+    # Create compressed archive of the synced data
+    tar -czf "/backup/${VOLUME}.tgz" -C "/backup/${VOLUME}" .
+    
+    # Remove the uncompressed directory to save space
+    rm -rf "/backup/${VOLUME}"
+    
     i=$((i+1))
   done
 ' _ "${VOLUMES[@]}"

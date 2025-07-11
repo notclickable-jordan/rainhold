@@ -38,15 +38,27 @@ for entry in "${VOLUMES[@]}"; do
   MOUNT_ARGS+=" --mount type=volume,source=$VOLUME,target=$MOUNT_PATH "
 done
 
-docker run --rm $MOUNT_ARGS -v "$TMPDIR:/backup" alpine:3.17.2 sh -c '
+docker run --rm $MOUNT_ARGS -v "$TMPDIR:/backup" ubuntu:22.04 sh -c '
   for entry in "$@"; do
     VOLUME="${entry%%:*}"
     MOUNT_PATH="${entry#*:}"
     TGZ="/backup/${VOLUME}.tgz"
     if [ -f "$TGZ" ]; then
+      # Create temporary extraction directory
+      mkdir -p "/tmp/${VOLUME}"
+      
+      # Extract archive to temporary location
+      tar -xzf "$TGZ" -C "/tmp/${VOLUME}"
+      
+      # Use rsync to restore files with better handling of permissions, links, etc.
+      # Clear destination first, then sync
       rm -rf "$MOUNT_PATH"/*
-      tar -xzf "$TGZ" -C "$MOUNT_PATH"
-      echo "Restored $VOLUME to $MOUNT_PATH"
+      rsync -av "/tmp/${VOLUME}/" "$MOUNT_PATH/"
+      
+      # Clean up temporary extraction directory
+      rm -rf "/tmp/${VOLUME}"
+      
+      echo "Restored $VOLUME to $MOUNT_PATH using rsync"
     else
       echo "Warning: $TGZ not found, skipping $VOLUME"
     fi

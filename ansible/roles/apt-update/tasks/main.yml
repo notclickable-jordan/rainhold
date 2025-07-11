@@ -15,3 +15,9 @@
 - name: Upgrade apt packages
   apt:
     upgrade: dist
+
+- name: Install essential packages
+  apt:
+    name:
+      - rsync
+    state: present
