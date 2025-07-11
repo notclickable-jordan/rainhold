@@ -38,6 +38,19 @@ check_network_path() {
   fi
 }
 
+# Function to check system load before large operations
+check_system_load() {
+  local load_avg=$(uptime | awk -F'load average:' '{print $2}' | awk '{print $1}' | sed 's/,//')
+  local cpu_count=$(nproc)
+  local load_threshold=$(echo "$cpu_count * 2" | bc 2>/dev/null || echo "$((cpu_count * 2))")
+  
+  # If load is too high, wait a bit
+  if (( $(echo "$load_avg > $load_threshold" | bc -l 2>/dev/null || echo "0") )); then
+    echo -n " (high load, waiting...)"
+    sleep 30
+  fi
+}
+
 # Function to safely copy file with retry logic
 safe_copy_with_retry() {
   local source="$1"
@@ -45,22 +58,48 @@ safe_copy_with_retry() {
   local max_attempts=3
   local attempt=1
   
-  # Calculate timeout based on file size (minimum 60 seconds, 1 second per MB)
+  # Get file size for monitoring
   local file_size_mb=$(du -m "$source" 2>/dev/null | awk '{print $1}' || echo "0")
-  local timeout_seconds=$((file_size_mb + 60))
-  # Cap the timeout at 20 minutes for very large files
-  if [ $timeout_seconds -gt 1200 ]; then
-    timeout_seconds=1200
+  local filename=$(basename "$source")
+  local target_file="$target_dir/$filename"
+  
+  # Calculate timeout based on file size (minimum 120 seconds, 3 seconds per MB for large files)
+  local timeout_seconds=$((file_size_mb * 3 + 120))
+  # Cap the timeout at 45 minutes for very large files
+  if [ $timeout_seconds -gt 2700 ]; then
+    timeout_seconds=2700
   fi
   
   while [ $attempt -le $max_attempts ]; do
-    if timeout $timeout_seconds cp "$source" "$target_dir/" 2>/dev/null; then
-      return 0
-    else
-      attempt=$((attempt + 1))
-      if [ $attempt -le $max_attempts ]; then
-        sleep 5  # Increased sleep time between retries
+    # For large files (>500MB), use dd with smaller block sizes to reduce memory pressure
+    if [ $file_size_mb -gt 500 ]; then
+      echo -n " (using safe mode for large file)"
+      # Use dd with 1MB blocks and sync after each block to prevent buffering issues
+      if timeout $timeout_seconds dd if="$source" of="$target_file" bs=1M conv=sync 2>/dev/null; then
+        # Verify the copy was successful by comparing file sizes
+        local source_size=$(stat -c%s "$source" 2>/dev/null || stat -f%z "$source" 2>/dev/null)
+        local target_size=$(stat -c%s "$target_file" 2>/dev/null || stat -f%z "$target_file" 2>/dev/null)
+        if [ "$source_size" = "$target_size" ]; then
+          return 0
+        else
+          echo -n " (size mismatch)"
+          rm -f "$target_file"
+        fi
       fi
+    else
+      # For smaller files, use regular cp
+      if timeout $timeout_seconds cp "$source" "$target_dir/" 2>/dev/null; then
+        return 0
+      fi
+    fi
+    
+    echo -n " (attempt $attempt failed)"
+    attempt=$((attempt + 1))
+    if [ $attempt -le $max_attempts ]; then
+      echo -n " retrying..."
+      sleep 15  # Longer sleep for large file retries
+      # Clean up any partial files
+      rm -f "$target_file"
     fi
   done
   
@@ -121,14 +160,29 @@ for entry in "${VOLUMES[@]}"; do
     # Copy to target location immediately
     if [ "$NETWORK_AVAILABLE" = true ]; then
       printf " Copying..."
-      if safe_copy_with_retry "$TMPDIR/$BACKUP_FILE" "$TARGET_FOLDER"; then
-        printf " done.\n"
-        rm -f "$TMPDIR/$BACKUP_FILE"
-        SUCCESSFUL_BACKUPS=$((SUCCESSFUL_BACKUPS + 1))
-      else
-        printf " failed. Kept locally.\n"
+      
+      # Check system load before copying large files
+      local file_size_mb=$(du -m "$TMPDIR/$BACKUP_FILE" 2>/dev/null | awk '{print $1}' || echo "0")
+      
+      # Skip extremely large files that might cause system lockup (>5GB)
+      if [ $file_size_mb -gt 5120 ]; then
+        printf " skipped (file too large: ${file_size_mb}MB). Kept locally.\n"
         mv "$TMPDIR/$BACKUP_FILE" "./"
         FAILED_BACKUPS=$((FAILED_BACKUPS + 1))
+      else
+        if [ $file_size_mb -gt 500 ]; then
+          check_system_load
+        fi
+        
+        if safe_copy_with_retry "$TMPDIR/$BACKUP_FILE" "$TARGET_FOLDER"; then
+          printf " done.\n"
+          rm -f "$TMPDIR/$BACKUP_FILE"
+          SUCCESSFUL_BACKUPS=$((SUCCESSFUL_BACKUPS + 1))
+        else
+          printf " failed. Kept locally.\n"
+          mv "$TMPDIR/$BACKUP_FILE" "./"
+          FAILED_BACKUPS=$((FAILED_BACKUPS + 1))
+        fi
       fi
     else
       mv "$TMPDIR/$BACKUP_FILE" "$TARGET_FOLDER/"
