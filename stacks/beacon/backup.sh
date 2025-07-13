@@ -24,10 +24,8 @@ TMPDIR=$(mktemp -d)
 echo "[Backup] Created temporary directory: $TMPDIR"
 
 # Build mount args (no longer needed as we process individually)
-echo "[Backup] Preparing to process volumes individually"
+echo "[Backup] Preparing to process volumes"
 
-echo "[Backup] Running backup container with memory-efficient compression"
-# Use alpine for lighter weight and compress directly to avoid double storage
 # Track start time
 START_TIME=$(date +%s)
 
@@ -44,7 +42,7 @@ for entry in "${VOLUMES[@]}"; do
     --mount type=volume,source="$VOLUME",target="$MOUNT_PATH",readonly \
     -v "$TMPDIR:/backup" \
     alpine:3.17 sh -c "
-      echo 'Compressing $VOLUME directly to avoid memory issues...'
+      echo 'Compressing $VOLUME...'
       tar -czf /backup/${VOLUME}.tgz -C $MOUNT_PATH .
       echo 'Completed $VOLUME'
     "
