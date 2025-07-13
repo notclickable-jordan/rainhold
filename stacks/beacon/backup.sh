@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Backup all named Docker volumes in the beacon stack as individual files
+# Backup all named Docker volumes in the beacon stack into a single archive
 set -e
 
 # Set the server name (change this if your server uses a different name)
@@ -12,7 +12,7 @@ SERVER_NAME="rainhold-beacon"
 EMAIL="admin@notclickable.com"
 DATE="$(date '+%Y-%m-%d %H:%M:%S')"
 DATE_SUFFIX="$(date '+%Y-%m-%d')"
-BACKUP_FOLDER="${SERVER_NAME}-${DATE_SUFFIX}"
+BACKUP_FILE="${SERVER_NAME}-${DATE_SUFFIX}.tgz"
 
 # Get the number of entries in the VOLUMES variable
 SERVICE_COUNT=${#VOLUMES[@]}
@@ -23,186 +23,48 @@ echo "[Backup] Starting backup of Docker volumes"
 TMPDIR=$(mktemp -d)
 echo "[Backup] Created temporary directory: $TMPDIR"
 
-# Function to check if network path is accessible
-check_network_path() {
-  local path="$1"
-  local timeout=10
-  
-  echo "[Backup] Checking network path accessibility: $path"
-  
-  # Test if we can access the directory with a timeout
-  if timeout $timeout ls "$path" >/dev/null 2>&1; then
-    return 0
-  else
-    return 1
-  fi
-}
+# Build mount args (no longer needed as we process individually)
+echo "[Backup] Preparing to process volumes individually"
 
-# Function to check system load before large operations
-check_system_load() {
-  local load_avg=$(uptime | awk -F'load average:' '{print $2}' | awk '{print $1}' | sed 's/,//')
-  local cpu_count=$(nproc)
-  local load_threshold=$(echo "$cpu_count * 2" | bc 2>/dev/null || echo "$((cpu_count * 2))")
-  
-  # If load is too high, wait a bit
-  if (( $(echo "$load_avg > $load_threshold" | bc -l 2>/dev/null || echo "0") )); then
-    echo -n " (high load, waiting...)"
-    sleep 30
-  fi
-}
-
-# Function to safely copy file with retry logic
-safe_copy_with_retry() {
-  local source="$1"
-  local target_dir="$2"
-  local max_attempts=3
-  local attempt=1
-  
-  # Get file size for monitoring
-  local file_size_mb=$(du -m "$source" 2>/dev/null | awk '{print $1}' || echo "0")
-  local filename=$(basename "$source")
-  local target_file="$target_dir/$filename"
-  
-  # Calculate timeout based on file size (minimum 120 seconds, 3 seconds per MB for large files)
-  local timeout_seconds=$((file_size_mb * 3 + 120))
-  # Cap the timeout at 45 minutes for very large files
-  if [ $timeout_seconds -gt 2700 ]; then
-    timeout_seconds=2700
-  fi
-  
-  while [ $attempt -le $max_attempts ]; do
-    # For large files (>500MB), use dd with smaller block sizes to reduce memory pressure
-    if [ $file_size_mb -gt 500 ]; then
-      echo -n " (using safe mode for large file)"
-      # Use dd with 1MB blocks and sync after each block to prevent buffering issues
-      if timeout $timeout_seconds dd if="$source" of="$target_file" bs=1M conv=sync 2>/dev/null; then
-        # Verify the copy was successful by comparing file sizes
-        local source_size=$(stat -c%s "$source" 2>/dev/null || stat -f%z "$source" 2>/dev/null)
-        local target_size=$(stat -c%s "$target_file" 2>/dev/null || stat -f%z "$target_file" 2>/dev/null)
-        if [ "$source_size" = "$target_size" ]; then
-          return 0
-        else
-          echo -n " (size mismatch)"
-          rm -f "$target_file"
-        fi
-      fi
-    else
-      # For smaller files, use regular cp
-      if timeout $timeout_seconds cp "$source" "$target_dir/" 2>/dev/null; then
-        return 0
-      fi
-    fi
-    
-    echo -n " (attempt $attempt failed)"
-    attempt=$((attempt + 1))
-    if [ $attempt -le $max_attempts ]; then
-      echo -n " retrying..."
-      sleep 15  # Longer sleep for large file retries
-      # Clean up any partial files
-      rm -f "$target_file"
-    fi
-  done
-  
-  return 1
-}
-
-# Build --mount args for all volumes
-echo "[Backup] Preparing volume mount arguments"
-MOUNT_ARGS=""
-for entry in "${VOLUMES[@]}"; do
-  VOLUME="${entry%%:*}"
-  MOUNT_PATH="${entry#*:}"
-  MOUNT_ARGS+=" --mount type=volume,source=$VOLUME,target=$MOUNT_PATH,readonly "
-done
-
+echo "[Backup] Running backup container with memory-efficient compression"
+# Use alpine for lighter weight and compress directly to avoid double storage
 # Track start time
 START_TIME=$(date +%s)
 
-# Check if backup path is accessible
-NETWORK_AVAILABLE=false
-TARGET_FOLDER=""
-if check_network_path "$BACKUP_PATH"; then
-  echo "[Backup] Network path is accessible"
-  TARGET_FOLDER="$BACKUP_PATH/$BACKUP_FOLDER"
-  
-  # Create the target folder if it doesn't exist
-  if timeout 10 mkdir -p "$TARGET_FOLDER" 2>/dev/null; then
-    echo "[Backup] Target folder created: $TARGET_FOLDER"
-    NETWORK_AVAILABLE=true
-  else
-    echo "[Backup] Error: Could not create target folder on network path"
-    echo "[Backup] Will keep backups locally"
-  fi
-else
-  echo "[Backup] Error: Network backup path is not accessible"
-  echo "[Backup] Will keep backups locally"
-  TARGET_FOLDER="$BACKUP_FOLDER"
-  mkdir -p "$TARGET_FOLDER"
-fi
-
-echo "[Backup] Processing individual volume backups"
-# Process each volume individually
+# Process volumes one at a time to reduce memory pressure
+total=${#VOLUMES[@]}
 i=1
-SUCCESSFUL_BACKUPS=0
-FAILED_BACKUPS=0
-
 for entry in "${VOLUMES[@]}"; do
   VOLUME="${entry%%:*}"
   MOUNT_PATH="${entry#*:}"
-  BACKUP_FILE="${SERVER_NAME}-${VOLUME}-${DATE_SUFFIX}.tgz"
+  echo "[$i/$total] Processing $VOLUME from $MOUNT_PATH"
   
-  printf "[%02d/%02d] Backing up %s..." "$i" "$SERVICE_COUNT" "$VOLUME"
+  # Process each volume individually with direct compression
+  docker run --rm \
+    --mount type=volume,source="$VOLUME",target="$MOUNT_PATH",readonly \
+    -v "$TMPDIR:/backup" \
+    alpine:3.17 sh -c "
+      echo 'Compressing $VOLUME directly to avoid memory issues...'
+      tar -czf /backup/${VOLUME}.tgz -C $MOUNT_PATH .
+      echo 'Completed $VOLUME'
+    "
   
-  # Create backup for this volume
-  if docker run --rm --mount type=volume,source="$VOLUME",target="$MOUNT_PATH",readonly -v "$TMPDIR:/backup" alpine:3.17.2 sh -c "tar -czf \"/backup/${BACKUP_FILE}\" -C \"$MOUNT_PATH\" ." 2>/dev/null; then
-    printf " done."
-    
-    # Copy to target location immediately
-    if [ "$NETWORK_AVAILABLE" = true ]; then
-      printf " Copying..."
-      
-      # Check system load before copying large files
-      file_size_mb=$(du -m "$TMPDIR/$BACKUP_FILE" 2>/dev/null | awk '{print $1}' || echo "0")
-      
-      # Skip extremely large files that might cause system lockup (>5GB)
-      if [ $file_size_mb -gt 5120 ]; then
-        printf " skipped (file too large: ${file_size_mb}MB). Kept locally.\n"
-        mv "$TMPDIR/$BACKUP_FILE" "./"
-        FAILED_BACKUPS=$((FAILED_BACKUPS + 1))
-      else
-        if [ $file_size_mb -gt 500 ]; then
-          check_system_load
-        fi
-        
-        if safe_copy_with_retry "$TMPDIR/$BACKUP_FILE" "$TARGET_FOLDER"; then
-          printf " done.\n"
-          rm -f "$TMPDIR/$BACKUP_FILE"
-          SUCCESSFUL_BACKUPS=$((SUCCESSFUL_BACKUPS + 1))
-        else
-          printf " failed. Kept locally.\n"
-          mv "$TMPDIR/$BACKUP_FILE" "./"
-          FAILED_BACKUPS=$((FAILED_BACKUPS + 1))
-        fi
-      fi
-    else
-      mv "$TMPDIR/$BACKUP_FILE" "$TARGET_FOLDER/"
-      printf " saved locally.\n"
-      SUCCESSFUL_BACKUPS=$((SUCCESSFUL_BACKUPS + 1))
-    fi
-  else
-    printf " failed.\n"
-    FAILED_BACKUPS=$((FAILED_BACKUPS + 1))
-  fi
-  
-  i=$((i + 1))
+  i=$((i+1))
 done
 
+echo "[Backup] Combining all volume archives into $BACKUP_FILE"
+cd "$TMPDIR"
+tar -czf "$BACKUP_FILE" *.tgz
+mv "$BACKUP_FILE" "$OLDPWD/"
+cd "$OLDPWD"
 rm -rf "$TMPDIR"
 
 HUMAN_DATE="$(date '+%B %-d, %Y at %I:%M %p')"
 
-echo "[Backup] Backup complete on $HUMAN_DATE"
-echo "[Backup] Successful: $SUCCESSFUL_BACKUPS, Failed: $FAILED_BACKUPS"
+echo "[Backup] Backup complete: $BACKUP_FILE on $HUMAN_DATE"
+
+# Get human-readable backup size
+BACKUP_SIZE=$(du -h "$BACKUP_FILE" | awk '{print $1}')
 
 # After backup is complete
 END_TIME=$(date +%s)
@@ -214,39 +76,26 @@ else
   ELAPSED_STR="$ELAPSED_MIN minutes"
 fi
 
-# Clean up old backup folders if using network storage
-if [ "$NETWORK_AVAILABLE" = true ]; then
-  echo "[Backup] Cleaning up old backup folders..."
-  if timeout 30 find "$BACKUP_PATH" -maxdepth 1 -type d -name "${SERVER_NAME}-*" -mtime +7 -exec rm -rf {} \; 2>/dev/null; then
-    echo "[Backup] Old backup folders cleaned up"
-  else
-    echo "[Backup] Warning: Cleanup of old backup folders timed out or failed"
-  fi
-fi
+DATE_FOLDER="$(date '+%Y-%m-%d')"
+TARGET_FOLDER="$BACKUP_PATH"
 
-# Determine backup status and location for email
-if [ "$NETWORK_AVAILABLE" = true ] && [ $FAILED_BACKUPS -eq 0 ]; then
-  BACKUP_LOCATION="$TARGET_FOLDER"
-  BACKUP_STATUS="Success - All files moved to network storage"
-elif [ "$NETWORK_AVAILABLE" = true ] && [ $FAILED_BACKUPS -gt 0 ]; then
-  BACKUP_LOCATION="Mixed: $TARGET_FOLDER and local directory"
-  BACKUP_STATUS="Partial success - Some files kept locally due to network issues"
-else
-  BACKUP_LOCATION="$(pwd)/$TARGET_FOLDER"
-  BACKUP_STATUS="Local backup - Network storage unavailable"
-fi
+# Create the target folder if it doesn't exist
+mkdir -p "$TARGET_FOLDER"
 
-# Calculate total backup size
-if [ "$NETWORK_AVAILABLE" = true ] && [ -d "$TARGET_FOLDER" ]; then
-  BACKUP_SIZE=$(du -sh "$TARGET_FOLDER" 2>/dev/null | awk '{print $1}' || echo "Unknown")
-elif [ -d "$TARGET_FOLDER" ]; then
-  BACKUP_SIZE=$(du -sh "$TARGET_FOLDER" 2>/dev/null | awk '{print $1}' || echo "Unknown")
-else
-  BACKUP_SIZE="Unknown"
-fi
+# Move the backup file to the target folder
+mv "$BACKUP_FILE" "$TARGET_FOLDER/"
+
+# Delete files older than 7 days in the backup_path
+find "$BACKUP_PATH" -type f -mtime +7 -exec rm -f {} \;
+
+# Delete empty folders in the backup_path
+find "$BACKUP_PATH" -type d -empty -exec rmdir {} \;
+
+echo "[Backup] Backup file moved to $TARGET_FOLDER and old files cleaned up."
+echo "[Backup] Empty folders cleaned up."
 
 # Compose email body
-MAIL_BODY="Backup completed on $HUMAN_DATE\nTime elapsed: $ELAPSED_STR\nStatus: $BACKUP_STATUS\n\nLocation: $BACKUP_LOCATION\nTotal size: $BACKUP_SIZE\nSuccessful backups: $SUCCESSFUL_BACKUPS\nFailed backups: $FAILED_BACKUPS\nTotal volumes: $SERVICE_COUNT\n"
+MAIL_BODY="Backup completed on $HUMAN_DATE\nTime elapsed: $ELAPSED_STR\n\nFile: $BACKUP_FILE\nSize: $BACKUP_SIZE\nVolumes: $SERVICE_COUNT\n"
 
 echo -e "$MAIL_BODY" | mail -s "${SERVER_NAME} backup complete" "$EMAIL"
 echo "[Backup] Notification email sent to $EMAIL"
