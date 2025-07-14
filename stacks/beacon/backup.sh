@@ -64,6 +64,16 @@ echo "[Backup] Backup complete: $BACKUP_FILE on $HUMAN_DATE"
 # Get human-readable backup size
 BACKUP_SIZE=$(du -h "$BACKUP_FILE" | awk '{print $1}')
 
+# Check backup destination before attempting operations
+echo "[Backup] Checking backup destination: $BACKUP_PATH"
+if ! touch "$BACKUP_PATH/.test" 2>/dev/null; then
+  echo "[Backup] WARNING: Backup destination appears to have issues"
+  df -h "$BACKUP_PATH" 2>/dev/null || echo "[Backup] Cannot get filesystem info for backup path"
+else
+  rm -f "$BACKUP_PATH/.test"
+  echo "[Backup] Backup destination is accessible"
+fi
+
 # After backup is complete
 END_TIME=$(date +%s)
 ELAPSED_SEC=$((END_TIME - START_TIME))
@@ -80,17 +90,36 @@ TARGET_FOLDER="$BACKUP_PATH"
 # Create the target folder if it doesn't exist
 mkdir -p "$TARGET_FOLDER"
 
-# Move the backup file to the target folder
-mv "$BACKUP_FILE" "$TARGET_FOLDER/"
+# Copy backup file to target with error handling for network mounts
+echo "[Backup] Moving backup file to $TARGET_FOLDER"
+if ! mv "$BACKUP_FILE" "$TARGET_FOLDER/" 2>/dev/null; then
+  echo "[Backup] Direct move failed, attempting copy with sync..."
+  if cp "$BACKUP_FILE" "$TARGET_FOLDER/" && sync; then
+    echo "[Backup] Copy successful, removing local copy..."
+    rm -f "$BACKUP_FILE"
+  else
+    echo "[Backup] WARNING: Failed to copy to backup destination. File remains at: $(pwd)/$BACKUP_FILE"
+    echo "[Backup] Network mount may be experiencing issues."
+  fi
+fi
 
-# Delete files older than 7 days in the backup_path
-find "$BACKUP_PATH" -type f -mtime +7 -exec rm -f {} \;
+# Clean up old files with error handling for network mounts
+echo "[Backup] Cleaning up old files..."
+if find "$BACKUP_PATH" -type f -mtime +7 -print0 2>/dev/null | xargs -0 rm -f 2>/dev/null; then
+  echo "[Backup] Old files cleaned up successfully"
+else
+  echo "[Backup] WARNING: Some old files may not have been cleaned up (network mount issue)"
+fi
 
-# Delete empty folders in the backup_path
-find "$BACKUP_PATH" -type d -empty -exec rmdir {} \;
+# Clean up empty folders with error handling
+echo "[Backup] Cleaning up empty folders..."
+if find "$BACKUP_PATH" -type d -empty -print0 2>/dev/null | xargs -0 rmdir 2>/dev/null; then
+  echo "[Backup] Empty folders cleaned up successfully"
+else
+  echo "[Backup] Empty folder cleanup completed (some may remain due to permissions)"
+fi
 
-echo "[Backup] Backup file moved to $TARGET_FOLDER and old files cleaned up."
-echo "[Backup] Empty folders cleaned up."
+echo "[Backup] Backup operations completed."
 
 # Compose email body
 MAIL_BODY="Backup completed on $HUMAN_DATE\nTime elapsed: $ELAPSED_STR\n\nFile: $BACKUP_FILE\nSize: $BACKUP_SIZE\nVolumes: $SERVICE_COUNT\n"
