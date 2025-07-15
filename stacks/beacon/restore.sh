@@ -12,19 +12,19 @@ SERVER_NAME="rainhold-beacon"
 # Function to find the latest backup folder
 find_latest_backup_folder() {
   # First check in current directory
-  local latest_local=$(ls -1dt ${SERVER_NAME}-20* 2>/dev/null | head -n 1)
+  local latest_local=$(ls -1dt 20*-*-* 2>/dev/null | head -n 1)
   
   # Then check in backup path if it exists and is accessible
   local latest_remote=""
   if [ -n "$BACKUP_PATH" ] && timeout 10 ls "$BACKUP_PATH" >/dev/null 2>&1; then
-    latest_remote=$(timeout 10 ls -1dt "$BACKUP_PATH"/${SERVER_NAME}-20* 2>/dev/null | head -n 1)
+    latest_remote=$(timeout 10 ls -1dt "$BACKUP_PATH"/20*-*-* 2>/dev/null | head -n 1)
   fi
   
   # Compare dates and return the most recent
   if [ -n "$latest_remote" ] && [ -n "$latest_local" ]; then
     # Extract dates and compare
-    local remote_date=$(basename "$latest_remote" | sed "s/${SERVER_NAME}-//")
-    local local_date=$(basename "$latest_local" | sed "s/${SERVER_NAME}-//")
+    local remote_date=$(basename "$latest_remote")
+    local local_date=$(basename "$latest_local")
     
     if [[ "$remote_date" > "$local_date" ]]; then
       echo "$latest_remote"
@@ -44,8 +44,8 @@ find_latest_backup_folder() {
 if [ -n "$1" ]; then
   # User specified a backup folder/date
   if [[ "$1" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}$ ]]; then
-    # User provided just a date, construct the folder name
-    BACKUP_FOLDER="${SERVER_NAME}-$1"
+    # User provided a date, use it directly as folder name
+    BACKUP_FOLDER="$1"
   else
     # User provided a full folder name
     BACKUP_FOLDER="$1"
@@ -64,10 +64,9 @@ else
   # Find the latest backup folder automatically
   BACKUP_SOURCE=$(find_latest_backup_folder)
   if [ -z "$BACKUP_SOURCE" ]; then
-    echo "Error: No ${SERVER_NAME}-* backup folders found"
+    echo "Error: No YYYY-MM-DD backup folders found"
     echo "Usage: $0 [backup-folder-or-date]"
     echo "Example: $0 2025-07-11"
-    echo "Example: $0 ${SERVER_NAME}-2025-07-11"
     exit 1
   fi
 fi
@@ -79,7 +78,7 @@ echo "Verifying backup files..."
 MISSING_BACKUPS=0
 for entry in "${VOLUMES[@]}"; do
   VOLUME="${entry%%:*}"
-  BACKUP_FILE="${SERVER_NAME}-${VOLUME}-*.tgz"
+  BACKUP_FILE="${VOLUME}.tgz"
   if ! ls "$BACKUP_SOURCE"/${BACKUP_FILE} >/dev/null 2>&1; then
     echo "Warning: No backup file found for volume $VOLUME"
     MISSING_BACKUPS=$((MISSING_BACKUPS + 1))
@@ -125,7 +124,7 @@ for i in "${!VOLUMES[@]}"; do
   MOUNT_PATH="${entry#*:}"
   
   # Find the backup file for this volume
-  BACKUP_FILE=$(ls "$BACKUP_SOURCE"/${SERVER_NAME}-${VOLUME}-*.tgz 2>/dev/null | head -n 1)
+  BACKUP_FILE="$BACKUP_SOURCE/${VOLUME}.tgz"
   
   printf "[%02d/%02d] Restoring %s..." "$((i+1))" "$TOTAL_VOLUMES" "$VOLUME"
   
