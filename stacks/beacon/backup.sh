@@ -36,7 +36,7 @@ for entry in "${VOLUMES[@]}"; do
   docker run --rm \
     --mount type=volume,source="$VOLUME",target="$MOUNT_PATH",readonly \
     -v "$(pwd)/$BACKUP_FOLDER:/backup" \
-    alpine:3.17.2 sh -c "tar -C $MOUNT_PATH -cvzf /backup/${BACKUP_FILE} ."
+    alpine:3.17.2 sh -c "tar -C $MOUNT_PATH -czf /backup/${BACKUP_FILE} ."
 done
 
 # Calculate elapsed time
