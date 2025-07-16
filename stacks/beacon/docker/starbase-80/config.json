@@ -63,6 +63,13 @@
 				"description": "Automation platform"
 			},
 			{
+				"name": "Storyden",
+				"uri": "https://storyden.notclickable.com",
+				"icon": "/img/storyden.png",
+				"description": "Forum and community",
+				"iconBubble": false
+			},
+			{
 				"name": "Vaultwarden",
 				"uri": "https://vaultwarden.notclickable.com",
 				"icon": "vaultwarden",
