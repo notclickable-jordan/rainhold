@@ -23,3 +23,11 @@ To enable users with certain groups to have access to an organization and team, 
         ```json
         { "gitea": { "Main": ["Developers"] } }
         ```
+
+## SSH cloning
+
+Clone git repositories directly using the server name to bypass going through Cloudflare.
+
+```bash
+git clone git clone ssh://git@server-name:port-number/path/to/repo.git
+```
