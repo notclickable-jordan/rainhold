@@ -131,17 +131,47 @@ for i in "${!VOLUMES[@]}"; do
   if [ -f "$BACKUP_FILE" ]; then
     # Restore this volume using a temporary container
     BACKUP_FILENAME=$(basename "$BACKUP_FILE")
-    if docker run --rm \
+    echo
+    echo "  DEBUG: Volume: $VOLUME"
+    echo "  DEBUG: Mount path: $MOUNT_PATH"
+    echo "  DEBUG: Backup file: $BACKUP_FILE"
+    echo "  DEBUG: Backup filename: $BACKUP_FILENAME"
+    echo "  DEBUG: Backup source: $BACKUP_SOURCE"
+    
+    # Test if the backup file is accessible in the container
+    echo "  DEBUG: Testing backup file accessibility..."
+    if ! docker run --rm -v "$BACKUP_SOURCE:/backup:ro" alpine:3.17.2 ls -la "/backup/$BACKUP_FILENAME" 2>/dev/null; then
+      echo "  ERROR: Backup file not accessible in container"
+      printf "  failed.\n"
+      FAILED_RESTORES=$((FAILED_RESTORES + 1))
+      continue
+    fi
+    
+    # Run the actual restore command with detailed output
+    echo "  DEBUG: Running restore command..."
+    RESTORE_OUTPUT=$(docker run --rm \
       --mount type=volume,source="$VOLUME",target="$MOUNT_PATH" \
       -v "$BACKUP_SOURCE:/backup:ro" \
       alpine:3.17.2 sh -c "
-        rm -rf $MOUNT_PATH/* $MOUNT_PATH/.[!.]* $MOUNT_PATH/..?* 2>/dev/null || true && \
+        echo 'Cleaning existing files...'
+        rm -rf $MOUNT_PATH/* $MOUNT_PATH/.[!.]* $MOUNT_PATH/..?* 2>/dev/null || true
+        echo 'Starting tar extraction...'
         tar -C $MOUNT_PATH -xzf /backup/$BACKUP_FILENAME
-      " >/dev/null 2>&1; then
-      printf " done.\n"
+        echo 'Extraction complete'
+        echo 'Final contents:'
+        ls -la $MOUNT_PATH
+      " 2>&1)
+    
+    RESTORE_EXIT_CODE=$?
+    echo "  DEBUG: Exit code: $RESTORE_EXIT_CODE"
+    echo "  DEBUG: Output:"
+    echo "$RESTORE_OUTPUT" | sed 's/^/    /'
+    
+    if [ $RESTORE_EXIT_CODE -eq 0 ]; then
+      printf "  done.\n"
       SUCCESSFUL_RESTORES=$((SUCCESSFUL_RESTORES + 1))
     else
-      printf " failed.\n"
+      printf "  failed.\n"
       FAILED_RESTORES=$((FAILED_RESTORES + 1))
     fi
   else
