@@ -29,5 +29,5 @@ To enable users with certain groups to have access to an organization and team, 
 Clone git repositories directly using the server name to bypass going through Cloudflare.
 
 ```bash
-git clone git clone ssh://git@server-name:port-number/path/to/repo.git
+git clone ssh://git@server-name:port-number/path/to/repo.git
 ```
