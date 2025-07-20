@@ -73,6 +73,12 @@ fi
 
 echo "Using backup source: $BACKUP_SOURCE"
 
+# Convert BACKUP_SOURCE to absolute path if it's relative
+if [[ "$BACKUP_SOURCE" != /* ]]; then
+  BACKUP_SOURCE="$(pwd)/$BACKUP_SOURCE"
+  echo "Converted to absolute path: $BACKUP_SOURCE"
+fi
+
 # Verify backup files exist
 echo "Verifying backup files..."
 MISSING_BACKUPS=0
