@@ -130,12 +130,13 @@ for i in "${!VOLUMES[@]}"; do
   
   if [ -f "$BACKUP_FILE" ]; then
     # Restore this volume using a temporary container
+    BACKUP_FILENAME=$(basename "$BACKUP_FILE")
     if docker run --rm \
       --mount type=volume,source="$VOLUME",target="$MOUNT_PATH" \
-      -v "$BACKUP_SOURCE:/backup" \
+      -v "$BACKUP_SOURCE:/backup:ro" \
       alpine:3.17.2 sh -c "
-        rm -rf $MOUNT_PATH/*
-        tar -xzf /backup/$(basename "$BACKUP_FILE") -C $MOUNT_PATH
+        rm -rf $MOUNT_PATH/* $MOUNT_PATH/.[!.]* $MOUNT_PATH/..?* 2>/dev/null || true && \
+        tar -C $MOUNT_PATH -xzf /backup/$BACKUP_FILENAME
       " >/dev/null 2>&1; then
       printf " done.\n"
       SUCCESSFUL_RESTORES=$((SUCCESSFUL_RESTORES + 1))
