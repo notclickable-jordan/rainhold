@@ -128,8 +128,8 @@
 				"icon": "/img/synology.png"
 			},
 			{
-				"name": "Rainhold",
-				"uri": "https://rainhold.tail6e07a.ts.net:8006",
+				"name": "Everglass",
+				"uri": "https://everglass.tail6e07a.ts.net:8006",
 				"description": "Proxmox",
 				"icon": "/img/proxmox.png",
 				"iconBubble": false
