@@ -134,8 +134,8 @@ for i in "${!VOLUMES[@]}"; do
       --mount type=volume,source="$VOLUME",target="$MOUNT_PATH" \
       -v "$BACKUP_SOURCE:/backup" \
       alpine:3.17.2 sh -c "
-        rm -rf \"$MOUNT_PATH\"/*
-        tar -xzf \"/backup/$(basename "$BACKUP_FILE")\" -C \"$MOUNT_PATH\"
+        rm -rf $MOUNT_PATH/*
+        tar -xzf /backup/$(basename "$BACKUP_FILE") -C $MOUNT_PATH
       " >/dev/null 2>&1; then
       printf " done.\n"
       SUCCESSFUL_RESTORES=$((SUCCESSFUL_RESTORES + 1))

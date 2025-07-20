@@ -58,6 +58,13 @@ echo "Backup complete: $BACKUP_FOLDER"
 TARGET_FOLDER="$BACKUP_PATH"
 if [ -d "$TARGET_FOLDER" ]; then
   echo "Moving backup to $TARGET_FOLDER"
+  
+  # Remove existing backup with same date if it exists
+  if [ -d "$TARGET_FOLDER/$BACKUP_FOLDER" ]; then
+    echo "Removing existing backup: $TARGET_FOLDER/$BACKUP_FOLDER"
+    rm -rf "$TARGET_FOLDER/$BACKUP_FOLDER"
+  fi
+  
   mv "$BACKUP_FOLDER" "$TARGET_FOLDER/"
   
   # Clean up old backups (keep last 7 days)
