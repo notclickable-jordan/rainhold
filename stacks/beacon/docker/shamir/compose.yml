@@ -1,0 +1,5 @@
+services:
+    shamir:
+        image: jordanroher/shamirs-secret-sharing-scheme
+        container_name: shamir
+        restart: unless-stopped

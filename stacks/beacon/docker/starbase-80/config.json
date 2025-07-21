@@ -63,6 +63,12 @@
 				"description": "Automation platform"
 			},
 			{
+				"name": "Shamir's Secrets",
+				"uri": "https://shamir.notclickable.com",
+				"description": "Secret distribution",
+				"icon": "/img/shamir.jpg"
+			},
+			{
 				"name": "Vaultwarden",
 				"uri": "https://vaultwarden.notclickable.com",
 				"icon": "vaultwarden",
