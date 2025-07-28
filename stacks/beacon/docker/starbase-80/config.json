@@ -21,10 +21,10 @@
 				"description": "Container logs"
 			},
 			{
-				"name": "Miniflux",
-				"uri": "https://miniflux.notclickable.com",
-				"icon": "/img/miniflux.jpg",
-				"description": "RSS feed aggregator"
+				"name": "LLDAP",
+				"uri": "https://ldap.notclickable.com",
+				"icon": "/img/ldap.jpg",
+				"description": "User directory"
 			},
 			{
 				"name": "Gitea",
@@ -57,16 +57,34 @@
 				"description": "Social network"
 			},
 			{
+				"name": "Miniflux",
+				"uri": "https://miniflux.notclickable.com",
+				"icon": "/img/miniflux.jpg",
+				"description": "RSS feed aggregator"
+			},
+			{
 				"name": "N8N",
 				"uri": "https://n8n.notclickable.com",
 				"icon": "/img/n8n.jpg",
 				"description": "Automation platform"
 			},
 			{
+				"name": "Pocket ID",
+				"uri": "https://pocket-id.notclickable.com",
+				"icon": "/img/pocket-id.png",
+				"description": "Identity provider"
+			},
+			{
 				"name": "Shamir's Secrets",
 				"uri": "https://shamir.notclickable.com",
 				"description": "Secret distribution",
 				"icon": "/img/shamir.jpg"
+			},
+			{
+				"name": "TinyAuth",
+				"uri": "https://tinyauth.notclickable.com",
+				"icon": "/img/tinyauth.jpg",
+				"description": "Authorization"
 			},
 			{
 				"name": "Vaultwarden",
@@ -89,25 +107,31 @@
 		]
 	},
 	{
-		"category": "Authentication",
+		"category": "My Sites",
 		"services": [
 			{
-				"name": "LLDAP",
-				"uri": "https://ldap.notclickable.com",
-				"icon": "/img/ldap.jpg",
-				"description": "User directory"
+				"name": "Jordan Roher",
+				"uri": "https://jordan.roher.me",
+				"icon": "/img/jordan-roher.jpg",
+				"description": "Personal blog"
 			},
 			{
-				"name": "Pocket ID",
-				"uri": "https://pocket-id.notclickable.com",
-				"icon": "/img/pocket-id.png",
-				"description": "Identity provider"
+				"name": "The Villain",
+				"uri": "https://insanityink.com",
+				"icon": "/img/the-villain.png",
+				"description": "16-bit sprite webcomic"
 			},
 			{
-				"name": "TinyAuth",
-				"uri": "https://tinyauth.notclickable.com",
-				"icon": "/img/tinyauth.jpg",
-				"description": "Authorization"
+				"name": "Xenobell",
+				"uri": "https://xenobell.com",
+				"icon": "/img/xenobell.png",
+				"description": "Theoretical space combat game"
+			},
+			{
+				"name": "Winter Starfall",
+				"uri": "https://winterstarfall-unofficial.com",
+				"icon": "/img/winter-starfall.jpg",
+				"description": "PlayFab demo game"
 			}
 		]
 	},
