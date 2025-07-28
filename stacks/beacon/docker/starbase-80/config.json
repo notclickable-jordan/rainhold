@@ -97,12 +97,6 @@
 				"uri": "https://ytptube.notclickable.com",
 				"icon": "/img/ytptube.png",
 				"description": "YouTube playlist manager"
-			},
-			{
-				"name": "YouTube Channel",
-				"uri": "https://www.youtube.com/@notclickable",
-				"icon": "/img/youtube.jpg",
-				"description": "Videos"
 			}
 		]
 	},
@@ -132,6 +126,12 @@
 				"uri": "https://winterstarfall-unofficial.com",
 				"icon": "/img/winter-starfall.jpg",
 				"description": "PlayFab demo game"
+			},
+			{
+				"name": "Not Clickable YouTube",
+				"uri": "https://www.youtube.com/@notclickable",
+				"icon": "/img/youtube.jpg",
+				"description": "Let's Play videos"
 			}
 		]
 	},
