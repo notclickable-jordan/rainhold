@@ -1,10 +1,9 @@
 # Run with docker compose up -d
 services:
-    dozzle:
+    filegator:
         image: filegator/filegator
         container_name: filegator
         restart: unless-stopped
-            - DOZZLE_ENABLE_SHELL=true
         networks:
             - caddy
 
