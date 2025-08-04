@@ -1,4 +1,3 @@
-# Run with docker compose up -d
 services:
     dozzle:
         image: amir20/dozzle:latest

@@ -27,6 +27,12 @@
 				"description": "User directory"
 			},
 			{
+				"name": "FileGator",
+				"uri": "https://filegator.notclickable.com",
+				"icon": "/img/filegator.png",
+				"description": "File management"
+			},
+			{
 				"name": "Gitea",
 				"uri": "https://gitea.notclickable.com",
 				"icon": "/img/gitea.jpg",
