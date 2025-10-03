@@ -64,3 +64,7 @@ services:
 
 volumes:
     model-cache:
+
+networks:
+    caddy:
+        external: true
