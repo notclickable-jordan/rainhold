@@ -45,6 +45,12 @@
 				"description": "Monitoring and analytics"
 			},
 			{
+				"name": "Immich",
+				"uri": "https://immich.notclickable.com",
+				"icon": "/img/immich.png",
+				"description": "Photo and video backup"
+			},
+			{
 				"name": "Lemmy",
 				"uri": "https://lemmy.notclickable.com",
 				"icon": "/img/lemmy.jpg",

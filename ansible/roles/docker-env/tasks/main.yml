@@ -7,6 +7,14 @@
     owner: root
     group: root
 
+- name: Generate .env file for Immich
+  template:
+    src: immich.env.j2
+    dest: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/immich/.env"
+    mode: "0600"
+    owner: root
+    group: root
+
 - name: Generate .env file for Pocket ID
   template:
     src: pocket-id.env.j2

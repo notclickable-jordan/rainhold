@@ -10,6 +10,7 @@ VOLUMES=(
   "gitea_data:/gitea/data"
   "gitea_db:/gitea/db"
   "grafana_storage:/grafana/storage"
+  "immich_data:/immich/data"
   "jellyfin_cache:/jellyfin/cache"
   "jellyfin_config:/jellyfin/config"
   "lemmy_extra_themes:/lemmy/extra-themes"
