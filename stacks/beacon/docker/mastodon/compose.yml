@@ -49,7 +49,7 @@ services:
             - "host.docker.internal:host-gateway"
 
     streaming:
-        image: ghcr.io/mastodon/mastodon-streaming:v4.4.3
+        image: ghcr.io/mastodon/mastodon-streaming:v4.4.6
         container_name: mastodon_streaming
         restart: unless-stopped
         env_file:
