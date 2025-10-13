@@ -83,7 +83,7 @@ services:
             - external_network
             - internal_network
         healthcheck:
-            test: ["CMD-SHELL", "ps aux | grep '[s]idekiq\ 6' || false"]
+            test: ["CMD-SHELL", "ps aux | grep '[s]idekiq\ 7' || false"]
         volumes:
             - web:/mastodon/public/system
 
