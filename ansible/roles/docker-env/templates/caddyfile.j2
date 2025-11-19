@@ -127,7 +127,7 @@ notclickable.social, www.notclickable.social {
                 not path /
         }
         @streaming {
-                path /api/v1/streaming /api/v1/streaming/*
+                path /api/v1/streaming
         }
         @cache_control {
                 path_regexp ^/(emoji|packs|/system/accounts/avatars|/system/media_attachments/files)
@@ -162,6 +162,8 @@ notclickable.social, www.notclickable.social {
                 to http://mastodon_streaming:4000
                 header_up X-Forwarded-Port 443
                 header_up X-Forwarded-Proto https
+                header_up Connection {http.connection}
+                header_up Upgrade {http.upgrade}
 
                 transport http {
                         keepalive 5s
