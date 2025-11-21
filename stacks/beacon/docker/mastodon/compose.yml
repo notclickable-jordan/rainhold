@@ -73,7 +73,7 @@ services:
         restart: unless-stopped
         env_file:
             - .env
-        command: bundle exec sidekiq -q default -q ingress -q push -q pull -q scheduler -q mailers
+        command: bundle exec sidekiq
         depends_on:
             - db
             - redis
