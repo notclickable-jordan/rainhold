@@ -7,7 +7,6 @@ services:
             - .env.postgres
         shm_size: 256mb
         networks:
-            - caddy
             - internal_network
         healthcheck:
             test: ["CMD", "pg_isready", "-U", "mastodon"]
@@ -18,8 +17,8 @@ services:
         image: redis:7-alpine
         container_name: mastodon_redis
         restart: unless-stopped
+        command: redis-server --save 60 1 --loglevel warning
         networks:
-            - caddy
             - internal_network
         healthcheck:
             test: ["CMD", "redis-cli", "ping"]
@@ -79,11 +78,10 @@ services:
             - db
             - redis
         networks:
-            - caddy
             - external_network
             - internal_network
         healthcheck:
-            test: ["CMD-SHELL", "ps aux | grep '[s]idekiq\ 8' || false"]
+            test: ["CMD-SHELL", "ps aux | grep '[s]idekiq' || false"]
         volumes:
             - web:/mastodon/public/system
 
@@ -96,7 +94,6 @@ networks:
         driver: bridge
 
 volumes:
-    sidekiq:
     db:
     redis:
     web:

@@ -19,7 +19,6 @@ VOLUMES=(
   "lldap_lldap_data:/lldap/data"
   "mastodon_db:/mastodon/db"
   "mastodon_redis:/mastodon/redis"
-  "mastodon_sidekiq:/mastodon/sidekiq"
   "mastodon_web:/mastodon/web"
   "n8n_app:/n8n/app"
   "n8n_db:/n8n/db"
