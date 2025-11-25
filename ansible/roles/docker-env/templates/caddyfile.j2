@@ -127,10 +127,10 @@ notclickable.social, www.notclickable.social {
                 not path /
         }
         @streaming {
-                path /api/v1/streaming
+            path_regexp streaming ^/api/v1/streaming
         }
         @cache_control {
-                path_regexp ^/(emoji|packs|/system/accounts/avatars|/system/media_attachments/files)
+            path_regexp assets ^/(emoji|packs|system/accounts/avatars|system/media_attachments/files)
         }
 
         root * /home/mastodon/live/public
