@@ -158,28 +158,26 @@ notclickable.social, www.notclickable.social {
             dns cloudflare {{ cloudflare_ssl_api_token }}
         }
 
-        reverse_proxy @streaming {
-                to http://mastodon_streaming:4000
+        handle /api/v1/streaming* {
+            reverse_proxy mastodon_streaming:4000 {
+                flush_interval -1
+
                 header_up X-Forwarded-Port 443
                 header_up X-Forwarded-Proto https
-                header_up Connection {http.connection}
-                header_up Upgrade {http.upgrade}
-
-                transport http {
-                        keepalive 5s
-                        keepalive_idle_conns 10
-                }
+                header_up Host {host}
+            }
         }
 
-        reverse_proxy {
-                to http://mastodon_web:3000
+        handle {
+            reverse_proxy mastodon_web:3000 {
                 header_up X-Forwarded-Port 443
                 header_up X-Forwarded-Proto https
+                header_up Host {host}
 
                 transport http {
-                        keepalive 5s
-                        keepalive_idle_conns 10
+                    keepalive 5s
                 }
+            }
         }
 }
 
