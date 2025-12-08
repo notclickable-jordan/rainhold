@@ -23,8 +23,6 @@ services:
             - caddy
         healthcheck:
             test: ["CMD", "redis-cli", "ping"]
-        volumes:
-            - redis:/data
 
     web:
         image: ghcr.io/mastodon/mastodon:v4.5.3
@@ -97,5 +95,4 @@ networks:
 
 volumes:
     db:
-    redis:
     web:
