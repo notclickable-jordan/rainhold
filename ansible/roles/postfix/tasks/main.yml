@@ -21,14 +21,14 @@
     database: passwd
     key: syslog
   register: syslog_user_check
-  ignore_errors: true
+  failed_when: false
 
 - name: Ensure mail.log file exists with proper permissions
   file:
     path: /var/log/mail.log
     state: touch
-    owner: "{{ 'syslog' if syslog_user_check is succeeded else 'root' }}"
-    group: "{{ 'adm' if syslog_user_check is succeeded else 'root' }}"
+    owner: "{{ 'syslog' if syslog_user_check.ansible_facts is defined and syslog_user_check.ansible_facts.getent_passwd is defined else 'root' }}"
+    group: "{{ 'adm' if syslog_user_check.ansible_facts is defined and syslog_user_check.ansible_facts.getent_passwd is defined else 'root' }}"
     mode: "0644"
 
 - name: Configure Postfix to use syslog facility

@@ -1,4 +1,12 @@
 ---
+- name: Ensure Caddy conf folder exists
+  file:
+    path: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/caddy/conf/"
+    state: directory
+    mode: "0755"
+    owner: root
+    group: root
+
 - name: Generate Caddyfile for Caddy
   template:
     src: caddyfile.j2
@@ -60,14 +68,6 @@
     src: n8n.env.j2
     dest: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/n8n/.env"
     mode: "0600"
-    owner: root
-    group: root
-
-- name: Ensure Caddy conf folder exists
-  file:
-    path: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/caddy/conf/"
-    state: directory
-    mode: "0755"
     owner: root
     group: root
 

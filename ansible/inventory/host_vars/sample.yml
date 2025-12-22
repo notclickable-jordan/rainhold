@@ -124,3 +124,6 @@ postfix_port: 25
 dovecot_mail_user: mailuser
 dovecot_mail_user_password_raw: supersecret
 dovecot_mail_domain: example.com
+
+# --- Immich ---
+immich_db_password: "your_immich_db_password_here"
