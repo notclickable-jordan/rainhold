@@ -10,3 +10,4 @@
     - role: docker-network
     - role: docker-env
     - role: docker-start
+    - role: mastodon-feeds

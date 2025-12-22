@@ -1,0 +1,45 @@
+- name: Install Mastodon feed rebuild script
+  copy:
+    dest: /usr/local/bin/mastodon-rebuild-feeds.sh
+    mode: "0755"
+    content: |
+      #!/bin/bash
+      docker exec mastodon_web bin/tootctl feeds build
+
+- name: Install systemd service for Mastodon feed rebuild
+  copy:
+    dest: /etc/systemd/system/mastodon-rebuild-feeds.service
+    mode: "0644"
+    content: |
+      [Unit]
+      Description=Rebuild Mastodon feeds
+
+      [Service]
+      Type=oneshot
+      ExecStart=/usr/local/bin/mastodon-rebuild-feeds.sh
+
+- name: Install systemd timer for Mastodon feed rebuild
+  copy:
+    dest: /etc/systemd/system/mastodon-rebuild-feeds.timer
+    mode: "0644"
+    content: |
+      [Unit]
+      Description=Run Mastodon feed rebuild every 30 minutes
+
+      [Timer]
+      OnBootSec=5min
+      OnUnitActiveSec=30min
+      Persistent=true
+
+      [Install]
+      WantedBy=timers.target
+
+- name: Reload systemd
+  systemd:
+    daemon_reload: true
+
+- name: Enable and start Mastodon feed rebuild timer
+  systemd:
+    name: mastodon-rebuild-feeds.timer
+    enabled: true
+    state: started
