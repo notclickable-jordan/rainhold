@@ -12,14 +12,21 @@
       - lsb-release
     state: present
 
+- name: Create keyrings directory
+  file:
+    path: /etc/apt/keyrings
+    state: directory
+    mode: '0755'
+
 - name: Add Docker GPG key
-  apt_key:
+  get_url:
     url: https://download.docker.com/linux/debian/gpg
-    state: present
+    dest: /etc/apt/keyrings/docker.asc
+    mode: '0644'
 
 - name: Add Docker repository
   apt_repository:
-    repo: "deb [arch=amd64] https://download.docker.com/linux/debian {{ ansible_distribution_release }} stable"
+    repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian {{ ansible_distribution_release }} stable"
     state: present
     filename: docker
 

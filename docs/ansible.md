@@ -15,8 +15,14 @@ Ansible is used to automate the deployment and configuration of your server envi
     ```
 1. Install Ansible
     ```bash
-    pip3.9 install ansible
+    pip3 install ansible
     ```
+
+Having trouble? Try running:
+
+```bash
+brew install ansible
+```
 
 # Running the playbook
 
