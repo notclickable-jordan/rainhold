@@ -91,6 +91,9 @@ You might not need a personal user if you don't plan to do much with your server
     crontab -e
     ```
 1. Add to crontab
+    ```bash
+    crontab -e
+    ```
     ```cron
     0 1 * * * /root/tailscale-ssl.sh
     ```
