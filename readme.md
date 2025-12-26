@@ -31,7 +31,6 @@ Follow these steps to set up your server environment.
 # Services used
 
 -   [Ansible](https://www.ansible.com)
--   [Audiobookshelf](https://www.audiobookshelf.org)
 -   [Caddy Cloudflare DNS](https://github.com/notclickable-jordan/caddy-cloudflare-dns)
 -   [Calibre](https://github.com/janeczku/calibre-web)
 -   [Cloudflare](https://cloudflare.com)
@@ -46,7 +45,6 @@ Follow these steps to set up your server environment.
 -   [Loki](https://grafana.com/oss/loki/)
 -   [Mastodon](https://joinmastodon.org)
 -   [Miniflux](https://miniflux.app)
--   [N8N](https://n8n.io)
 -   [NextDNS](https://nextdns.io)
 -   [Pocket ID](https://github.com/pocket-id/pocket-id)
 -   [Prometheus](https://prometheus.io)
@@ -54,5 +52,3 @@ Follow these steps to set up your server environment.
 -   [Starbase 80](https://github.com/notclickable-jordan/starbase-80)
 -   [Tailscale](https://tailscale.com)
 -   [Tinyauth](https://tinyauth.app)
--   [Vaultwarden](https://github.com/dani-garcia/vaultwarden)
--   [YTPTube](https://github.com/arabcoders/ytptube)

@@ -3,12 +3,6 @@
 		"category": "Services",
 		"services": [
 			{
-				"name": "AudioBookshelf",
-				"uri": "https://audiobookshelf.notclickable.com",
-				"icon": "audiobookshelf",
-				"description": "Audiobook server"
-			},
-			{
 				"name": "Calibre",
 				"uri": "https://calibre.notclickable.com",
 				"icon": "/img/calibre.jpg",
@@ -45,12 +39,6 @@
 				"description": "Monitoring and analytics"
 			},
 			{
-				"name": "Immich",
-				"uri": "https://immich.notclickable.com",
-				"icon": "/img/immich.png",
-				"description": "Photo and video backup"
-			},
-			{
 				"name": "Lemmy",
 				"uri": "https://lemmy.notclickable.com",
 				"icon": "/img/lemmy.jpg",
@@ -75,12 +63,6 @@
 				"description": "RSS feed aggregator"
 			},
 			{
-				"name": "N8N",
-				"uri": "https://n8n.notclickable.com",
-				"icon": "/img/n8n.jpg",
-				"description": "Automation platform"
-			},
-			{
 				"name": "Pocket ID",
 				"uri": "https://pocket-id.notclickable.com",
 				"icon": "/img/pocket-id.png",
@@ -97,18 +79,6 @@
 				"uri": "https://tinyauth.notclickable.com",
 				"icon": "/img/tinyauth.jpg",
 				"description": "Authorization"
-			},
-			{
-				"name": "Vaultwarden",
-				"uri": "https://vaultwarden.notclickable.com",
-				"icon": "vaultwarden",
-				"description": "Password manager"
-			},
-			{
-				"name": "YTPTube",
-				"uri": "https://ytptube.notclickable.com",
-				"icon": "/img/ytptube.png",
-				"description": "YouTube playlist manager"
 			}
 		]
 	},

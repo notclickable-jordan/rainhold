@@ -71,19 +71,6 @@ gitea.notclickable.com {
     reverse_proxy http://gitea:3000
 }
 
-n8n.notclickable.com {
-    forward_auth http://tinyauth:3000 {
-        uri /api/auth/caddy
-        copy_headers Remote-User Remote-Email Remote-Name Remote-Groups
-    }
-
-    tls {
-        dns cloudflare {{ cloudflare_ssl_api_token }}
-    }
-
-    reverse_proxy http://n8n:5678
-}
-
 lemmy.notclickable.com {
     tls {
         dns cloudflare {{ cloudflare_ssl_api_token }}
@@ -194,40 +181,6 @@ calibre.notclickable.com {
     reverse_proxy http://calibre:8083
 }
 
-ytptube.notclickable.com {
-    forward_auth http://tinyauth:3000 {
-        uri /api/auth/caddy
-        copy_headers Remote-User Remote-Email Remote-Name Remote-Groups
-    }
-
-    tls {
-        dns cloudflare {{ cloudflare_ssl_api_token }}
-    }
-
-    reverse_proxy http://ytptube:8081
-}
-
-audiobookshelf.notclickable.com {
-    forward_auth http://tinyauth:3000 {
-        uri /api/auth/caddy
-        copy_headers Remote-User Remote-Email Remote-Name Remote-Groups
-    }
-
-    tls {
-        dns cloudflare {{ cloudflare_ssl_api_token }}
-    }
-
-    reverse_proxy http://audiobookshelf:80
-}
-
-vaultwarden.notclickable.com {
-    tls {
-        dns cloudflare {{ cloudflare_ssl_api_token }}
-    }
-
-    reverse_proxy http://vaultwarden:80
-}
-
 starbase80.dev, www.starbase80.dev {
     redir https://github.com/notclickable-jordan/starbase-80
 }
@@ -251,12 +204,4 @@ filegator.notclickable.com {
     }
 
     reverse_proxy http://filegator:8080
-}
-
-immich.notclickable.com {
-    tls {
-        dns cloudflare {{ cloudflare_ssl_api_token }}
-    }
-
-    reverse_proxy http://immich_server:2283
 }

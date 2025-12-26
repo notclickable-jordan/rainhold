@@ -23,14 +23,6 @@
     owner: root
     group: root
 
-- name: Generate .env file for Immich
-  template:
-    src: immich.env.j2
-    dest: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/immich/.env"
-    mode: "0600"
-    owner: root
-    group: root
-
 - name: Generate .env file for Pocket ID
   template:
     src: pocket-id.env.j2
@@ -59,14 +51,6 @@
   template:
     src: gitea.runner.env.j2
     dest: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/gitea/.env.runner"
-    mode: "0600"
-    owner: root
-    group: root
-
-- name: Generate .env file for N8N
-  template:
-    src: n8n.env.j2
-    dest: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/n8n/.env"
     mode: "0600"
     owner: root
     group: root
@@ -163,14 +147,6 @@
   template:
     src: mastodon.env.postgres.j2
     dest: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/mastodon/.env.postgres"
-    mode: "0600"
-    owner: root
-    group: root
-
-- name: Generate env for Vaultwarden
-  template:
-    src: vaultwarden.env.j2
-    dest: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/vaultwarden/.env"
     mode: "0600"
     owner: root
     group: root
