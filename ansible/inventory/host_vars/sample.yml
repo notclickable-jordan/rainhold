@@ -26,6 +26,9 @@ lldap_jwt_secret: "your_jwt_secret_here"
 lldap_key_seed: "your_key_seed_here"
 lldap_ldap_user_pass: "your_ldap_user_password_here"
 
+# --- Pocket ID ---
+pocket_id_hostname: "pocket-id.example.com"
+
 # --- Tinyauth ---
 # Generate: openssl rand -base64 32 | tr -dc 'a-zA-Z0-9' | head -c 32
 # Trim the string so it is exactly 32 characters long
@@ -66,6 +69,9 @@ n8n_POSTGRES_PASSWORD: "your_n8n_postgres_password_here"
 # --- Lemmy ---
 lemmy_db_password: "your_lemmy_db_password_here"
 lemmy_hostname: "lemmy.example.com"
+# Generate in Pocket ID: Create OIDC client with redirect URI https://lemmy.example.com/api/v3/oauth/callback
+lemmy_oidc_client_id: "your_lemmy_oidc_client_id_here"
+lemmy_oidc_client_secret: "your_lemmy_oidc_client_secret_here"
 lemmy_pictrs_api_key: "your_pictrs_api_key_here"
 lemmy_pictrs_store_endpoint: "http://s3-us-west-2.amazonaws.com"
 lemmy_pictrs_store_bucket: "your_pictrs_bucket_name_here"
@@ -109,12 +115,19 @@ mastodon_smtp_from_address: "Mastodon <mastodon@example.com>"
 mastodon_active_record_encryption_deterministic_key: "your_mastodon_active_record_encryption_deterministic_key_here"
 mastodon_active_record_encryption_key_derivation_salt: "your_mastodon_active_record_encryption_key_derivation_salt_here"
 mastodon_active_record_encryption_primary_key: "your_mastodon_active_record_encryption_primary_key_here"
+# Generate in Pocket ID: Create OIDC client with redirect URI https://mastodon.example.com/auth/auth/openid_connect/callback
+mastodon_oidc_client_id: "your_mastodon_oidc_client_id_here"
+mastodon_oidc_client_secret: "your_mastodon_oidc_client_secret_here"
 
 # --- Miniflux ---
 miniflux_admin_username: "admin"
 miniflux_admin_password: "your_miniflux_admin_password_here"
 miniflux_db_user: "miniflux"
 miniflux_db_password: "your_miniflux_db_password_here"
+miniflux_hostname: "miniflux.example.com"
+# Generate in Pocket ID: Create OIDC client with redirect URI https://miniflux.example.com/oauth2/oidc/callback
+miniflux_oidc_client_id: "your_miniflux_oidc_client_id_here"
+miniflux_oidc_client_secret: "your_miniflux_oidc_client_secret_here"
 
 # --- Vaultwarden ---
 vaultwarden_admin_token: "your_vaultwarden_admin_token_here"
