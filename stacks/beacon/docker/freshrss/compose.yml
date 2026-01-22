@@ -1,0 +1,20 @@
+services:
+    freshrss:
+        image: freshrss/freshrss:latest
+        container_name: freshrss
+        env_file:
+            - .env
+        restart: unless-stopped
+        networks:
+            - caddy
+        volumes:
+            - data:/var/www/FreshRSS/data
+            - extensions:/var/www/FreshRSS/extensions
+
+volumes:
+    data:
+    extensions:
+
+networks:
+    caddy:
+        external: true

@@ -44,7 +44,7 @@ Follow these steps to set up your server environment.
 -   [LLDAP](https://github.com/lldap/lldap)
 -   [Loki](https://grafana.com/oss/loki/)
 -   [Mastodon](https://joinmastodon.org)
--   [Miniflux](https://miniflux.app)
+-   [FreshRSS](https://freshrss.org)
 -   [NextDNS](https://nextdns.io)
 -   [Pocket ID](https://github.com/pocket-id/pocket-id)
 -   [Prometheus](https://prometheus.io)

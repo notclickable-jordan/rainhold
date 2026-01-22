@@ -95,18 +95,10 @@
     owner: root
     group: root
 
-- name: Generate env for Miniflux
+- name: Generate env for FreshRSS
   template:
-    src: miniflux.env.j2
-    dest: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/miniflux/.env"
-    mode: "0600"
-    owner: root
-    group: root
-
-- name: Generate env for Miniflux database
-  template:
-    src: miniflux.env.db.j2
-    dest: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/miniflux/.env.db"
+    src: freshrss.env.j2
+    dest: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/freshrss/.env"
     mode: "0600"
     owner: root
     group: root

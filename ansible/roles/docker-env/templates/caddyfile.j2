@@ -79,12 +79,12 @@ lemmy.notclickable.com {
     reverse_proxy http://lemmy-nginx:8536
 }
 
-miniflux.notclickable.com {
+freshrss.notclickable.com {
     tls {
         dns cloudflare {{ cloudflare_ssl_api_token }}
     }
 
-    reverse_proxy http://miniflux:8080
+    reverse_proxy http://freshrss:80
 }
 
 grafana.notclickable.com {

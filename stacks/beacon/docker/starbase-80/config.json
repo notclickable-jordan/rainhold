@@ -51,9 +51,9 @@
 				"description": "Social network"
 			},
 			{
-				"name": "Miniflux",
-				"uri": "https://miniflux.notclickable.com",
-				"icon": "/img/miniflux.jpg",
+				"name": "FreshRSS",
+				"uri": "https://freshrss.notclickable.com",
+				"icon": "/img/freshrss.png",
 				"description": "RSS feed aggregator"
 			},
 			{
