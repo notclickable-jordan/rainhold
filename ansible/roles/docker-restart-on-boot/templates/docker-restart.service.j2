@@ -1,0 +1,13 @@
+[Unit]
+Description=Restart Docker containers 10 minutes after boot
+After=docker.service
+Requires=docker.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/docker-restart.sh {{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
