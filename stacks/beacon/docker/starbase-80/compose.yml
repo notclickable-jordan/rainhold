@@ -17,7 +17,7 @@ services:
         deploy:
             resources:
                 limits:
-                    memory: 256m
+                    memory: 512m
 
 networks:
     caddy:
