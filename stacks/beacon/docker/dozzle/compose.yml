@@ -10,6 +10,10 @@ services:
             - DOZZLE_ENABLE_SHELL=true
         networks:
             - caddy
+        deploy:
+            resources:
+                limits:
+                    memory: 256m
 
 networks:
     caddy:

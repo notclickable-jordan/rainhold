@@ -15,6 +15,10 @@ services:
             start_period: 10s
         networks:
             - caddy
+        deploy:
+            resources:
+                limits:
+                    memory: 256m
 
 volumes:
     data:

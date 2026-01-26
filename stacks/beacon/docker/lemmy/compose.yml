@@ -18,6 +18,10 @@ services:
             - lemmy-ui
         networks:
             - caddy
+        deploy:
+            resources:
+                limits:
+                    memory: 64m
 
     lemmy:
         image: dessalines/lemmy:0.19.12
@@ -34,6 +38,10 @@ services:
             - pictrs
         networks:
             - caddy
+        deploy:
+            resources:
+                limits:
+                    memory: 512m
 
     lemmy-ui:
         image: dessalines/lemmy-ui:0.19.12
@@ -48,6 +56,10 @@ services:
         logging: *default-logging
         networks:
             - caddy
+        deploy:
+            resources:
+                limits:
+                    memory: 512m
 
     pictrs:
         image: asonix/pictrs:0.5.19
@@ -63,7 +75,7 @@ services:
         deploy:
             resources:
                 limits:
-                    memory: 690m
+                    memory: 512m
         networks:
             - caddy
 
@@ -80,6 +92,10 @@ services:
         logging: *default-logging
         networks:
             - caddy
+        deploy:
+            resources:
+                limits:
+                    memory: 1g
 
 volumes:
     extra_themes:

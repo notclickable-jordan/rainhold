@@ -7,6 +7,10 @@ services:
             - .env
         networks:
             - caddy
+        deploy:
+            resources:
+                limits:
+                    memory: 128m
 
 networks:
     caddy:

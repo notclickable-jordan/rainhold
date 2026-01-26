@@ -16,6 +16,10 @@ services:
             - ./conf:/etc/caddy
             - data:/data
             - config:/config
+        deploy:
+            resources:
+                limits:
+                    memory: 256m
 
 volumes:
     data:

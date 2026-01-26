@@ -20,6 +20,10 @@ services:
             interval: 30s
             timeout: 10s
             retries: 3
+        deploy:
+            resources:
+                limits:
+                    memory: 2g
 
     db:
         image: docker.io/library/postgres:14
@@ -31,6 +35,10 @@ services:
             - .env
         volumes:
             - db:/var/lib/postgresql/data
+        deploy:
+            resources:
+                limits:
+                    memory: 512m
 
     runner:
         image: gitea/act_runner
@@ -46,6 +54,10 @@ services:
             - ./runner.yml:/config.yaml
             - /var/run/docker.sock:/var/run/docker.sock
             - runner_data:/data
+        deploy:
+            resources:
+                limits:
+                    memory: 256m
 
 volumes:
     data:

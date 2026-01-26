@@ -11,6 +11,10 @@ services:
             - 4213:3000
         networks:
             - caddy
+        deploy:
+            resources:
+                limits:
+                    memory: 1g
 
     loki:
         image: grafana/loki:latest
@@ -19,6 +23,10 @@ services:
         ports:
             - 4214:3100
         command: -config.file=/etc/loki/local-config.yaml
+        deploy:
+            resources:
+                limits:
+                    memory: 512m
 
     promtail:
         image: grafana/promtail:latest
@@ -28,6 +36,10 @@ services:
             - /var/log:/var/log
             - ./promtail-config.yml:/etc/promtail/config.yml:ro
         command: -config.file=/etc/promtail/config.yml
+        deploy:
+            resources:
+                limits:
+                    memory: 256m
 
     prometheus:
         image: prom/prometheus:latest
@@ -37,6 +49,10 @@ services:
             - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
         ports:
             - 4215:9090
+        deploy:
+            resources:
+                limits:
+                    memory: 1g
 
 volumes:
     storage:

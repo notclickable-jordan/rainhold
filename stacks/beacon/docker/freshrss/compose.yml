@@ -10,6 +10,10 @@ services:
         volumes:
             - data:/var/www/FreshRSS/data
             - extensions:/var/www/FreshRSS/extensions
+        deploy:
+            resources:
+                limits:
+                    memory: 256m
 
 volumes:
     data:

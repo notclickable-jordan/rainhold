@@ -5,6 +5,10 @@ services:
         restart: unless-stopped
         networks:
             - caddy
+        deploy:
+            resources:
+                limits:
+                    memory: 128m
 
 networks:
     caddy:

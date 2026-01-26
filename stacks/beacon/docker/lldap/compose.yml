@@ -11,6 +11,10 @@ services:
             - 389:3890
         networks:
             - caddy
+        deploy:
+            resources:
+                limits:
+                    memory: 128m
 
 volumes:
     lldap_data:

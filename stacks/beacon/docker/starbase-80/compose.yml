@@ -14,6 +14,10 @@ services:
             - ./img/logo.png:/app/public/logo.png:ro
             - ./img/favicon.ico:/app/public/favicon.ico:ro
             - ./img:/app/public/img:ro
+        deploy:
+            resources:
+                limits:
+                    memory: 256m
 
 networks:
     caddy:
