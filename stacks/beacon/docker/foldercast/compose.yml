@@ -1,11 +1,12 @@
 services:
     app:
         container_name: foldercast
-        image: jordanroher/foldercast
+        build: .
         restart: unless-stopped
         networks:
             - caddy
         env_file: .env
+        command: ["/app/entrypoint.sh"]
         volumes:
             - .:/app
             - static_volume:/app/static_cdn
