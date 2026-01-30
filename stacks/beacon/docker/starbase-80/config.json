@@ -20,12 +20,7 @@
 				"icon": "/img/filegator.png",
 				"description": "File management"
 			},
-			{
-				"name": "Foldercast",
-				"uri": "https://foldercast.notclickable.com",
-				"icon": "/img/foldercast.png",
-				"description": "Podcast hosting"
-			},
+
 			{
 				"name": "Gitea",
 				"uri": "https://gitea.notclickable.com",

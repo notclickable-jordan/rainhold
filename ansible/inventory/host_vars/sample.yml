@@ -120,9 +120,3 @@ dovecot_mail_user: mailuser
 dovecot_mail_user_password_raw: supersecret
 dovecot_mail_domain: example.com
 
-# --- Foldercast ---
-foldercast_secret_key: "your_foldercast_secret_key_here"
-foldercast_timezone: "America/New_Los_Angeles"
-foldercast_csrf_trusted_origins: "http://your_server_ip:80"
-foldercast_admin_name: "admin"
-foldercast_admin_email: "admin@domain.com"

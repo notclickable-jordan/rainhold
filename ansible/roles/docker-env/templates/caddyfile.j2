@@ -206,10 +206,3 @@ filegator.notclickable.com {
     reverse_proxy http://filegator:8080
 }
 
-foldercast.notclickable.com {
-    tls {
-        dns cloudflare {{ cloudflare_ssl_api_token }}
-    }
-
-    reverse_proxy http://foldercast_nginx:80
-}

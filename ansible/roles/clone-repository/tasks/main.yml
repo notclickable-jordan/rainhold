@@ -29,45 +29,4 @@
     version: main
     force: yes
 
-- name: Ensure foldercast directory exists
-  file:
-    path: "{{ rainhold_dest }}/stacks/beacon/docker/foldercast"
-    state: directory
-    mode: "0755"
-  when: rainhold_stack == "beacon"
 
-- name: Check if foldercast is a git repo
-  stat:
-    path: "{{ rainhold_dest }}/stacks/beacon/docker/foldercast/.git"
-  register: foldercast_git_dir
-  when: rainhold_stack == "beacon"
-
-- name: Initialize git repo in foldercast directory if not present
-  command: git init
-  args:
-    chdir: "{{ rainhold_dest }}/stacks/beacon/docker/foldercast"
-  when: rainhold_stack == "beacon" and not foldercast_git_dir.stat.exists
-
-- name: Set foldercast remote origin
-  command: git remote add origin "https://github.com/ahmedlemine/foldercast"
-  args:
-    chdir: "{{ rainhold_dest }}/stacks/beacon/docker/foldercast"
-  when: rainhold_stack == "beacon" and not foldercast_git_dir.stat.exists
-  register: foldercast_remote_add
-  failed_when: foldercast_remote_add.rc != 0 and "already exists" not in foldercast_remote_add.stderr
-
-- name: Fetch foldercast repository
-  command: git fetch origin
-  args:
-    chdir: "{{ rainhold_dest }}/stacks/beacon/docker/foldercast"
-  when: rainhold_stack == "beacon"
-
-- name: Checkout foldercast files without overwriting existing ones
-  shell: |
-    git checkout origin/main -- $(git ls-tree -r origin/main --name-only | while read file; do [ ! -f "$file" ] && echo "$file"; done)
-  args:
-    chdir: "{{ rainhold_dest }}/stacks/beacon/docker/foldercast"
-  when: rainhold_stack == "beacon"
-  register: foldercast_checkout
-  failed_when: false
-  changed_when: foldercast_checkout.rc == 0
