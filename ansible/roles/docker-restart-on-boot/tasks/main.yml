@@ -1,0 +1,39 @@
+---
+# Role: docker-restart-on-boot
+# Purpose: Restart all Docker containers once, 10 minutes after system boot
+
+- name: Copy docker-restart script
+  copy:
+    src: docker-restart.sh
+    dest: /usr/local/bin/docker-restart.sh
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Install docker-restart systemd service
+  template:
+    src: docker-restart.service.j2
+    dest: /etc/systemd/system/docker-restart.service
+    owner: root
+    group: root
+    mode: "0644"
+  notify: reload systemd
+
+- name: Install docker-restart systemd timer
+  template:
+    src: docker-restart.timer.j2
+    dest: /etc/systemd/system/docker-restart.timer
+    owner: root
+    group: root
+    mode: "0644"
+  notify: reload systemd
+
+- name: Reload systemd daemon
+  systemd:
+    daemon_reload: yes
+
+- name: Enable docker-restart timer
+  systemd:
+    name: docker-restart.timer
+    enabled: yes
+    state: started

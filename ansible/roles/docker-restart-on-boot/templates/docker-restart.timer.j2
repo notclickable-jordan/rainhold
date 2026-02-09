@@ -1,0 +1,9 @@
+[Unit]
+Description=Run Docker restart 10 minutes after boot
+
+[Timer]
+OnBootSec=10min
+Unit=docker-restart.service
+
+[Install]
+WantedBy=timers.target

@@ -10,4 +10,5 @@
     - role: docker-network
     - role: docker-env
     - role: docker-start
+    - role: docker-restart-on-boot
     - role: mastodon-feeds
