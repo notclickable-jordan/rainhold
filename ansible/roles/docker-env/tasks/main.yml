@@ -15,6 +15,14 @@
     owner: root
     group: root
 
+- name: Generate .env file for PodCastDN
+  template:
+    src: podcastdn.env.j2
+    dest: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/podcastdn/.env"
+    mode: "0600"
+    owner: root
+    group: root
+
 - name: Generate .env file for LLDAP
   template:
     src: lldap.env.j2

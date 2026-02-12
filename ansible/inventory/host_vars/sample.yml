@@ -110,6 +110,22 @@ mastodon_active_record_encryption_deterministic_key: "your_mastodon_active_recor
 mastodon_active_record_encryption_key_derivation_salt: "your_mastodon_active_record_encryption_key_derivation_salt_here"
 mastodon_active_record_encryption_primary_key: "your_mastodon_active_record_encryption_primary_key_here"
 
+# --- PodCastDN ---
+podcastdn_DATABASE_URL: "postgresql://postgres:postgres123@localhost:5432/podcastdb"
+podcastdn_NEXTAUTH_URL: "http://localhost:3000"
+podcastdn_NEXTAUTH_SECRET: "change-me-to-a-random-secret"
+podcastdn_AUTH_TRUST_HOST: "true"
+podcastdn_AWS_REGION: "us-east-1"
+podcastdn_AWS_ACCESS_KEY_ID: "your-key"
+podcastdn_AWS_SECRET_ACCESS_KEY: "your-secret"
+podcastdn_S3_BUCKET_NAME: "your-bucket"
+podcastdn_CLOUDFRONT_DOMAIN: ""
+podcastdn_CLOUDFRONT_DISTRIBUTION_ID: ""
+podcastdn_CUSTOM_DOMAIN: ""
+podcastdn_POLLING_INTERVAL_MINUTES: 60
+podcastdn_POSTGRES_DB: podcastdb
+podcastdn_POSTGRES_USER: postgres
+podcastdn_POSTGRES_PASSWORD: postgres123
 
 # --- Vaultwarden ---
 vaultwarden_admin_token: "your_vaultwarden_admin_token_here"

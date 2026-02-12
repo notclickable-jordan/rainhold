@@ -20,7 +20,6 @@
 				"icon": "/img/filegator.png",
 				"description": "File management"
 			},
-
 			{
 				"name": "Gitea",
 				"uri": "https://gitea.notclickable.com",
@@ -62,6 +61,12 @@
 				"uri": "https://pocket-id.notclickable.com",
 				"icon": "/img/pocket-id.png",
 				"description": "Identity provider"
+			},
+			{
+				"name": "PodcastDN",
+				"uri": "https://podcastdn.notclickable.com",
+				"icon": "/img/podcastdn.jpg",
+				"description": "Podcast management"
 			},
 			{
 				"name": "Shamir's Secrets",

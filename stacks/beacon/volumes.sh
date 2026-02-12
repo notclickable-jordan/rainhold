@@ -19,6 +19,8 @@ VOLUMES=(
   "mastodon_redis:/mastodon/redis"
   "mastodon_web:/mastodon/web"
   "pocket-id_data:/pocket-id/data"
+  "podcastdn_db:/podcastdn/db"
+  "podcastdn_tmp:/podcastdn/tmp"
 )
 
 BACKUP_PATH="/mnt/backup/rainhold/beacon"

@@ -79,6 +79,14 @@ lemmy.notclickable.com {
     reverse_proxy http://lemmy-nginx:8536
 }
 
+podcastdn.notclickable.com {
+    tls {
+        dns cloudflare {{ cloudflare_ssl_api_token }}
+    }
+
+    reverse_proxy http://podcastdn:80
+}
+
 freshrss.notclickable.com {
     tls {
         dns cloudflare {{ cloudflare_ssl_api_token }}
