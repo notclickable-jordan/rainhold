@@ -111,7 +111,7 @@ mastodon_active_record_encryption_key_derivation_salt: "your_mastodon_active_rec
 mastodon_active_record_encryption_primary_key: "your_mastodon_active_record_encryption_primary_key_here"
 
 # --- PodCastDN ---
-podcastdn_DATABASE_URL: "postgresql://postgres:postgres123@localhost:5432/podcastdb"
+podcastdn_DATABASE_URL: "postgresql://postgres:postgres123@db:5432/podcastdb"
 podcastdn_NEXTAUTH_URL: "http://localhost:3000"
 podcastdn_NEXTAUTH_SECRET: "change-me-to-a-random-secret"
 podcastdn_AUTH_TRUST_HOST: "true"
