@@ -54,15 +54,17 @@ services:
             - ./runner.yml:/config.yaml
             - /var/run/docker.sock:/var/run/docker.sock
             - runner_data:/data
+            - runner_cache:/root/.cache/act
         deploy:
             resources:
                 limits:
-                    memory: 256m
+                    memory: 512m
 
 volumes:
     data:
     db:
     runner_data:
+    runner_cache:
 
 networks:
     caddy:
