@@ -31,3 +31,7 @@ services:
 volumes:
     db:
     tmp:
+
+networks:
+    caddy:
+        external: true
