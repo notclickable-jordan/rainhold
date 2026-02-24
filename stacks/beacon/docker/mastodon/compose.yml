@@ -33,7 +33,7 @@ services:
                     memory: 128m
 
     web:
-        image: ghcr.io/mastodon/mastodon:v4.5.6
+        image: ghcr.io/mastodon/mastodon:v4.5.7
         container_name: mastodon_web
         restart: unless-stopped
         env_file:
@@ -59,7 +59,7 @@ services:
                     memory: 2g
 
     streaming:
-        image: ghcr.io/mastodon/mastodon-streaming:v4.5.6
+        image: ghcr.io/mastodon/mastodon-streaming:v4.5.7
         container_name: mastodon_streaming
         restart: unless-stopped
         env_file:
@@ -83,7 +83,7 @@ services:
                     memory: 256m
 
     sidekiq:
-        image: ghcr.io/mastodon/mastodon:v4.5.6
+        image: ghcr.io/mastodon/mastodon:v4.5.7
         container_name: mastodon_sidekiq
         restart: unless-stopped
         env_file:
