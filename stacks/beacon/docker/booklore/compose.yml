@@ -1,0 +1,53 @@
+services:
+    booklore:
+        image: booklore/booklore:latest
+        container_name: booklore
+        env_file:
+            - .env
+        depends_on:
+            mariadb:
+                condition: service_healthy
+        volumes:
+            - data:/app/data
+            - /mnt/books:/books
+            - bookdrop:/bookdrop
+        restart: unless-stopped
+        networks:
+            - caddy
+        healthcheck:
+            test: wget -q -O - http://localhost:6060/api/v1/healthcheck
+            interval: 60s
+            retries: 5
+            start_period: 60s
+            timeout: 10s
+        deploy:
+            resources:
+                limits:
+                    memory: 1g
+
+    mariadb:
+        image: lscr.io/linuxserver/mariadb:11.4.8
+        container_name: booklore-mariadb
+        env_file:
+            - .env.mariadb
+        volumes:
+            - mariadb:/config
+        restart: unless-stopped
+        healthcheck:
+            test: ["CMD", "mariadb-admin", "ping", "-h", "localhost"]
+            interval: 5s
+            timeout: 5s
+            retries: 10
+        deploy:
+            resources:
+                limits:
+                    memory: 512m
+
+volumes:
+    data:
+    bookdrop:
+    mariadb:
+
+networks:
+    caddy:
+        external: true

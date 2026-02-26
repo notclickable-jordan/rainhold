@@ -136,3 +136,9 @@ dovecot_mail_user: mailuser
 dovecot_mail_user_password_raw: supersecret
 dovecot_mail_domain: example.com
 
+# --- Booklore ---
+# Generate: openssl rand -base64 32 | tr -dc 'a-zA-Z0-9' | head -c 32
+booklore_db_password: "your_booklore_db_password_here"
+# Generate: openssl rand -base64 32 | tr -dc 'a-zA-Z0-9' | head -c 32
+booklore_db_root_password: "your_booklore_db_root_password_here"
+

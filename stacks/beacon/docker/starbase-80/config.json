@@ -79,6 +79,12 @@
 				"uri": "https://tinyauth.notclickable.com",
 				"icon": "/img/tinyauth.jpg",
 				"description": "Authorization"
+			},
+			{
+				"name": "Booklore",
+				"uri": "https://booklore.notclickable.com",
+				"icon": "/img/booklore.svg",
+				"description": "Book library"
 			}
 		]
 	},

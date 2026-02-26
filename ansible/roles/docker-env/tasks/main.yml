@@ -151,3 +151,19 @@
     owner: root
     group: root
 
+- name: Generate env for Booklore
+  template:
+    src: booklore.env.j2
+    dest: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/booklore/.env"
+    mode: "0600"
+    owner: root
+    group: root
+
+- name: Generate env for Booklore MariaDB
+  template:
+    src: booklore.env.mariadb.j2
+    dest: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/booklore/.env.mariadb"
+    mode: "0600"
+    owner: root
+    group: root
+

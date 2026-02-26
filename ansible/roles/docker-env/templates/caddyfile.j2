@@ -214,3 +214,16 @@ filegator.notclickable.com {
     reverse_proxy http://filegator:8080
 }
 
+booklore.notclickable.com {
+    forward_auth http://tinyauth:3000 {
+        uri /api/auth/caddy
+        copy_headers Remote-User Remote-Email Remote-Name Remote-Groups
+    }
+
+    tls {
+        dns cloudflare {{ cloudflare_ssl_api_token }}
+    }
+
+    reverse_proxy http://booklore:6060
+}
+
