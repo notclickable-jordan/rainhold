@@ -136,3 +136,5 @@ dovecot_mail_user: mailuser
 dovecot_mail_user_password_raw: supersecret
 dovecot_mail_domain: example.com
 
+# --- Docent ---
+docent_tv_ip: 192.168.1.50

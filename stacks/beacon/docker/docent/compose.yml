@@ -1,0 +1,19 @@
+services:
+    docent:
+        image: ghcr.io/danmunz/docent:latest
+        container_name: docent
+        network_mode: host
+        restart: unless-stopped
+        env_file:
+            - .env
+        networks:
+            - caddy
+        volumes:
+            - data:/data
+
+volumes:
+    data:
+
+networks:
+    caddy:
+        external: true

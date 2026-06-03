@@ -214,3 +214,10 @@ filegator.notclickable.com {
     reverse_proxy http://filegator:8080
 }
 
+docent.notclickable.com {
+    tls {
+        dns cloudflare {{ cloudflare_ssl_api_token }}
+    }
+
+    reverse_proxy http://docent:8000
+}

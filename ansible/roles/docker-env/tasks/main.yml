@@ -15,6 +15,14 @@
     owner: root
     group: root
 
+- name: Generate .env file for Docent
+  template:
+    src: docent.env.j2
+    dest: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/docent/.env"
+    mode: "0600"
+    owner: root
+    group: root
+
 - name: Generate .env file for PodCastDN
   template:
     src: podcastdn.env.j2
