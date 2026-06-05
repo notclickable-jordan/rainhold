@@ -4,7 +4,7 @@
 		"services": [
 			{
 				"name": "Docent",
-				"uri": "https://docent.notclickable.com",
+				"uri": "http://rainhold-beacon:8765",
 				"icon": "/img/docent.jpg",
 				"description": "Frame TV art"
 			},
