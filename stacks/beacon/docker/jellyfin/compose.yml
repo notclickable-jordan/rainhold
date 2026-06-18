@@ -9,6 +9,8 @@ services:
             - /mnt/media:/media
             - /mnt/erotica:/erotica
         restart: unless-stopped
+        ports:
+            - 8096:8096
         environment:
             - JELLYFIN_PublishedServerUrl=https://jellyfin.notclickable.com
         networks:
