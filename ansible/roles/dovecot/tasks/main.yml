@@ -35,23 +35,25 @@
     line: "mail_location = maildir:~/Maildir"
   notify: Restart Dovecot
 
-- name: Allow plaintext auth (local only)
+- name: Remove obsolete plaintext auth setting
   lineinfile:
     path: /etc/dovecot/conf.d/10-auth.conf
     regexp: "^disable_plaintext_auth ="
-    line: "disable_plaintext_auth = no"
+    state: absent
   notify: Restart Dovecot
 
-- name: Ensure IMAP listener is enabled on port 143
+- name: Allow plaintext auth (local only)
+  lineinfile:
+    path: /etc/dovecot/conf.d/10-auth.conf
+    regexp: "^auth_allow_cleartext ="
+    line: "auth_allow_cleartext = yes"
+  notify: Restart Dovecot
+
+- name: Remove redundant IMAP listener configuration
   blockinfile:
     path: /etc/dovecot/conf.d/10-master.conf
     marker: "# {mark} ANSIBLE MANAGED BLOCK: IMAP LISTENER"
-    block: |
-      service imap-login {
-        inet_listener imap {
-          port = 143
-        }
-      }
+    state: absent
   notify: Restart Dovecot
 
 - name: Configure Dovecot auth to use system users

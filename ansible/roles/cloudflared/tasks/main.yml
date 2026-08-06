@@ -15,10 +15,18 @@
     mode: "0644"
 
 - name: Add Cloudflared apt repository
-  ansible.builtin.apt_repository:
-    repo: "deb [signed-by=/usr/share/keyrings/cloudflare-main.gpg] https://pkg.cloudflare.com/cloudflared any main"
-    filename: cloudflared
-    state: present
+  ansible.builtin.deb822_repository:
+    name: cloudflared
+    types: deb
+    uris: https://pkg.cloudflare.com/cloudflared
+    suites: any
+    components: main
+    signed_by: /usr/share/keyrings/cloudflare-main.gpg
+
+- name: Remove legacy Cloudflared repository source
+  ansible.builtin.file:
+    path: /etc/apt/sources.list.d/cloudflared.list
+    state: absent
 
 - name: Update apt cache
   ansible.builtin.apt:
