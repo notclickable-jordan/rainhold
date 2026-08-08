@@ -8,9 +8,4 @@
     url: "http://pictrs:8080/"
     api_key: "{{ lemmy_pictrs_api_key }}"
   }
-  email: {
-    smtp_server: "{{ ansible_host }}:{{ postfix_port }}"
-    smtp_from_address: "{{ lemmy_email_from_address }}"
-    tls_type: "none"
-  }
 }
