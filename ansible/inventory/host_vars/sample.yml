@@ -75,8 +75,6 @@ lemmy_pictrs_secret_key: "your_pictrs_secret_key_here"
 lemmy_postgres_user: "lemmy"
 lemmy_postgres_password: "your_lemmy_postgres_password_here"
 lemmy_postgres_db: "lemmy"
-lemmy_postfix_hostname: "lemmy.example.com"
-lemmy_email_from_address: "lemmy@example.com"
 lemmy_port: 4211
 
 # --- Grafana ---
@@ -129,12 +127,6 @@ podcastdn_POSTGRES_PASSWORD: postgres123
 
 # --- Vaultwarden ---
 vaultwarden_admin_token: "your_vaultwarden_admin_token_here"
-
-# --- Postfix and Dovecot ---
-postfix_port: 25
-dovecot_mail_user: mailuser
-dovecot_mail_user_password_raw: supersecret
-dovecot_mail_domain: example.com
 
 # --- Docent ---
 docent_tv_ip: 192.168.1.50

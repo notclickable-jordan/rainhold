@@ -1,0 +1,81 @@
+- name: Remove the local mail server from Rainhold virtual machine
+  hosts: public
+  become: true
+  vars:
+    mail_user: "{{ dovecot_mail_user | default('mailuser') }}"
+    mail_packages:
+      - dovecot-imapd
+      - dovecot-pop3d
+      - dovecot-core
+      - postfix
+      - mailutils
+  tasks:
+    - name: Stop and disable mail services
+      service:
+        name: "{{ item }}"
+        state: stopped
+        enabled: false
+      loop:
+        - dovecot
+        - postfix
+      failed_when: false
+
+    - name: Remove mail packages
+      apt:
+        name: "{{ mail_packages }}"
+        state: absent
+        purge: true
+        autoremove: true
+
+    - name: Remove mail configuration directories
+      file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - /etc/dovecot
+        - /etc/postfix
+        - /var/spool/postfix
+        - /var/lib/dovecot
+
+    - name: Remove Maildir for the mail user
+      file:
+        path: "/home/{{ mail_user }}/Maildir"
+        state: absent
+
+    - name: Remove the mail user account
+      user:
+        name: "{{ mail_user }}"
+        state: absent
+        remove: true
+      failed_when: false
+
+    - name: Remove mail log files
+      file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - /var/log/mail.log
+        - /var/log/mail.err
+        - /var/log/mail.warn
+        - /var/log/mail.info
+
+    - name: Remove mail logging directive from rsyslog
+      lineinfile:
+        path: /etc/rsyslog.conf
+        regexp: "^mail\\.\\*"
+        state: absent
+      register: rsyslog_mail_removed
+      failed_when: false
+
+    - name: Restart rsyslog
+      service:
+        name: rsyslog
+        state: restarted
+      when: rsyslog_mail_removed.changed
+      failed_when: false
+
+    - name: Remove generated Lemmy postfix env file
+      file:
+        path: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/lemmy/.env.postfix"
+        state: absent
+      when: rainhold_dest is defined and rainhold_stack is defined

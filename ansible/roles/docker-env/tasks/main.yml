@@ -103,14 +103,6 @@
     owner: root
     group: root
 
-- name: Generate env.postfix for Lemmy
-  template:
-    src: lemmy.env.postfix.j2
-    dest: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/lemmy/.env.postfix"
-    mode: "0600"
-    owner: root
-    group: root
-
 - name: Generate env for FreshRSS
   template:
     src: freshrss.env.j2

@@ -34,6 +34,14 @@ ansible-playbook ansible/playbook.yml --ask-become-pass --user strongbad --inven
 
 This will take a long time to run. Once it's done, use [Cloudflare](./cloudflare.md) to set up your public sites and Tailscale/NextDNS for [private sites](./private.md).
 
+## Removing the local mail server
+
+Earlier versions of Rainhold installed a local Postfix/Dovecot mail server. If you ran the playbook back then, this one-off playbook uninstalls and cleans up those packages, config, logs and the mail user.
+
+```bash
+ansible-playbook ansible/remove-mail-server.yml --ask-become-pass --user strongbad --inventory ansible/inventory/hosts.yml
+```
+
 ## Troubleshooting
 
 If the Tailscale Ansible role fails, disable manual device approval in the Tailscale admin console.
