@@ -1,0 +1,111 @@
+---
+# tasks file for rotate-secrets
+#
+# Assumes:
+#  - host_vars/beacon.yml already has the NEW secret values you rotated at
+#    the source (Cloudflare dashboard, AWS IAM, SMTP provider, etc.)
+#  - the docker-env role has just re-rendered every .env/config file with
+#    those new values (this playbook runs it first, before this role)
+#  - the affected containers are STILL RUNNING with the OLD credentials at
+#    this point, so we can use `docker exec` (which uses the Postgres unix
+#    socket + trust auth, not the network password) to change each DB role's
+#    password without needing to know the old one.
+#  - docker-start runs AFTER this role, to restart every stack so the apps
+#    pick up the new values that now match what's in the databases.
+
+- name: Rotate Postgres role passwords to match the new beacon.yml values
+  ansible.builtin.command:
+    argv:
+      - docker
+      - exec
+      - "{{ item.container }}"
+      - psql
+      - -U
+      - "{{ item.user }}"
+      - -d
+      - "{{ item.db }}"
+      - -c
+      - "ALTER USER \"{{ item.user }}\" WITH PASSWORD '{{ item.password }}';"
+  loop: "{{ rotate_databases }}"
+  loop_control:
+    label: "{{ item.container }}"
+  register: rotate_db_result
+  failed_when: false
+  no_log: true
+
+- name: Warn if a database container wasn't reachable for password rotation
+  debug:
+    msg: >-
+      WARNING: could not rotate the Postgres password in
+      {{ item.item.container }} — is the container running? Rotate it
+      manually with `docker exec {{ item.item.container }} psql -U
+      {{ item.item.user }} -c "ALTER USER ... PASSWORD ...;"` once it's up.
+  loop: "{{ rotate_db_result.results }}"
+  loop_control:
+    label: "{{ item.item.container }}"
+  when: item.rc is defined and item.rc != 0
+
+- name: Set new root password
+  ansible.builtin.user:
+    name: root
+    password: "{{ linux_root_password_new }}"
+
+# --- Cloudflare Tunnel token ---
+# `cloudflared service install <token>` only runs once (guarded by
+# `creates: /etc/systemd/system/cloudflared.service` in the cloudflared
+# role), so simply updating cloudflared_token and re-running the main
+# playbook is a no-op. Force a clean re-install with the new token.
+
+- name: Check if cloudflared service is currently installed
+  ansible.builtin.stat:
+    path: /etc/systemd/system/cloudflared.service
+  register: cloudflared_service_file
+
+- name: Stop and disable the existing cloudflared service
+  ansible.builtin.systemd:
+    name: cloudflared
+    state: stopped
+    enabled: false
+  when: cloudflared_service_file.stat.exists
+  failed_when: false
+
+- name: Uninstall the existing cloudflared tunnel service
+  ansible.builtin.command: cloudflared service uninstall
+  when: cloudflared_service_file.stat.exists
+  failed_when: false
+  changed_when: true
+
+- name: Reload systemd after cloudflared uninstall
+  ansible.builtin.systemd:
+    daemon_reload: true
+  when: cloudflared_service_file.stat.exists
+
+- name: Re-install cloudflared service with the rotated tunnel token
+  ansible.builtin.command: >
+    cloudflared service install {{ cloudflared_token }}
+  args:
+    creates: /etc/systemd/system/cloudflared.service
+
+- name: Enable and start cloudflared with the rotated token
+  ansible.builtin.systemd:
+    name: cloudflared
+    enabled: true
+    state: started
+    daemon_reload: true
+
+# --- Tailscale auth key ---
+# Auth keys are redeemed once at `tailscale up` time; rotating the var alone
+# does nothing to an already-joined node. Only touch this if explicitly
+# opted in, since it changes the node's tailnet identity/IP.
+
+- name: Log out of Tailscale to allow re-authentication with the new key
+  ansible.builtin.command: tailscale logout
+  when: rotate_tailscale | bool
+  changed_when: true
+  failed_when: false
+
+- name: Re-authenticate to Tailscale with the rotated auth key
+  ansible.builtin.command: >
+    tailscale up --authkey={{ tailscale_authkey }} --accept-dns=true
+  when: rotate_tailscale | bool
+  changed_when: true

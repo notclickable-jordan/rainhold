@@ -1,0 +1,41 @@
+---
+# Role: rotate-secrets
+# Purpose: Rotate credentials that are NOT automatically picked up by a normal
+# `ansible-playbook playbook.yml` run — Postgres users (password only applied
+# at first container init), the Cloudflare Tunnel token (only installed once),
+# the root password (normally guarded by an old-password check), and
+# optionally the Tailscale auth key (only redeemed once per node).
+#
+# Assumes host_vars/beacon.yml has ALREADY been updated with the new secret
+# values you want to roll out (i.e. rotate the credential at its source first
+# — Cloudflare dashboard, AWS IAM, SMTP provider, etc. — then update
+# beacon.yml, then run this playbook).
+
+# Postgres databases whose in-container role password must be changed with
+# ALTER USER before the app containers are restarted with the new value.
+rotate_databases:
+  - container: gitea-db
+    user: "{{ GITEA__database__USER }}"
+    password: "{{ GITEA__database__PASSWD }}"
+    db: "{{ GITEA__database__NAME }}"
+
+  - container: lemmy-db
+    user: "{{ lemmy_postgres_user }}"
+    password: "{{ lemmy_postgres_password }}"
+    db: "{{ lemmy_postgres_db }}"
+
+  - container: mastodon_db
+    user: "{{ mastodon_postgres_user }}"
+    password: "{{ mastodon_postgres_password }}"
+    db: mastodon_production
+
+  - container: podcastdn_db
+    user: "{{ podcastdn_POSTGRES_USER }}"
+    password: "{{ podcastdn_POSTGRES_PASSWORD }}"
+    db: "{{ podcastdn_POSTGRES_DB }}"
+
+# Tailscale auth keys are redeemed once; rotating the var does nothing to an
+# already-joined node. Set this to true if you also want this run to log the
+# node out and rejoin the tailnet with the new key (this will change the
+# node's Tailscale identity/IP, so it's opt-in).
+rotate_tailscale: false
