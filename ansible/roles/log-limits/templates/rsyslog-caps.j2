@@ -12,10 +12,12 @@
     delaycompress
     missingok
     notifempty
-    create 640 syslog adm
-    su root syslog
+    create 640 {{ log_owner }} {{ log_group }}
+    su {{ log_owner }} {{ log_group }}
     sharedscripts
     postrotate
-        /usr/lib/rsyslog/rsyslog-rotate
+        if [ -x /usr/lib/rsyslog/rsyslog-rotate ]; then
+            /usr/lib/rsyslog/rsyslog-rotate
+        fi
     endscript
 }

@@ -31,6 +31,27 @@
     path: /etc/logrotate.d/rsyslog
   register: stock_rsyslog_logrotate
 
+# Which user owns the log files varies: Ubuntu's rsyslog package creates a
+# "syslog" user, but a host where rsyslog was installed differently keeps them
+# as root:adm. Hardcoding either one makes logrotate reject the config with
+# "unknown user", so detect the owner of an existing log instead.
+- name: Detect the owner of the existing log files
+  ansible.builtin.stat:
+    path: /var/log/syslog
+  register: syslog_file
+
+- name: Determine the log owner and group to rotate as
+  ansible.builtin.set_fact:
+    log_owner: "{{ syslog_file.stat.pw_name | default('root', true) }}"
+    log_group: "{{ syslog_file.stat.gr_name | default('adm', true) }}"
+  when: syslog_file.stat.exists
+
+- name: Fall back to root:adm when no log file exists yet
+  ansible.builtin.set_fact:
+    log_owner: root
+    log_group: adm
+  when: not syslog_file.stat.exists
+
 # logrotate aborts with "duplicate log entry" if a path appears in two configs.
 # Commenting individual paths out is not safe: on Ubuntu /var/log/syslog is the
 # only path in its block, so removing it leaves a dangling "{" that breaks the
