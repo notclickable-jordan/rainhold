@@ -34,12 +34,44 @@
   loop: "{{ network_shares }}"
   loop_control:
     label: "{{ item.mount_point }}"
+  register: fstab_entries
   become: true
 
+# systemd only picks up new fstab entries after a daemon-reload, which
+# generates the .automount units the mounts below rely on.
 - name: Run systemctl daemon-reload
   command: systemctl daemon-reload
   become: true
+  when: fstab_entries is changed
 
+# These entries use x-systemd.automount, so systemd mounts each share on first
+# access and `mount -a` is only needed to bring up shares that are not mounted
+# yet. mount.cifs returns EBUSY (rc 32) for a share that is already mounted
+# rather than skipping it, so a fully-mounted host would fail this task on
+# every run.
+#
+# Only treat the failure as benign when EVERY reported mount error is EBUSY. A
+# plain substring check would pass a run where one share was busy and another
+# genuinely failed on credentials or an unreachable host.
 - name: Run mount -a to activate all fstab mounts
   command: mount -a
+  register: mount_all
+  changed_when: mount_all.rc == 0
+  failed_when: >-
+    mount_all.rc != 0 and (
+      mount_all.stderr_lines | select('search', '^mount error') | list | length == 0
+      or
+      mount_all.stderr_lines
+        | select('search', '^mount error')
+        | reject('search', 'Device or resource busy')
+        | list | length > 0
+    )
   become: true
+
+- name: Warn when some shares were already mounted
+  debug:
+    msg: >-
+      mount -a reported shares that were already mounted; this is expected on a
+      host that is already up and was treated as success. Check `findmnt -t cifs`
+      and `dmesg -T | grep -i cifs` if a share is actually missing.
+  when: mount_all.rc != 0
