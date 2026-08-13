@@ -1,0 +1,139 @@
+---
+# Role: log-limits
+# Purpose: Cap log growth so a logging flood cannot fill the root filesystem.
+#
+# Context: a runaway kernel/syslog flood produced two 195G files in /var/log
+# (syslog.1 and kern.log.1) and filled the disk, which hung the Gitea runner.
+# Nothing here stops a flood at the source; it bounds the damage.
+
+- name: Collect service facts
+  ansible.builtin.service_facts:
+
+- name: Ensure journald drop-in directory exists
+  ansible.builtin.file:
+    path: /etc/systemd/journald.conf.d
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Cap systemd journal size
+  ansible.builtin.template:
+    src: 99-size.conf.j2
+    dest: /etc/systemd/journald.conf.d/99-size.conf
+    owner: root
+    group: root
+    mode: "0644"
+  notify: restart journald
+
+- name: Check whether the stock rsyslog logrotate config is present
+  ansible.builtin.stat:
+    path: /etc/logrotate.d/rsyslog
+  register: stock_rsyslog_logrotate
+
+# logrotate aborts with "duplicate log entry" if a path appears in two configs.
+# Commenting individual paths out is not safe: on Ubuntu /var/log/syslog is the
+# only path in its block, so removing it leaves a dangling "{" that breaks the
+# entire config. Instead the stock file is moved out of /etc/logrotate.d and this
+# role takes over every path it covered. The replacement is installed first so a
+# validation failure cannot leave the host with no rotation at all.
+- name: Install size-capped logrotate config for high-volume logs
+  ansible.builtin.template:
+    src: rsyslog-caps.j2
+    dest: /etc/logrotate.d/rsyslog-caps
+    owner: root
+    group: root
+    mode: "0644"
+    validate: logrotate --debug %s
+
+- name: Ensure the disabled-config directory exists
+  ansible.builtin.file:
+    path: /etc/logrotate.d.disabled
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Back up the stock rsyslog logrotate config
+  ansible.builtin.copy:
+    src: /etc/logrotate.d/rsyslog
+    dest: /etc/logrotate.d.disabled/rsyslog
+    remote_src: true
+    owner: root
+    group: root
+    mode: "0644"
+    force: false
+  when: stock_rsyslog_logrotate.stat.exists
+
+- name: Remove the stock rsyslog logrotate config
+  ansible.builtin.file:
+    path: /etc/logrotate.d/rsyslog
+    state: absent
+  when: stock_rsyslog_logrotate.stat.exists
+
+- name: Verify the combined logrotate config still parses
+  ansible.builtin.command: logrotate --debug /etc/logrotate.conf
+  register: logrotate_check
+  changed_when: false
+  failed_when: logrotate_check.rc != 0
+
+- name: Ensure logrotate timer drop-in directory exists
+  ansible.builtin.file:
+    path: /etc/systemd/system/logrotate.timer.d
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+  when: logrotate_hourly
+
+- name: Run logrotate hourly so maxsize is enforced promptly
+  ansible.builtin.template:
+    src: logrotate-hourly.conf.j2
+    dest: /etc/systemd/system/logrotate.timer.d/hourly.conf
+    owner: root
+    group: root
+    mode: "0644"
+  when: logrotate_hourly
+  notify: restart logrotate timer
+
+- name: Ensure the Docker config directory exists
+  ansible.builtin.file:
+    path: /etc/docker
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Cap Docker container log size
+  ansible.builtin.copy:
+    content: |
+      {
+          "log-driver": "json-file",
+          "log-opts": {
+              "max-size": "{{ docker_log_max_size }}",
+              "max-file": "{{ docker_log_max_file }}"
+          }
+      }
+    dest: /etc/docker/daemon.json
+    owner: root
+    group: root
+    mode: "0644"
+  notify: restart docker
+
+- name: Install disk usage warning script
+  ansible.builtin.template:
+    src: disk-warn.sh.j2
+    dest: /usr/local/bin/disk-warn.sh
+    owner: root
+    group: root
+    mode: "0755"
+  when: disk_warn_threshold_percent | int > 0
+
+- name: Schedule hourly disk usage check
+  ansible.builtin.cron:
+    name: Warn when the root filesystem is nearly full
+    cron_file: disk-warn
+    user: root
+    minute: "0"
+    job: /usr/local/bin/disk-warn.sh
+    state: "{{ 'present' if disk_warn_threshold_percent | int > 0 else 'absent' }}"

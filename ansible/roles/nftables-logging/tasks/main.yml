@@ -1,47 +1,116 @@
 ---
 # tasks file for nftables-logging
+#
+# "nft add" is idempotent and always exits 0, so these tasks previously
+# reported "changed" on every run. Check the current ruleset first so only
+# real changes are reported.
+- name: Read the current inet filter ruleset
+  become: true
+  command: nft list table inet filter
+  register: nft_existing
+  changed_when: false
+  failed_when: false
+
 - name: Ensure inet table exists
   become: true
   command: nft add table inet filter
-  register: nft_table_result
-  failed_when: false
-  changed_when: nft_table_result.rc == 0
+  when: nft_existing.rc != 0
 
 - name: Ensure input chain exists
   become: true
   command: nft add chain inet filter input '{ type filter hook input priority 0; }'
-  register: nft_input_chain_result
-  failed_when: false
-  changed_when: nft_input_chain_result.rc == 0
+  when: "'chain input' not in nft_existing.stdout"
 
 - name: Ensure forward chain exists
   become: true
   command: nft add chain inet filter forward '{ type filter hook forward priority 0; }'
-  register: nft_forward_chain_result
-  failed_when: false
-  changed_when: nft_forward_chain_result.rc == 0
+  when: "'chain forward' not in nft_existing.stdout"
 
 - name: Ensure output chain exists
   become: true
   command: nft add chain inet filter output '{ type filter hook output priority 0; }'
-  register: nft_output_chain_result
-  failed_when: false
-  changed_when: nft_output_chain_result.rc == 0
+  when: "'chain output' not in nft_existing.stdout"
 
+- name: Count existing input chain log rules
+  become: true
+  shell: |
+    set -o pipefail
+    nft list chain inet filter input 2>/dev/null |
+      grep -c 'log prefix "{{ nftables_log_prefix }}input"' || true
+  args:
+    executable: /bin/bash
+  register: nft_input_log_count
+  changed_when: false
+
+# Adding the rule unconditionally appended a duplicate on every playbook run,
+# multiplying log volume each time. Converge on exactly one rule: add it when
+# missing, and strip the extras when a previous run left duplicates behind.
 - name: Ensure nftables logging is enabled for input chain
   become: true
   command: >
-    nft add rule inet filter input log prefix "nftables-input" flags all
-  ignore_errors: true
+    nft add rule inet filter input log prefix "{{ nftables_log_prefix }}input" flags all
+  when: nft_input_log_count.stdout | trim | int == 0
 
-- name: Ensure nftables logging is enabled for forward chain
+- name: Remove duplicate input chain log rules
   become: true
-  command: >
-    nft add rule inet filter forward log prefix "nftables-forward" flags all
-  ignore_errors: true
+  shell: |
+    set -o pipefail
+    nft -a list chain inet filter input 2>/dev/null |
+      awk '/log prefix "{{ nftables_log_prefix }}input"/ {print $NF}' |
+      tail -n +2 |
+      while read -r handle; do
+        nft delete rule inet filter input handle "$handle"
+      done
+  args:
+    executable: /bin/bash
+  when: nft_input_log_count.stdout | trim | int > 1
+  changed_when: true
+
+# The forward chain is deliberately NOT logged. On a Docker host every packet
+# of every container traverses forward, so logging it wrote ~195G/day to
+# kern.log and syslog and filled the root filesystem.
+- name: Remove any existing forward chain log rules
+  become: true
+  shell: |
+    set -o pipefail
+    nft -a list chain inet filter forward 2>/dev/null |
+      awk '/log prefix "{{ nftables_log_prefix }}forward"/ {print $NF}' |
+      while read -r handle; do
+        nft delete rule inet filter forward handle "$handle"
+      done
+  args:
+    executable: /bin/bash
+  register: nft_forward_log_cleanup
+  changed_when: false
+
+- name: Count existing output chain log rules
+  become: true
+  shell: |
+    set -o pipefail
+    nft list chain inet filter output 2>/dev/null |
+      grep -c 'log prefix "{{ nftables_log_prefix }}output"' || true
+  args:
+    executable: /bin/bash
+  register: nft_output_log_count
+  changed_when: false
 
 - name: Ensure nftables logging is enabled for output chain
   become: true
   command: >
-    nft add rule inet filter output log prefix "nftables-output" flags all
-  ignore_errors: true
+    nft add rule inet filter output log prefix "{{ nftables_log_prefix }}output" flags all
+  when: nft_output_log_count.stdout | trim | int == 0
+
+- name: Remove duplicate output chain log rules
+  become: true
+  shell: |
+    set -o pipefail
+    nft -a list chain inet filter output 2>/dev/null |
+      awk '/log prefix "{{ nftables_log_prefix }}output"/ {print $NF}' |
+      tail -n +2 |
+      while read -r handle; do
+        nft delete rule inet filter output handle "$handle"
+      done
+  args:
+    executable: /bin/bash
+  when: nft_output_log_count.stdout | trim | int > 1
+  changed_when: true

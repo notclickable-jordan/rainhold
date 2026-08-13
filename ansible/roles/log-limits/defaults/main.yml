@@ -1,0 +1,35 @@
+---
+# defaults file for log-limits
+
+# systemd-journald caps
+journald_system_max_use: "500M"
+journald_system_max_file_size: "50M"
+
+# logrotate caps for rsyslog's files. This role replaces the stock
+# /etc/logrotate.d/rsyslog entirely, so this list must cover every path that
+# file rotated or those logs would grow unrotated.
+logrotate_managed_logs:
+  - /var/log/syslog
+  - /var/log/kern.log
+  - /var/log/daemon.log
+  - /var/log/messages
+  - /var/log/mail.log
+  - /var/log/mail.err
+  - /var/log/auth.log
+  - /var/log/user.log
+  - /var/log/cron.log
+  - /var/log/debug
+  - /var/log/lpr.log
+logrotate_max_size: "500M"
+logrotate_rotate_count: 7
+
+# Run logrotate hourly instead of daily. maxsize is only evaluated when
+# logrotate runs, so a daily timer cannot contain a fast log flood.
+logrotate_hourly: true
+
+# Docker json-file log driver caps. Applies to newly created containers only.
+docker_log_max_size: "10m"
+docker_log_max_file: "3"
+
+# Warn before the disk fills. Set to 0 to skip installing the check.
+disk_warn_threshold_percent: 85

@@ -1,0 +1,12 @@
+#!/bin/sh
+# Managed by Ansible (log-limits role)
+# Warn when the root filesystem crosses the configured usage threshold.
+set -eu
+
+THRESHOLD={{ disk_warn_threshold_percent }}
+USED=$(df -P / | awk 'NR==2 {gsub(/%/, "", $5); print $5}')
+
+if [ "$USED" -gt "$THRESHOLD" ]; then
+    printf 'Disk usage on / is %s%%, above the %s%% threshold\n' "$USED" "$THRESHOLD" |
+        logger -t disk-warn -p daemon.warning
+fi

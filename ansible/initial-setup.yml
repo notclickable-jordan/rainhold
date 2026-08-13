@@ -9,5 +9,6 @@
     - role: ssh-hardening
     - role: root-password
     - role: network-share
+    - role: log-limits
     - role: docker-install
     - role: cloudflared

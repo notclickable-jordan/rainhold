@@ -1,0 +1,20 @@
+---
+- name: restart journald
+  ansible.builtin.systemd:
+    name: systemd-journald
+    state: restarted
+
+- name: restart logrotate timer
+  ansible.builtin.systemd:
+    name: logrotate.timer
+    state: restarted
+    daemon_reload: yes
+
+- name: restart docker
+  ansible.builtin.systemd:
+    name: docker
+    state: restarted
+  # This role runs before docker-install on a fresh host, where there is no
+  # docker unit to restart yet. docker-install starts it with the config
+  # already in place, so skipping here is correct rather than a failure.
+  when: "'docker.service' in ansible_facts.services | default({})"
