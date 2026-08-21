@@ -104,12 +104,6 @@
 				"description": "16-bit sprite webcomic"
 			},
 			{
-				"name": "Xenobell",
-				"uri": "https://xenobell.com",
-				"icon": "/img/xenobell.png",
-				"description": "In development"
-			},
-			{
 				"name": "Winter Starfall",
 				"uri": "https://winterstarfall-unofficial.com",
 				"icon": "/img/winter-starfall.jpg",
