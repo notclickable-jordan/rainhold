@@ -1,5 +1,9 @@
-base-url: "http://localhost:4217"
+base-url: "https://ntfy.notclickable.com"
 listen-http: ":80"
+
+# Relay through ntfy.sh's push infrastructure so iOS/Android apps get real
+# background push notifications instead of only updating while connected.
+upstream-base-url: "https://ntfy.sh"
 
 # Internal SMTP bridge for Docker apps that can send email notifications.
 # Put the app on the caddy network and send email to rainhold@ntfy.local via ntfy:25.

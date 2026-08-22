@@ -221,3 +221,11 @@ docent.notclickable.com {
 
     reverse_proxy http://docent:8000
 }
+
+ntfy.notclickable.com {
+    tls {
+        dns cloudflare {{ cloudflare_ssl_api_token }}
+    }
+
+    reverse_proxy http://ntfy:80
+}
