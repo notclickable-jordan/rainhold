@@ -18,8 +18,8 @@ VOLUMES=(
   "mastodon_db:/mastodon/db"
   "mastodon_redis:/mastodon/redis"
   "mastodon_web:/mastodon/web"
-  "nfty_cache:/ntfy/cache"
-  "nfty_data:/ntfy/data"
+  "ntfy_cache:/ntfy/cache"
+  "ntfy_data:/ntfy/data"
   "pocket-id_data:/pocket-id/data"
   "podcastdn_db:/podcastdn/db"
 )
