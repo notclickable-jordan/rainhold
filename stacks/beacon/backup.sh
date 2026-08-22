@@ -20,8 +20,8 @@ echo "Starting backup of Docker volumes"
 
 notify_failure() {
   local exit_code=$?
-  if command -v rainhold-ntfy-notify >/dev/null 2>&1; then
-    rainhold-ntfy-notify "${SERVER_NAME} backup failed" high x "Backup failed with exit code ${exit_code}."
+  if [ -x /usr/local/bin/rainhold-ntfy-notify ]; then
+    /usr/local/bin/rainhold-ntfy-notify "${SERVER_NAME} backup failed" high x "Backup failed with exit code ${exit_code}."
   fi
   exit "$exit_code"
 }
@@ -91,8 +91,8 @@ HUMAN_DATE="$(date '+%B %-d, %Y at %I:%M %p')"
 # Compose notification body
 MESSAGE_BODY="Backup completed on $HUMAN_DATE\nTime elapsed: $ELAPSED_STR\n\nLocation: $BACKUP_LOCATION\nSize: $BACKUP_SIZE\nVolumes: $SERVICE_COUNT\n"
 
-if command -v rainhold-ntfy-notify >/dev/null 2>&1; then
-  rainhold-ntfy-notify "${SERVER_NAME} backup complete" default floppy_disk "$(printf "%b" "$MESSAGE_BODY")"
+if [ -x /usr/local/bin/rainhold-ntfy-notify ]; then
+  /usr/local/bin/rainhold-ntfy-notify "${SERVER_NAME} backup complete" default floppy_disk "$(printf "%b" "$MESSAGE_BODY")"
 else
   echo -e "$MESSAGE_BODY" | mail -s "${SERVER_NAME} backup complete" "$EMAIL"
 fi
