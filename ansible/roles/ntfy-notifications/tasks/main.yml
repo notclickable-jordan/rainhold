@@ -1,0 +1,83 @@
+---
+- name: Install curl for ntfy notifications
+  ansible.builtin.apt:
+    name: curl
+    state: present
+
+- name: Ensure ntfy state directory exists
+  ansible.builtin.file:
+    path: /var/lib/rainhold-ntfy
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Install ntfy notification helper
+  ansible.builtin.template:
+    src: rainhold-ntfy-notify.j2
+    dest: /usr/local/bin/rainhold-ntfy-notify
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Install unattended-upgrades ntfy reporter
+  ansible.builtin.template:
+    src: rainhold-unattended-upgrades-notify.j2
+    dest: /usr/local/bin/rainhold-unattended-upgrades-notify
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Schedule unattended-upgrades ntfy report
+  ansible.builtin.cron:
+    name: Report unattended-upgrades activity to ntfy
+    cron_file: rainhold-unattended-upgrades-notify
+    user: root
+    minute: "30"
+    hour: "6"
+    job: /usr/local/bin/rainhold-unattended-upgrades-notify
+
+- name: Install resource pressure checker
+  ansible.builtin.template:
+    src: rainhold-resource-watch.j2
+    dest: /usr/local/bin/rainhold-resource-watch
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Install resource pressure service
+  ansible.builtin.template:
+    src: rainhold-resource-watch.service.j2
+    dest: /etc/systemd/system/rainhold-resource-watch.service
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Install resource pressure timer
+  ansible.builtin.template:
+    src: rainhold-resource-watch.timer.j2
+    dest: /etc/systemd/system/rainhold-resource-watch.timer
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Install boot notification service
+  ansible.builtin.template:
+    src: rainhold-boot-notify.service.j2
+    dest: /etc/systemd/system/rainhold-boot-notify.service
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Enable and start resource pressure timer
+  ansible.builtin.systemd:
+    name: rainhold-resource-watch.timer
+    enabled: true
+    state: started
+    daemon_reload: true
+
+- name: Enable boot notification service
+  ansible.builtin.systemd:
+    name: rainhold-boot-notify.service
+    enabled: true
+    daemon_reload: true

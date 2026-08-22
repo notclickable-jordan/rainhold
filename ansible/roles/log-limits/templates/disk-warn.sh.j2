@@ -7,6 +7,10 @@ THRESHOLD={{ disk_warn_threshold_percent }}
 USED=$(df -P / | awk 'NR==2 {gsub(/%/, "", $5); print $5}')
 
 if [ "$USED" -gt "$THRESHOLD" ]; then
-    printf 'Disk usage on / is %s%%, above the %s%% threshold\n' "$USED" "$THRESHOLD" |
-        logger -t disk-warn -p daemon.warning
+    MESSAGE=$(printf 'Disk usage on / is %s%%, above the %s%% threshold' "$USED" "$THRESHOLD")
+    printf '%s\n' "$MESSAGE" | logger -t disk-warn -p daemon.warning
+
+    if [ -x /usr/local/bin/rainhold-ntfy-notify ]; then
+        /usr/local/bin/rainhold-ntfy-notify "Low disk space" high warning "$MESSAGE"
+    fi
 fi

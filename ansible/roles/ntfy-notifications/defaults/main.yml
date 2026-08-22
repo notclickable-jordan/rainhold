@@ -1,0 +1,12 @@
+---
+# ntfy endpoint reachable from the Linux host.
+rainhold_ntfy_enabled: true
+rainhold_ntfy_url: "http://127.0.0.1:4217"
+rainhold_ntfy_topic: "rainhold"
+
+# Notify when resource pressure is sustained across this many checks.
+rainhold_ntfy_resource_check_minutes: 5
+rainhold_ntfy_resource_consecutive_checks: 3
+rainhold_ntfy_cpu_threshold_percent: 90
+rainhold_ntfy_memory_threshold_percent: 90
+

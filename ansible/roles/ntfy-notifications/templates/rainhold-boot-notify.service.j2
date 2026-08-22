@@ -1,0 +1,14 @@
+[Unit]
+Description=Send Rainhold boot notification
+After=network-online.target docker.service
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/rainhold-ntfy-notify "Rainhold restarted" default arrows_counterclockwise "The server booted and network is online."
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
+

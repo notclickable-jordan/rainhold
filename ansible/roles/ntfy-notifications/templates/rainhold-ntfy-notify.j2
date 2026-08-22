@@ -1,0 +1,37 @@
+#!/bin/sh
+set -eu
+
+ENABLED="{{ rainhold_ntfy_enabled | bool | ternary('true', 'false') }}"
+NTFY_URL="{{ rainhold_ntfy_url }}"
+NTFY_TOPIC="{{ rainhold_ntfy_topic }}"
+
+if [ "$ENABLED" != "true" ]; then
+    exit 0
+fi
+
+TITLE="${1:-Rainhold notification}"
+PRIORITY="${2:-default}"
+TAGS="${3:-bell}"
+
+if [ "$#" -ge 3 ]; then
+    shift 3
+else
+    shift "$#"
+fi
+
+if [ "$#" -gt 0 ]; then
+    MESSAGE="$*"
+else
+    MESSAGE="$(cat)"
+fi
+
+curl --fail --silent --show-error \
+    --retry 3 \
+    --connect-timeout 5 \
+    --max-time 20 \
+    -H "Title: $TITLE" \
+    -H "Priority: $PRIORITY" \
+    -H "Tags: $TAGS" \
+    --data-binary "$MESSAGE" \
+    "${NTFY_URL%/}/$NTFY_TOPIC" >/dev/null
+

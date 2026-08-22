@@ -3,11 +3,19 @@ services:
         image: binwiederhier/ntfy
         container_name: ntfy
         restart: unless-stopped
-        command: serve
+        command: serve --config /etc/ntfy/server.yml
         ports:
             - 4217:80
+        volumes:
+            - ./server.yml:/etc/ntfy/server.yml:ro
+            - cache:/var/cache/ntfy
+            - data:/var/lib/ntfy
         networks:
             - caddy
+
+volumes:
+    cache:
+    data:
 
 networks:
     caddy:

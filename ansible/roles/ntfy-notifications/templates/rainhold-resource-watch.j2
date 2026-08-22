@@ -1,0 +1,68 @@
+#!/bin/sh
+set -eu
+
+STATE_DIR=/var/lib/rainhold-ntfy
+CONSECUTIVE={{ rainhold_ntfy_resource_consecutive_checks | int }}
+CPU_THRESHOLD={{ rainhold_ntfy_cpu_threshold_percent | int }}
+MEMORY_THRESHOLD={{ rainhold_ntfy_memory_threshold_percent | int }}
+
+mkdir -p "$STATE_DIR"
+
+notify_state() {
+    metric="$1"
+    value="$2"
+    threshold="$3"
+    unit="$4"
+    count_file="$STATE_DIR/$metric.count"
+    alert_file="$STATE_DIR/$metric.alerting"
+
+    count=0
+    if [ -f "$count_file" ]; then
+        count=$(cat "$count_file")
+    fi
+    case "$count" in
+        ''|*[!0-9]*) count=0 ;;
+    esac
+
+    if [ "$value" -ge "$threshold" ]; then
+        count=$((count + 1))
+        printf '%s\n' "$count" > "$count_file"
+
+        if [ "$count" -ge "$CONSECUTIVE" ] && [ ! -f "$alert_file" ]; then
+            touch "$alert_file"
+            /usr/local/bin/rainhold-ntfy-notify \
+                "Sustained $metric spike" \
+                high \
+                warning \
+                "$metric has been at ${value}${unit}, at or above the ${threshold}${unit} threshold for $count consecutive checks."
+        fi
+    else
+        printf '0\n' > "$count_file"
+        if [ -f "$alert_file" ]; then
+            rm -f "$alert_file"
+            /usr/local/bin/rainhold-ntfy-notify \
+                "$metric recovered" \
+                default \
+                white_check_mark \
+                "$metric is back below threshold at ${value}${unit}."
+        fi
+    fi
+}
+
+CORES=$(getconf _NPROCESSORS_ONLN)
+CPU_LOAD_PERCENT=$(awk -v cores="$CORES" '{ printf "%.0f", ($3 / cores) * 100 }' /proc/loadavg)
+MEMORY_USED_PERCENT=$(awk '
+    /MemTotal:/ { total = $2 }
+    /MemAvailable:/ { available = $2 }
+    END {
+        if (total > 0) {
+            printf "%.0f", ((total - available) / total) * 100
+        } else {
+            print 0
+        }
+    }
+' /proc/meminfo)
+
+notify_state CPU "$CPU_LOAD_PERCENT" "$CPU_THRESHOLD" "%"
+notify_state memory "$MEMORY_USED_PERCENT" "$MEMORY_THRESHOLD" "%"
+

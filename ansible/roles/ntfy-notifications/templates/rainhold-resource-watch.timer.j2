@@ -1,0 +1,13 @@
+[Unit]
+Description=Run Rainhold resource pressure checks
+
+[Timer]
+OnBootSec=5min
+OnUnitActiveSec={{ rainhold_ntfy_resource_check_minutes | int }}min
+AccuracySec=1min
+Persistent=true
+Unit=rainhold-resource-watch.service
+
+[Install]
+WantedBy=timers.target
+

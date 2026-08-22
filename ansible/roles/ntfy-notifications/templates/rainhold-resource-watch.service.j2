@@ -1,0 +1,9 @@
+[Unit]
+Description=Check sustained CPU and memory pressure
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/rainhold-resource-watch
+StandardOutput=journal
+StandardError=journal
+

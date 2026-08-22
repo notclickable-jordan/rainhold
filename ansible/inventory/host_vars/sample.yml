@@ -83,6 +83,12 @@ grafana_server_root_url: "https://grafana.example.com"
 # --- Backup ---
 backup_path: "/mnt/backup"
 
+# --- ntfy notifications ---
+rainhold_ntfy_url: "http://127.0.0.1:4217"
+rainhold_ntfy_topic: "rainhold"
+rainhold_ntfy_cpu_threshold_percent: 90
+rainhold_ntfy_memory_threshold_percent: 90
+
 # --- Mastodon ---
 mastodon_postgres_user: "mastodon"
 mastodon_postgres_password: "your_mastodon_postgres_password_here"

@@ -1,0 +1,44 @@
+#!/bin/sh
+set -eu
+
+LOG=/var/log/unattended-upgrades/unattended-upgrades.log
+STATE_DIR=/var/lib/rainhold-ntfy
+OFFSET_FILE="$STATE_DIR/unattended-upgrades.offset"
+
+[ -f "$LOG" ] || exit 0
+
+mkdir -p "$STATE_DIR"
+SIZE=$(wc -c < "$LOG" | tr -d ' ')
+OFFSET=0
+if [ -f "$OFFSET_FILE" ]; then
+    OFFSET=$(cat "$OFFSET_FILE")
+fi
+
+case "$OFFSET" in
+    ''|*[!0-9]*) OFFSET=0 ;;
+esac
+
+if [ "$SIZE" -lt "$OFFSET" ]; then
+    OFFSET=0
+fi
+
+if [ "$SIZE" -eq "$OFFSET" ]; then
+    exit 0
+fi
+
+NEW_LOG=$(mktemp)
+trap 'rm -f "$NEW_LOG"' EXIT
+tail -c +"$((OFFSET + 1))" "$LOG" > "$NEW_LOG"
+printf '%s\n' "$SIZE" > "$OFFSET_FILE"
+
+if grep -Eiq 'error|failed|traceback|exception' "$NEW_LOG"; then
+    /usr/local/bin/rainhold-ntfy-notify \
+        "Unattended upgrades need attention" \
+        high \
+        warning < "$NEW_LOG"
+elif grep -Eq 'Packages that will be upgraded:|All upgrades installed|Packages with upgradable origin' "$NEW_LOG"; then
+    /usr/local/bin/rainhold-ntfy-notify \
+        "Unattended upgrades ran" \
+        default \
+        package < "$NEW_LOG"
+fi

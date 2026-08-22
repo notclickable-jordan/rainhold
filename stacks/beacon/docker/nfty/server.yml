@@ -1,0 +1,8 @@
+base-url: "http://localhost:4217"
+listen-http: ":80"
+
+# Internal SMTP bridge for Docker apps that can send email notifications.
+# Put the app on the caddy network and send email to rainhold@ntfy.local via ntfy:25.
+smtp-server-listen: ":25"
+smtp-server-domain: "ntfy.local"
+

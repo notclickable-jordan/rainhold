@@ -16,6 +16,10 @@ fi
 
 echo "$(date): Starting Docker container restart for $DOCKER_DIR"
 
+if command -v rainhold-ntfy-notify >/dev/null 2>&1; then
+    rainhold-ntfy-notify "Docker restart started" default whale "Restarting Docker Compose stacks in $DOCKER_DIR."
+fi
+
 for dir in "$DOCKER_DIR"/*/; do
     if [ -f "$dir/compose.yml" ]; then
         echo "$(date): Restarting containers in $dir"
@@ -26,3 +30,7 @@ for dir in "$DOCKER_DIR"/*/; do
 done
 
 echo "$(date): Docker container restart complete"
+
+if command -v rainhold-ntfy-notify >/dev/null 2>&1; then
+    rainhold-ntfy-notify "Docker restart complete" default white_check_mark "Docker Compose stacks in $DOCKER_DIR have been restarted."
+fi

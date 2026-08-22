@@ -32,4 +32,5 @@ docker_log_max_size: "10m"
 docker_log_max_file: "3"
 
 # Warn before the disk fills. Set to 0 to skip installing the check.
-disk_warn_threshold_percent: 85
+# The default matches "less than 20% free".
+disk_warn_threshold_percent: 80
