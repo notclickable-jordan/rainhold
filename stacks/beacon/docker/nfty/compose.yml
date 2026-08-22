@@ -1,0 +1,14 @@
+services:
+    ntfy:
+        image: binwiederhier/ntfy
+        container_name: ntfy
+        restart: unless-stopped
+        command: serve
+        ports:
+            - 4217:80
+        networks:
+            - caddy
+
+networks:
+    caddy:
+        external: true
