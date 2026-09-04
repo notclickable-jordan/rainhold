@@ -64,3 +64,11 @@ upstream backend {
     RAILS_ENV=production bundle exec rails assets:precompile
     RAILS_ENV=production ./bin/tootctl feeds build
     ```
+
+# Mastodon update
+
+Updated Mastodon? Here's the command to get the new version and update the application.
+
+``` bash
+sudo git pull;sudo docker compose pull;sudo docker compose down;sudo docker compose up -d;sudo docker exec mastodon_web bin/tootctl feeds build
+```
