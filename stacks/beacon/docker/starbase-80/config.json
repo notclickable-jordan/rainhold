@@ -121,12 +121,6 @@
 		"category": "Devices",
 		"services": [
 			{
-				"name": "Router",
-				"uri": "http://192.168.1.1/",
-				"description": "Netgear Orbi",
-				"icon": "/img/router.png"
-			},
-			{
 				"name": "Home Assistant",
 				"uri": "http://homeassistant:8123/",
 				"description": "Home automation",
@@ -138,13 +132,6 @@
 				"uri": "http://synology:5000",
 				"description": "Network storage",
 				"icon": "/img/synology.png"
-			},
-			{
-				"name": "Rainhold",
-				"uri": "https://rainhold.tail6e07a.ts.net:8006",
-				"description": "Proxmox",
-				"icon": "/img/proxmox.png",
-				"iconBubble": false
 			}
 		]
 	}
