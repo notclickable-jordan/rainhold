@@ -1,6 +1,6 @@
 services:
     gitea:
-        image: docker.gitea.com/gitea:1.23.8
+        image: docker.gitea.com/gitea:1.24.7
         container_name: gitea
         env_file:
             - .env
