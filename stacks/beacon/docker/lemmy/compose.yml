@@ -44,7 +44,7 @@ services:
                     memory: 512m
 
     lemmy-ui:
-        image: dessalines/lemmy-ui:0.19.12
+        image: dessalines/lemmy-ui:0.19.20
         container_name: lemmy-ui
         env_file:
             - .env
@@ -62,7 +62,7 @@ services:
                     memory: 512m
 
     pictrs:
-        image: asonix/pictrs:0.5.19
+        image: asonix/pictrs:0.5.25
         container_name: lemmy-pictrs
         hostname: pictrs
         env_file:
