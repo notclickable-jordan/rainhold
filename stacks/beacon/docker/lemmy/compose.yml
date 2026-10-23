@@ -24,7 +24,7 @@ services:
                     memory: 64m
 
     lemmy:
-        image: dessalines/lemmy:0.19.12
+        image: dessalines/lemmy:0.19.20
         container_name: lemmy
         hostname: lemmy
         restart: unless-stopped
