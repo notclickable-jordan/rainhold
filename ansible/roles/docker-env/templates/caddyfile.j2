@@ -95,19 +95,6 @@ freshrss.notclickable.com {
     reverse_proxy http://freshrss:80
 }
 
-grafana.notclickable.com {
-    forward_auth http://tinyauth:3000 {
-        uri /api/auth/caddy
-        copy_headers Remote-User Remote-Email Remote-Name Remote-Groups
-    }
-
-    tls {
-        dns cloudflare {{ cloudflare_ssl_api_token }}
-    }
-
-    reverse_proxy http://grafana:3000
-}
-
 jellyfin.notclickable.com {
     tls {
         dns cloudflare {{ cloudflare_ssl_api_token }}
@@ -199,19 +186,6 @@ shamir.notclickable.com {
     }
 
     reverse_proxy http://shamir:80
-}
-
-filegator.notclickable.com {
-    forward_auth http://tinyauth:3000 {
-        uri /api/auth/caddy
-        copy_headers Remote-User Remote-Email Remote-Name Remote-Groups
-    }
-    
-    tls {
-        dns cloudflare {{ cloudflare_ssl_api_token }}
-    }
-
-    reverse_proxy http://filegator:8080
 }
 
 docent.notclickable.com {

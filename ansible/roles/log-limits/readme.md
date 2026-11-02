@@ -54,5 +54,4 @@ is in place before any container is created.
   stacks (`docker compose up -d --force-recreate`) to pick it up.
 - The disk warning goes to syslog via `logger`. Point it at a real notification
   channel if you want to be paged.
-- This role bounds damage; it does not stop a flood at the source. See the
-  `nftables-logging` role, which logs every forwarded packet on a Docker host.
+- This role bounds damage; it does not stop a flood at the source.

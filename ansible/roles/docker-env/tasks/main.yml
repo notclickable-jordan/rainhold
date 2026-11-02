@@ -111,30 +111,6 @@
     owner: root
     group: root
 
-- name: Generate env for Grafana
-  template:
-    src: grafana.env.j2
-    dest: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/grafana/.env"
-    mode: "0600"
-    owner: root
-    group: root
-
-- name: Generate prometheus.yml for Grafana stack
-  template:
-    src: prometheus.yml.j2
-    dest: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/grafana/prometheus.yml"
-    mode: "0644"
-    owner: root
-    group: root
-
-- name: Generate promtail config for Grafana stack
-  template:
-    src: promtail-config.yml.j2
-    dest: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/grafana/promtail-config.yml"
-    mode: "0644"
-    owner: root
-    group: root
-
 - name: Generate env for Mastodon
   template:
     src: mastodon.env.j2
@@ -150,4 +126,3 @@
     mode: "0600"
     owner: root
     group: root
-

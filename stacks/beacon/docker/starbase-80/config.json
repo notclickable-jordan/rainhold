@@ -21,22 +21,10 @@
 				"description": "User directory"
 			},
 			{
-				"name": "FileGator",
-				"uri": "https://filegator.notclickable.com",
-				"icon": "/img/filegator.png",
-				"description": "File management"
-			},
-			{
 				"name": "Gitea",
 				"uri": "https://gitea.notclickable.com",
 				"icon": "/img/gitea.jpg",
 				"description": "Source code repository"
-			},
-			{
-				"name": "Grafana",
-				"uri": "https://grafana.notclickable.com",
-				"icon": "/img/grafana.jpg",
-				"description": "Monitoring and analytics"
 			},
 			{
 				"name": "Lemmy",
