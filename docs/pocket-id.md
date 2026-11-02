@@ -53,3 +53,19 @@ The short version:
 -   Install the [Jellyfin SSO plugin](https://github.com/9p4/jellyfin-plugin-sso?tab=readme-ov-file)
 -   The OID endpoint should just be the domain, without a trailing slash, e.g. `https://pocketid.example.com`
 -   In "Scheme override", enter `https`
+
+# Dozzle
+
+Dozzle uses forward-proxy authentication through the existing Caddy and Tinyauth
+integration. Tinyauth handles sign-in with Pocket ID, and Caddy passes the
+authenticated user's identity to Dozzle. No separate Dozzle accounts or OIDC
+client are needed.
+
+Everyone admitted by Tinyauth has full Dozzle permissions, including container
+actions and shell access. This is intentional: no roles header is supplied, so
+Dozzle grants all roles. User settings persist in the `dozzle_data` volume mounted
+at `/data`.
+
+Keep Dozzle behind Caddy without publishing its port on the host. Forward-proxy
+authentication trusts the identity headers from the proxy; direct access could
+bypass Tinyauth.

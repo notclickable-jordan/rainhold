@@ -5,7 +5,9 @@ services:
         restart: unless-stopped
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock
+            - dozzle_data:/data
         environment:
+            - DOZZLE_AUTH_PROVIDER=forward-proxy
             - DOZZLE_ENABLE_ACTIONS=true
             - DOZZLE_ENABLE_SHELL=true
         networks:
@@ -14,6 +16,10 @@ services:
             resources:
                 limits:
                     memory: 256m
+
+volumes:
+    dozzle_data:
+        driver: local
 
 networks:
     caddy:
