@@ -21,7 +21,8 @@ For the sake of replacement, let's pretend these are yours:
 # Ansible
 
 1. Open `ansible/inventory/hosts.yml`
-1. Change both instances of `beacon` to your Linux VM name
+1. Change the host name `beacon` to your Linux VM name
+1. Leave `rainhold_stack: beacon` as is; it names the folder under `stacks/` to deploy
 1. You won't have `ansible_host` yet; come back to that after creating the VM in Proxmox
 
 # Host variables
@@ -37,7 +38,7 @@ For the sake of replacement, let's pretend these are yours:
 Generate alphanumeric secrets using OpenSSL:
 
 ```bash
-openssl rand -base64 32
+openssl rand -hex 32
 ```
 
 ---

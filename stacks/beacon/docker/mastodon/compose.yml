@@ -1,30 +1,31 @@
 services:
     db:
-        image: postgres:14-alpine
+        image: postgres:14-alpine@sha256:e7d9e6aac7fe3232f7661da103aebc0ce38b04105b46af5e9edd5ef6bc343f20
         container_name: mastodon_db
         restart: unless-stopped
         env_file:
             - .env.postgres
         shm_size: 256mb
+        command: postgres -c hba_file=/etc/postgresql/pg_hba.conf
         networks:
             - internal_network
         healthcheck:
             test: ["CMD", "pg_isready", "-U", "mastodon"]
         volumes:
             - db:/var/lib/postgresql/data
+            - ./pg_hba.conf:/etc/postgresql/pg_hba.conf:ro
         deploy:
             resources:
                 limits:
                     memory: 1g
 
     redis:
-        image: redis:7-alpine
+        image: redis:7-alpine@sha256:7f7d30b7fdd09467bac58198a1f166dd69789d348d4fe859cccb20e0cf287fbe
         container_name: mastodon_redis
         restart: unless-stopped
         command: redis-server --save 60 1 --loglevel warning
         networks:
             - internal_network
-            - caddy
         healthcheck:
             test: ["CMD", "redis-cli", "ping"]
         deploy:
@@ -33,7 +34,7 @@ services:
                     memory: 128m
 
     web:
-        image: ghcr.io/mastodon/mastodon:v4.7.5
+        image: ghcr.io/mastodon/mastodon:v4.7.5@sha256:1cf98fb199f8cc1dcf4bb174095656bd5e19e99f29e935c2a838132083e1f609
         container_name: mastodon_web
         restart: unless-stopped
         env_file:
@@ -59,7 +60,7 @@ services:
                     memory: 2g
 
     streaming:
-        image: ghcr.io/mastodon/mastodon-streaming:v4.7.5
+        image: ghcr.io/mastodon/mastodon-streaming:v4.7.5@sha256:3859d071e61a0ed2610a00e8048d89310235afb86e6923c0243bb4f9f4a31093
         container_name: mastodon_streaming
         restart: unless-stopped
         env_file:
@@ -83,7 +84,7 @@ services:
                     memory: 256m
 
     sidekiq:
-        image: ghcr.io/mastodon/mastodon:v4.7.5
+        image: ghcr.io/mastodon/mastodon:v4.7.5@sha256:1cf98fb199f8cc1dcf4bb174095656bd5e19e99f29e935c2a838132083e1f609
         container_name: mastodon_sidekiq
         restart: unless-stopped
         env_file:

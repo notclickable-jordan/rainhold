@@ -1,14 +1,12 @@
 services:
     lldap:
-        image: lldap/lldap:stable
+        image: lldap/lldap:stable@sha256:2a8454b668c1aba7157e832eab0e242e1e7eb5fb7591d7e7774ba05286511ca8
         container_name: lldap
         restart: unless-stopped
         volumes:
             - lldap_data:/data
         env_file:
             - .env
-        ports:
-            - 389:3890
         networks:
             - caddy
         deploy:

@@ -3,11 +3,13 @@
 VOLUMES=(
   "caddy_config:/caddy/config"
   "caddy_data:/caddy/data"
-  "calibre_config:/calibre/config"
+  "docent_data:/docent/data"
+  "dozzle_dozzle_data:/dozzle/data"
   "freshrss_data:/freshrss/data"
   "freshrss_extensions:/freshrss/extensions"
   "gitea_data:/gitea/data"
   "gitea_db:/gitea/db"
+  "gitea_runner_data:/gitea/runner-data"
   "jellyfin_cache:/jellyfin/cache"
   "jellyfin_config:/jellyfin/config"
   "lemmy_extra_themes:/lemmy/extra-themes"
@@ -15,7 +17,6 @@ VOLUMES=(
   "lemmy_postgres:/lemmy/postgres"
   "lldap_lldap_data:/lldap/data"
   "mastodon_db:/mastodon/db"
-  "mastodon_redis:/mastodon/redis"
   "mastodon_web:/mastodon/web"
   "ntfy_cache:/ntfy/cache"
   "ntfy_data:/ntfy/data"
@@ -23,4 +24,6 @@ VOLUMES=(
   "podcastdn_db:/podcastdn/db"
 )
 
+# Stacks running Postgres. These are stopped while their volumes are archived
+# so the database files on disk are consistent.
 BACKUP_PATH="/mnt/backup/rainhold/beacon"

@@ -6,8 +6,10 @@ set -e
 # Set the backup file prefix (change this if your server uses a different name)
 SERVER_NAME="rainhold-beacon"
 
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+
 # Source shared volumes variable
-. "$(dirname "$0")/volumes.sh"
+. "$SCRIPT_DIR/volumes.sh"
 
 # Function to find the latest backup folder
 find_latest_backup_folder() {
@@ -42,14 +44,8 @@ find_latest_backup_folder() {
 
 # Allow user to specify a backup folder or find the latest one
 if [ -n "$1" ]; then
-  # User specified a backup folder/date
-  if [[ "$1" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}$ ]]; then
-    # User provided a date, use it directly as folder name
-    BACKUP_FOLDER="$1"
-  else
-    # User provided a full folder name
-    BACKUP_FOLDER="$1"
-  fi
+  # User specified a backup folder or date
+  BACKUP_FOLDER="$1"
   
   # Check if folder exists locally first
   if [ -d "$BACKUP_FOLDER" ]; then
@@ -103,7 +99,7 @@ fi
 
 # 1. Shut down all running docker services in each subfolder
 echo "Stopping all docker compose services in subfolders..."
-for compose in ./docker/*/compose.yml; do
+for compose in "$SCRIPT_DIR"/docker/*/compose.yml; do
   if [ -f "$compose" ]; then
     folder=$(dirname "$compose")
     service_name=$(basename "$folder")
@@ -137,47 +133,21 @@ for i in "${!VOLUMES[@]}"; do
   if [ -f "$BACKUP_FILE" ]; then
     # Restore this volume using a temporary container
     BACKUP_FILENAME=$(basename "$BACKUP_FILE")
-    echo
-    echo "  DEBUG: Volume: $VOLUME"
-    echo "  DEBUG: Mount path: $MOUNT_PATH"
-    echo "  DEBUG: Backup file: $BACKUP_FILE"
-    echo "  DEBUG: Backup filename: $BACKUP_FILENAME"
-    echo "  DEBUG: Backup source: $BACKUP_SOURCE"
-    
-    # Test if the backup file is accessible in the container
-    echo "  DEBUG: Testing backup file accessibility..."
-    if ! docker run --rm -v "$BACKUP_SOURCE:/backup:ro" alpine:3.17.2 ls -la "/backup/$BACKUP_FILENAME" 2>/dev/null; then
-      echo "  ERROR: Backup file not accessible in container"
-      printf "  failed.\n"
-      FAILED_RESTORES=$((FAILED_RESTORES + 1))
-      continue
-    fi
-    
-    # Run the actual restore command with detailed output
-    echo "  DEBUG: Running restore command..."
+    RESTORE_EXIT_CODE=0
     RESTORE_OUTPUT=$(docker run --rm \
       --mount type=volume,source="$VOLUME",target="$MOUNT_PATH" \
       -v "$BACKUP_SOURCE:/backup:ro" \
-      alpine:3.17.2 sh -c "
-        echo 'Cleaning existing files...'
+      alpine:3.22@sha256:49340b346798875b5592e5d420241f2f9cfba5f47e62ebb1446a1b34734e898f sh -c "
         rm -rf $MOUNT_PATH/* $MOUNT_PATH/.[!.]* $MOUNT_PATH/..?* 2>/dev/null || true
-        echo 'Starting tar extraction...'
         tar -C $MOUNT_PATH -xzf /backup/$BACKUP_FILENAME
-        echo 'Extraction complete'
-        echo 'Final contents:'
-        ls -la $MOUNT_PATH
-      " 2>&1)
-    
-    RESTORE_EXIT_CODE=$?
-    echo "  DEBUG: Exit code: $RESTORE_EXIT_CODE"
-    echo "  DEBUG: Output:"
-    echo "$RESTORE_OUTPUT" | sed 's/^/    /'
-    
+      " 2>&1) || RESTORE_EXIT_CODE=$?
+
     if [ $RESTORE_EXIT_CODE -eq 0 ]; then
-      printf "  done.\n"
+      printf " done.\n"
       SUCCESSFUL_RESTORES=$((SUCCESSFUL_RESTORES + 1))
     else
-      printf "  failed.\n"
+      printf " failed (exit code %d):\n" "$RESTORE_EXIT_CODE"
+      echo "$RESTORE_OUTPUT" | sed 's/^/    /'
       FAILED_RESTORES=$((FAILED_RESTORES + 1))
     fi
   else
@@ -190,7 +160,7 @@ echo "Restore complete. Successful: $SUCCESSFUL_RESTORES, Failed: $FAILED_RESTOR
 
 echo "Restarting all docker compose services in subfolders..."
 
-for compose in ./docker/*/compose.yml; do
+for compose in "$SCRIPT_DIR"/docker/*/compose.yml; do
   if [ -f "$compose" ]; then
     folder=$(dirname "$compose")
     service_name=$(basename "$folder")

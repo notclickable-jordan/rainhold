@@ -1,6 +1,6 @@
 services:
     shamir:
-        image: jordanroher/shamirs-secret-sharing-scheme
+        image: jordanroher/shamirs-secret-sharing-scheme:latest@sha256:d5f86d54752988b7922ed2286be1e5217de73cb8686d11c3c4bf2e8886a949e4
         container_name: shamir
         restart: unless-stopped
         networks:

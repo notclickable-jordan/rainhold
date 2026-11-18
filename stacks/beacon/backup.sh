@@ -1,15 +1,16 @@
 #!/bin/bash
 
 # Backup all named Docker volumes in the beacon stack into individual files
-set -e
+set -eE
 
 # Set the server name (change this if your server uses a different name)
 SERVER_NAME="rainhold-beacon"
 
-# Source shared volumes variable
-. "$(dirname "$0")/volumes.sh"
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-EMAIL="admin@notclickable.com"
+# Source shared volumes variable
+. "$SCRIPT_DIR/volumes.sh"
+
 DATE_SUFFIX="$(date '+%Y-%m-%d')"
 BACKUP_FOLDER="$DATE_SUFFIX"
 
@@ -18,8 +19,26 @@ SERVICE_COUNT=${#VOLUMES[@]}
 
 echo "Starting backup of Docker volumes"
 
+# Each stack is stopped while its volumes are archived so databases (Postgres
+# and SQLite) are copied in a consistent state. Only services that were
+# running beforehand are started again.
+STOPPED_STACK=""
+STOPPED_SERVICES=()
+
+start_stopped_stack() {
+  if [ -n "$STOPPED_STACK" ]; then
+    if [ "${#STOPPED_SERVICES[@]}" -gt 0 ]; then
+      echo "Starting $STOPPED_STACK..."
+      (cd "$SCRIPT_DIR/docker/$STOPPED_STACK" && docker compose start "${STOPPED_SERVICES[@]}")
+    fi
+    STOPPED_STACK=""
+    STOPPED_SERVICES=()
+  fi
+}
+
 notify_failure() {
   local exit_code=$?
+  start_stopped_stack || true
   if [ -x /usr/local/bin/rainhold-ntfy-notify ]; then
     /usr/local/bin/rainhold-ntfy-notify "${SERVER_NAME} backup failed" high x "Backup failed with exit code ${exit_code}."
   fi
@@ -39,15 +58,30 @@ for entry in "${VOLUMES[@]}"; do
   VOLUME="${entry%%:*}"
   MOUNT_PATH="${entry#*:}"
   BACKUP_FILE="${VOLUME}.tgz"
-  
+  STACK="${VOLUME%%_*}"
+
+  if [ "$STACK" != "$STOPPED_STACK" ]; then
+    start_stopped_stack
+    RUNNING_SERVICES="$(cd "$SCRIPT_DIR/docker/$STACK" && docker compose ps --services --status running)"
+    STOPPED_STACK="$STACK"
+    if [ -n "$RUNNING_SERVICES" ]; then
+      # Service names never contain whitespace, so word splitting is safe here
+      STOPPED_SERVICES=($RUNNING_SERVICES)
+      echo "Stopping $STACK for a consistent backup..."
+      (cd "$SCRIPT_DIR/docker/$STACK" && docker compose stop)
+    fi
+  fi
+
   echo "Backing up $VOLUME..."
   
   # Use the same tar command structure as the old backup script
   docker run --rm \
     --mount type=volume,source="$VOLUME",target="$MOUNT_PATH",readonly \
     -v "$(pwd)/$BACKUP_FOLDER:/backup" \
-    alpine:3.17.2 sh -c "tar -C $MOUNT_PATH -czf /backup/${BACKUP_FILE} ."
+    alpine:3.22@sha256:49340b346798875b5592e5d420241f2f9cfba5f47e62ebb1446a1b34734e898f sh -c "tar -C $MOUNT_PATH -czf /backup/${BACKUP_FILE} ."
 done
+
+start_stopped_stack
 
 # Calculate elapsed time
 END_TIME=$(date +%s)
@@ -94,5 +128,5 @@ MESSAGE_BODY="Backup completed on $HUMAN_DATE\nTime elapsed: $ELAPSED_STR\n\nLoc
 if [ -x /usr/local/bin/rainhold-ntfy-notify ]; then
   /usr/local/bin/rainhold-ntfy-notify "${SERVER_NAME} backup complete" default floppy_disk "$(printf "%b" "$MESSAGE_BODY")"
 else
-  echo -e "$MESSAGE_BODY" | mail -s "${SERVER_NAME} backup complete" "$EMAIL"
+  printf "%b" "$MESSAGE_BODY"
 fi

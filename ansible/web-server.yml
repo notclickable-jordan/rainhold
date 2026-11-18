@@ -3,7 +3,6 @@
   become: true
   roles:
     - role: clone-repository
-    - role: ntfy-notifications
     - role: schedule-backup
     - role: docker-network
     - role: docker-env

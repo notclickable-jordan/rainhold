@@ -5,11 +5,8 @@
 - name: Install prerequisites
   apt:
     name:
-      - apt-transport-https
       - ca-certificates
       - curl
-      - gnupg
-      - lsb-release
     state: present
 
 - name: Create keyrings directory
@@ -31,7 +28,7 @@
     uris: https://download.docker.com/linux/debian
     suites: "{{ ansible_distribution_release }}"
     components: stable
-    architectures: amd64
+    architectures: "{{ {'x86_64': 'amd64', 'aarch64': 'arm64', 'armv7l': 'armhf'}[ansible_architecture] | default(ansible_architecture) }}"
     signed_by: /etc/apt/keyrings/docker.asc
 
 - name: Remove legacy Docker repository source
@@ -49,4 +46,10 @@
       - docker-ce
       - docker-ce-cli
       - containerd.io
+    state: present
+
+# Required on the host by the community.docker modules (e.g. docker_network).
+- name: Install Python Docker libraries for Ansible
+  apt:
+    name: python3-docker
     state: present

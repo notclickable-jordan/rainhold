@@ -1,74 +1,44 @@
-# Mastodon setup
+# Mastodon
 
-## Postgres
+The stack's `.env` and `.env.postgres` are rendered by Ansible from `ansible/roles/docker-env/templates/mastodon.env*.j2` using the `mastodon_*` variables in your host vars. Don't edit them on the server; change the host vars and re-run the playbook.
 
-1. Create mastodon role
-    ```bash
-    docker run --rm --name postgres \
-    -v mastodon_db:/var/lib/postgresql/data \
-    -e POSTGRES_USER=mastodon \
-    -e POSTGRES_PASSWORD="<password>" \
-    -d postgres:14-alpine
-    ```
-1. Can sign in with
-    ```bash
-    docker exec -it postgres psql -U mastodon
-    ``` 
+## First-time setup
 
-## Put this in .env.production
-
-```
-DB_HOST=db
-DB_PORT=5432
-DB_NAME=mastodon
-DB_USER=mastodon
-DB_PASS=<password>
-REDIS_HOST=redis
-REDIS_PORT=6379
-REDIS_PASSWORD=
-```
-
-## Started Mastodon setup
+Generate the secrets for your host vars (`mastodon_secret_key_base`, `mastodon_otp_secret`, the VAPID keys and the Active Record encryption keys):
 
 ```bash
-docker compose run --rm web bundle exec rake mastodon:setup
+docker compose run --rm web bundle exec rails secret
+docker compose run --rm web bundle exec rails mastodon:webpush:generate_vapid_key
+docker compose run --rm web bundle exec rails db:encryption:init
 ```
 
-## Saved output to .env.production
+Then create the database schema:
 
-Copy what's in the terminal and paste it into .env.production
-
-## Fixed 502 bad gateway in nginx config
-
-```conf
-upstream backend {
-    server localhost:3000 fail_timeout=0;
-}
+```bash
+docker compose run --rm web bundle exec rails db:setup
 ```
 
-## Restored postgres database
+## Restoring a Postgres dump
 
-1. Copied database backup to container
+1. Copy the dump into the database container
     ```bash
-    docker cp '/Users/me/Desktop/Backup/backup.dump' postgres:/
+    docker cp backup.dump mastodon_db:/
     ```
-1. Terminal to postgres container in Docker
-    ``` bash
-    pg_restore -Fc -U mastodon -n public --no-owner --role=mastodon -d mastodon -c backup.dump
-    ```
-
-## Recompiled mastodon
-
-1. Went into the web container terminal and ran
+1. Restore it
     ```bash
-    RAILS_ENV=production bundle exec rails assets:precompile
-    RAILS_ENV=production ./bin/tootctl feeds build
+    docker exec -it mastodon_db pg_restore -Fc -U mastodon -n public --no-owner --role=mastodon -d mastodon -c /backup.dump
+    ```
+1. Rebuild home feeds
+    ```bash
+    docker exec mastodon_web bin/tootctl feeds build
     ```
 
-# Mastodon update
+## Updating
 
-Updated Mastodon? Here's the command to get the new version and update the application.
+Bump the image tags in `compose.yml`, commit, and re-run the playbook. Check the release notes for required migrations, which you can run with:
 
-``` bash
-sudo git pull;sudo docker compose pull;sudo docker compose down;sudo docker compose up -d;sudo docker exec mastodon_web bin/tootctl feeds build
+```bash
+docker compose run --rm web bundle exec rails db:migrate
 ```
+
+The `mastodon-feeds` Ansible role rebuilds home feeds every 30 minutes.

@@ -1,5 +1,13 @@
 {
-    admin 0.0.0.0:2019
+    admin off
+
+    # Public traffic arrives through cloudflared on the host, so requests come
+    # from a private address. Trust forwarded client IPs only from private
+    # ranges, preferring Cloudflare's header.
+    servers {
+        trusted_proxies static private_ranges
+        client_ip_headers CF-Connecting-IP X-Forwarded-For
+    }
 
     log {
         output file /var/log/caddy/access.log {
@@ -9,8 +17,6 @@
         }
         format json
     }
-
-    metrics
 }
 
 ldap.notclickable.com {
@@ -104,26 +110,8 @@ jellyfin.notclickable.com {
 }
 
 notclickable.social, www.notclickable.social {
-        @local {
-                file
-                not path /
-        }
-        @streaming {
-            path_regexp streaming ^/api/v1/streaming
-        }
         @cache_control {
             path_regexp assets ^/(emoji|packs|system/accounts/avatars|system/media_attachments/files)
-        }
-
-        root * /home/mastodon/live/public
-
-        log {
-                output file /var/log/caddy/mastodon.log
-        }
-
-        handle_errors {
-                rewrite 500.html
-                file_server
         }
 
         header {
@@ -131,10 +119,6 @@ notclickable.social, www.notclickable.social {
         }
         header /sw.js Cache-Control "public, max-age=0"
         header @cache_control Cache-Control "public, max-age=31536000, immutable"
-
-        handle @local {
-                file_server
-        }
 
         tls {
             dns cloudflare {{ cloudflare_ssl_api_token }}
@@ -163,19 +147,6 @@ notclickable.social, www.notclickable.social {
         }
 }
 
-calibre.notclickable.com {
-    forward_auth http://tinyauth:3000 {
-        uri /api/auth/caddy
-        copy_headers Remote-User Remote-Email Remote-Name Remote-Groups
-    }
-
-    tls {
-        dns cloudflare {{ cloudflare_ssl_api_token }}
-    }
-
-    reverse_proxy http://calibre:8083
-}
-
 starbase80.dev, www.starbase80.dev {
     redir https://github.com/notclickable-jordan/starbase-80
 }
@@ -186,14 +157,6 @@ shamir.notclickable.com {
     }
 
     reverse_proxy http://shamir:80
-}
-
-docent.notclickable.com {
-    tls {
-        dns cloudflare {{ cloudflare_ssl_api_token }}
-    }
-
-    reverse_proxy http://docent:8000
 }
 
 ntfy.notclickable.com {

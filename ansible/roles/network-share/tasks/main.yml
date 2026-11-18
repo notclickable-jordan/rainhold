@@ -23,6 +23,7 @@
       password={{ network_share_password }}
     mode: "0600"
   become: true
+  no_log: true
 
 - name: Ensure fstab entries for network shares
   lineinfile:

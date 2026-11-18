@@ -37,17 +37,13 @@
     name: cloudflared
     state: present
 
-- name: Create cloudflared config directory
+# The tunnel is token-managed (ingress lives in the Cloudflare dashboard), so
+# no local config is needed. Remove the old placeholder config, which exposed
+# the tunnel token in a world-readable file.
+- name: Remove legacy cloudflared configuration file
   file:
-    path: "/etc/cloudflared"
-    state: directory
-    mode: "0755"
-
-- name: Deploy cloudflared configuration file
-  template:
-    src: config.yml.j2
-    dest: "/etc/cloudflared/config.yml"
-    mode: "0644"
+    path: "/etc/cloudflared/config.yml"
+    state: absent
 
 - name: Check if cloudflared is already logged in
   stat:
@@ -60,6 +56,7 @@
   when: not cloudflared_service.stat.exists
   args:
     creates: /etc/systemd/system/cloudflared.service
+  no_log: true
 
 - name: Enable and start cloudflared service
   systemd:

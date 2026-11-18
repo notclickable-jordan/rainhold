@@ -18,7 +18,7 @@ In Pocket ID, go to **Application Configuration &gt; LDAP** and enter the follow
 
 | Field                             | Value                                        |
 | --------------------------------- | -------------------------------------------- |
-| **LDAP URL**                      | `ldap://tailscale.ip.address:389`            |
+| **LDAP URL**                      | `ldap://lldap:3890`                          |
 | **LDAP Bind DN**                  | `uid=admin,ou=people,dc=notclickable,dc=com` |
 | **LDAP Bind Password**            | _(set via UI — use value from `.env`)_       |
 | **LDAP Base DN**                  | `dc=notclickable,dc=com`                     |

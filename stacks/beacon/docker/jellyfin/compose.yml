@@ -1,6 +1,6 @@
 services:
     jellyfin:
-        image: jellyfin/jellyfin:latest
+        image: jellyfin/jellyfin:latest@sha256:fea863d0cd9ec445985d9c75fc6ed64e38a1d2766cf0c250a33d553f4fc1b771
         container_name: jellyfin
         user: 1000:1000
         volumes:

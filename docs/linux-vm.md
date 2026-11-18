@@ -6,10 +6,10 @@ In Proxmox:
     - Go to `Datacenter > strongserver > local > ISO Images`
     - Add from URL (or latest from [Debian](https://www.debian.org/distrib/)):
         ```
-        https://cdimage.debian.org/debian-cd/current/amd64/iso-dvd/debian-12.11.0-amd64-DVD-1.iso
+        https://cdimage.debian.org/cdimage/archive/12.11.0/amd64/iso-dvd/debian-12.11.0-amd64-DVD-1.iso
         ```
 1. Create VM and install
-    - Use the Linux VM name and first username you set in [variables](docs/variables.md)
+    - Use the Linux VM name and first username you set in [variables](./variables.md)
     - If it asks if you want to install mirrors, select `Yes`
     - For software selection, uncheck everything except `SSH server` and `standard system utilities`
     - Once it's installed, get the IP address of your Linux VM from your router. Proxmox does not tell you the IP address of the VM. You'll need this for the Ansible step below.
@@ -50,6 +50,7 @@ adduser strongbad sudo
 
 1. Open `ansible/inventory/hosts.yml`
 1. Update `ansible_host` to your Linux VM's IP address
+1. Ansible verifies SSH host keys, so connect once with `ssh strongbad@ip.address` and accept the host key before running it (repeat if you later change `ansible_host`, e.g. to the Tailscale IP)
 
 # Troubleshooting
 

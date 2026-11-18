@@ -1,11 +1,14 @@
 services:
     ntfy:
-        image: binwiederhier/ntfy
+        image: binwiederhier/ntfy:latest@sha256:038da2be5e668fee6d36a62884eea48975e1b71c29a56964e5298c1b9165a573
         container_name: ntfy
         restart: unless-stopped
         command: serve --config /etc/ntfy/server.yml
+        env_file:
+            - .env
         ports:
-            - 4217:80
+            # Host-only: notification scripts on the VM publish here.
+            - 127.0.0.1:4217:80
         volumes:
             - ./server.yml:/etc/ntfy/server.yml:ro
             - cache:/var/cache/ntfy

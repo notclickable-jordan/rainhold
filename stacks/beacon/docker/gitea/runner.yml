@@ -13,9 +13,7 @@ runner:
   # Execute how many tasks concurrently at the same time.
   capacity: 1
   # Extra environment variables to run jobs.
-  envs:
-    A_TEST_ENV_NAME_1: a_test_env_value_1
-    A_TEST_ENV_NAME_2: a_test_env_value_2
+  envs: {}
   # Extra environment variables to run jobs from a file.
   # It will be ignored if it's empty or the file doesn't exist.
   env_file: .env
@@ -40,7 +38,6 @@ runner:
   labels:
     - "ubuntu-latest:docker://gitea/runner-images:ubuntu-latest"
     - "ubuntu-22.04:docker://gitea/runner-images:ubuntu-22.04"
-    - "ubuntu-20.04:docker://gitea/runner-images:ubuntu-20.04"
 
 cache:
   # Enable cache server to use actions/cache.
@@ -64,7 +61,9 @@ container:
   # Specifies the network to which the container will connect.
   # Could be host, bridge or the name of a custom network.
   # If it's empty, act_runner will create a network automatically.
-  network: "caddy"
+  # Jobs run on a dedicated network shared only with Gitea so they can't reach
+  # databases or other services on the caddy network.
+  network: "gitea-runner"
   # Whether to use privileged mode or not when launching task containers (privileged mode is required for Docker-in-Docker).
   privileged: false
   # And other options to be used when the container is started (eg, --add-host=my.gitea.url:host-gateway).
@@ -89,6 +88,9 @@ container:
   # If it's empty, act_runner will find an available docker host automatically.
   # If it's "-", act_runner will find an available docker host automatically, but the docker host won't be mounted to the job containers and service containers.
   # If it's not empty or "-", the specified docker host will be used. An error will be returned if it doesn't work.
+  # NOTE: the host Docker socket is mounted into jobs so workflows can build
+  # images. This gives every workflow root-equivalent access to the VM, so only
+  # run trusted workflows (keep Actions disabled for forks/untrusted users).
   docker_host: ""
   # Pull docker image(s) even if already present
   force_pull: false

@@ -88,7 +88,6 @@ You might not need a personal user if you don't plan to do much with your server
     ```bash
     sudo chmod +x /root/tailscale-ssl.sh
     sudo /root/tailscale-ssl.sh
-    crontab -e
     ```
 1. Add to crontab
     ```bash

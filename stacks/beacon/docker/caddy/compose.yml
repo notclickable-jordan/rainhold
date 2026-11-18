@@ -1,17 +1,17 @@
 services:
     caddy:
-        image: jordanroher/caddy-cloudflare-dns
+        image: jordanroher/caddy-cloudflare-dns:latest@sha256:ced853ecf6a08db47512557735f58e8d7bed125b1d467bb205e9ddc02053bde9
         container_name: caddy
         restart: unless-stopped
         cap_add:
             - NET_ADMIN
         networks:
             - caddy
+            - dozzle
         ports:
             - "80:80"
             - "443:443"
             - "443:443/udp"
-            - "2019:2019"
         volumes:
             - ./conf:/etc/caddy
             - data:/data
@@ -27,4 +27,6 @@ volumes:
 
 networks:
     caddy:
+        external: true
+    dozzle:
         external: true
