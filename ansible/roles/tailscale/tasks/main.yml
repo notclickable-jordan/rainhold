@@ -38,4 +38,6 @@
   changed_when: "'Logged in' in tailscale_result.stdout or 'Success' in tailscale_result.stdout"
   no_log: true  # Hide key in output
   become: true
-  when: tailscale_status.rc != 0 or (tailscale_status.stdout is defined and "'Authenticated'" not in tailscale_status.stdout)
+  when: >-
+    tailscale_status.rc != 0
+    or (tailscale_status.stdout | from_json).BackendState != 'Running'
