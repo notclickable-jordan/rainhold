@@ -1,5 +1,4 @@
 # --- Root user ---
-linux_root_password: "password1"
 linux_root_password_new: "{{ 'newplaintextpassword' | password_hash('sha512') }}"
 
 # --- First user ---
