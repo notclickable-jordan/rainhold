@@ -7,11 +7,6 @@
     name: unattended-upgrades
     state: present
 
-- name: Enable unattended-upgrades
-  command: dpkg-reconfigure --priority=low unattended-upgrades
-  environment:
-    DEBIAN_FRONTEND: noninteractive
-
 - name: Configure 20auto-upgrades using template
   template:
     src: 20auto-upgrades.j2
