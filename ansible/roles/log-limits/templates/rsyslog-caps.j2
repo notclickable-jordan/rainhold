@@ -1,6 +1,7 @@
 # Managed by Ansible (log-limits role)
-# Size-capped rotation for high-volume rsyslog files. These paths are removed
-# from /etc/logrotate.d/rsyslog by the role so logrotate does not see duplicates.
+# Size-capped rotation for rsyslog's files. This replaces the stock
+# /etc/logrotate.d/rsyslog, which the role removes so logrotate does not see
+# duplicate entries.
 {% for log in logrotate_managed_logs %}
 {{ log }}
 {% endfor %}
