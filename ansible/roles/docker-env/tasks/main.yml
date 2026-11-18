@@ -83,9 +83,10 @@
   template:
     src: lemmy.hjson.j2
     dest: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/lemmy/lemmy.hjson"
-    mode: "0644"
+    # Contains DB and admin passwords; the lemmy image runs as uid/gid 1000.
+    mode: "0640"
     owner: root
-    group: root
+    group: "1000"
 
 - name: Generate env for Lemmy
   template:
