@@ -30,7 +30,7 @@ services:
         restart: unless-stopped
         logging: *default-logging
         environment:
-            - RUST_LOG="warn"
+            - RUST_LOG=warn
         volumes:
             - ./lemmy.hjson:/config/config.hjson:Z
         depends_on:
