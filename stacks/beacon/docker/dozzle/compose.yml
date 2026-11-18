@@ -11,7 +11,7 @@ services:
             - DOZZLE_ENABLE_ACTIONS=true
             - DOZZLE_ENABLE_SHELL=true
         networks:
-            - caddy
+            - dozzle
         deploy:
             resources:
                 limits:
@@ -22,5 +22,5 @@ volumes:
         driver: local
 
 networks:
-    caddy:
+    dozzle:
         external: true

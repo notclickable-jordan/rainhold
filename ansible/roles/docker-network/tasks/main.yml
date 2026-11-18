@@ -1,7 +1,15 @@
 ---
-# Tasks to create the proxy network
+# Tasks to create the shared proxy networks
 - name: Create caddy network
   docker_network:
     name: caddy
+    driver: bridge
+    state: present
+
+# Dozzle trusts Remote-User headers from its forward-auth proxy, so only
+# Caddy may reach it.
+- name: Create dozzle network
+  docker_network:
+    name: dozzle
     driver: bridge
     state: present
