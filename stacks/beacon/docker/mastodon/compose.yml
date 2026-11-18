@@ -6,12 +6,14 @@ services:
         env_file:
             - .env.postgres
         shm_size: 256mb
+        command: postgres -c hba_file=/etc/postgresql/pg_hba.conf
         networks:
             - internal_network
         healthcheck:
             test: ["CMD", "pg_isready", "-U", "mastodon"]
         volumes:
             - db:/var/lib/postgresql/data
+            - ./pg_hba.conf:/etc/postgresql/pg_hba.conf:ro
         deploy:
             resources:
                 limits:
