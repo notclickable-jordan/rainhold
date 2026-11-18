@@ -38,6 +38,7 @@ services:
             - pictrs
         networks:
             - caddy
+            - backend
         deploy:
             resources:
                 limits:
@@ -77,7 +78,7 @@ services:
                 limits:
                     memory: 512m
         networks:
-            - caddy
+            - backend
 
     postgres:
         image: postgres:17-alpine
@@ -91,7 +92,7 @@ services:
         restart: unless-stopped
         logging: *default-logging
         networks:
-            - caddy
+            - backend
         deploy:
             resources:
                 limits:
@@ -105,3 +106,4 @@ volumes:
 networks:
     caddy:
         external: true
+    backend:
