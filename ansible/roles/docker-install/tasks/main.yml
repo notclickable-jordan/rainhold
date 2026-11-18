@@ -5,11 +5,8 @@
 - name: Install prerequisites
   apt:
     name:
-      - apt-transport-https
       - ca-certificates
       - curl
-      - gnupg
-      - lsb-release
     state: present
 
 - name: Create keyrings directory
