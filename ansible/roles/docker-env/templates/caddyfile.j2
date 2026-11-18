@@ -1,6 +1,14 @@
 {
     admin off
 
+    # Public traffic arrives through cloudflared on the host, so requests come
+    # from a private address. Trust forwarded client IPs only from private
+    # ranges, preferring Cloudflare's header.
+    servers {
+        trusted_proxies static private_ranges
+        client_ip_headers CF-Connecting-IP X-Forwarded-For
+    }
+
     log {
         output file /var/log/caddy/access.log {
             roll_size 10MiB
