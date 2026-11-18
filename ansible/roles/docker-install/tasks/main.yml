@@ -50,3 +50,9 @@
       - docker-ce-cli
       - containerd.io
     state: present
+
+# Required on the host by the community.docker modules (e.g. docker_network).
+- name: Install Python Docker libraries for Ansible
+  apt:
+    name: python3-docker
+    state: present
