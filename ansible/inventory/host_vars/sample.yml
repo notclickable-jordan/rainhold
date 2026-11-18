@@ -63,7 +63,6 @@ n8n_POSTGRES_NON_ROOT_PASSWORD: "your_n8n_non_root_password_here"
 n8n_POSTGRES_PASSWORD: "your_n8n_postgres_password_here"
 
 # --- Lemmy ---
-lemmy_db_password: "your_lemmy_db_password_here"
 lemmy_hostname: "lemmy.example.com"
 lemmy_pictrs_api_key: "your_pictrs_api_key_here"
 lemmy_pictrs_store_endpoint: "http://s3-us-west-2.amazonaws.com"
