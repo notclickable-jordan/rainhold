@@ -1,12 +1,20 @@
 base-url: "https://ntfy.notclickable.com"
 listen-http: ":80"
+behind-proxy: true
 
 # Relay through ntfy.sh's push infrastructure so iOS/Android apps get real
 # background push notifications instead of only updating while connected.
 upstream-base-url: "https://ntfy.sh"
 
+# Private instance: nobody can read or publish without logging in. Users,
+# tokens and any anonymous topic access are provisioned from .env, which
+# Ansible renders from host_vars (ntfy_admin_*, ntfy_anonymous_write_topics).
+auth-file: "/var/lib/ntfy/user.db"
+auth-default-access: "deny-all"
+enable-login: true
+
 # Internal SMTP bridge for Docker apps that can send email notifications.
-# Put the app on the caddy network and send email to rainhold@ntfy.local via ntfy:25.
+# Put the app on the caddy network and send email via ntfy:25 to
+# rainhold+<access token>@ntfy.local (or use SMTP AUTH PLAIN with a ntfy user).
 smtp-server-listen: ":25"
 smtp-server-domain: "ntfy.local"
-

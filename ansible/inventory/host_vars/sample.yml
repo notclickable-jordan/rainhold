@@ -85,6 +85,14 @@ rainhold_ntfy_url: "http://127.0.0.1:4217"
 rainhold_ntfy_topic: "rainhold"
 rainhold_ntfy_cpu_threshold_percent: 90
 rainhold_ntfy_memory_threshold_percent: 90
+# ntfy is private (deny-all). Log in to the app/web UI as this admin user.
+# Hash: docker run --rm -it binwiederhier/ntfy user hash
+ntfy_admin_user: "admin"
+ntfy_admin_password_hash: "$2a$10$replace_with_bcrypt_hash"
+# Token used by host notification scripts: docker run --rm binwiederhier/ntfy token generate
+ntfy_admin_token: "tk_replace_with_generated_token00"
+# Topics anonymous senders (e.g. SMTP bridge apps without auth) may publish to.
+ntfy_anonymous_write_topics: []
 
 # --- Mastodon ---
 mastodon_postgres_user: "mastodon"

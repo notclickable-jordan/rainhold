@@ -4,6 +4,7 @@ set -eu
 ENABLED="{{ rainhold_ntfy_enabled | bool | ternary('true', 'false') }}"
 NTFY_URL="{{ rainhold_ntfy_url }}"
 NTFY_TOPIC="{{ rainhold_ntfy_topic }}"
+NTFY_TOKEN="{{ ntfy_admin_token }}"
 
 if [ "$ENABLED" != "true" ]; then
     exit 0
@@ -32,6 +33,7 @@ curl --fail --silent --show-error \
     -H "Title: $TITLE" \
     -H "Priority: $PRIORITY" \
     -H "Tags: $TAGS" \
+    -H "Authorization: Bearer $NTFY_TOKEN" \
     --data-binary "$MESSAGE" \
     "${NTFY_URL%/}/$NTFY_TOPIC" >/dev/null
 

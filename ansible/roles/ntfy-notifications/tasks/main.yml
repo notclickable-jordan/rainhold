@@ -18,7 +18,7 @@
     dest: /usr/local/bin/rainhold-ntfy-notify
     owner: root
     group: root
-    mode: "0755"
+    mode: "0700"
 
 - name: Install unattended-upgrades ntfy reporter
   ansible.builtin.template:
