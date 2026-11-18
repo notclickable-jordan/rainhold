@@ -28,6 +28,7 @@ fi
 
 curl --fail --silent --show-error \
     --retry 3 \
+    --retry-connrefused \
     --connect-timeout 5 \
     --max-time 20 \
     -H "Title: $TITLE" \

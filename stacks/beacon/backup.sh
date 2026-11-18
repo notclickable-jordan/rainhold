@@ -19,14 +19,20 @@ SERVICE_COUNT=${#VOLUMES[@]}
 
 echo "Starting backup of Docker volumes"
 
-# Stack currently stopped for a consistent database backup, if any
+# Each stack is stopped while its volumes are archived so databases (Postgres
+# and SQLite) are copied in a consistent state. Only services that were
+# running beforehand are started again.
 STOPPED_STACK=""
+STOPPED_SERVICES=()
 
 start_stopped_stack() {
   if [ -n "$STOPPED_STACK" ]; then
-    echo "Starting $STOPPED_STACK..."
-    (cd "$SCRIPT_DIR/docker/$STOPPED_STACK" && docker compose start)
+    if [ "${#STOPPED_SERVICES[@]}" -gt 0 ]; then
+      echo "Starting $STOPPED_STACK..."
+      (cd "$SCRIPT_DIR/docker/$STOPPED_STACK" && docker compose start "${STOPPED_SERVICES[@]}")
+    fi
     STOPPED_STACK=""
+    STOPPED_SERVICES=()
   fi
 }
 
@@ -56,9 +62,12 @@ for entry in "${VOLUMES[@]}"; do
 
   if [ "$STACK" != "$STOPPED_STACK" ]; then
     start_stopped_stack
-    if [[ " ${DB_STACKS[*]} " == *" $STACK "* ]]; then
-      echo "Stopping $STACK for a consistent database backup..."
-      STOPPED_STACK="$STACK"
+    RUNNING_SERVICES="$(cd "$SCRIPT_DIR/docker/$STACK" && docker compose ps --services --status running)"
+    STOPPED_STACK="$STACK"
+    if [ -n "$RUNNING_SERVICES" ]; then
+      # Service names never contain whitespace, so word splitting is safe here
+      STOPPED_SERVICES=($RUNNING_SERVICES)
+      echo "Stopping $STACK for a consistent backup..."
       (cd "$SCRIPT_DIR/docker/$STACK" && docker compose stop)
     fi
   fi
