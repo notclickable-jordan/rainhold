@@ -1,5 +1,8 @@
 # --- Root user ---
-linux_root_password_new: "{{ 'newplaintextpassword' | password_hash('sha512') }}"
+# Use a fixed salt (any random [a-zA-Z0-9./] string, up to 16 characters) so the
+# hash is identical on every run. Without it, a new random salt is generated
+# each time and the root password is reset on every playbook run.
+linux_root_password_new: "{{ 'newplaintextpassword' | password_hash('sha512', 'replacewithsalt') }}"
 
 # --- First user ---
 linux_first_user_username: jordan
