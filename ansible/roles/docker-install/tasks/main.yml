@@ -28,7 +28,7 @@
     uris: https://download.docker.com/linux/debian
     suites: "{{ ansible_distribution_release }}"
     components: stable
-    architectures: amd64
+    architectures: "{{ {'x86_64': 'amd64', 'aarch64': 'arm64', 'armv7l': 'armhf'}[ansible_architecture] | default(ansible_architecture) }}"
     signed_by: /etc/apt/keyrings/docker.asc
 
 - name: Remove legacy Docker repository source
