@@ -28,9 +28,9 @@
     mode: "0644"
   notify: reload systemd
 
-- name: Reload systemd daemon
-  systemd:
-    daemon_reload: yes
+# Reload systemd now (only if a unit changed) so the timer can be enabled below.
+- name: Apply pending systemd reload
+  meta: flush_handlers
 
 - name: Enable docker-restart timer
   systemd:
