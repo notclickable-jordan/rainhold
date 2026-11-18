@@ -64,7 +64,9 @@ container:
   # Specifies the network to which the container will connect.
   # Could be host, bridge or the name of a custom network.
   # If it's empty, act_runner will create a network automatically.
-  network: "caddy"
+  # Jobs run on a dedicated network shared only with Gitea so they can't reach
+  # databases or other services on the caddy network.
+  network: "gitea-runner"
   # Whether to use privileged mode or not when launching task containers (privileged mode is required for Docker-in-Docker).
   privileged: false
   # And other options to be used when the container is started (eg, --add-host=my.gitea.url:host-gateway).
@@ -89,6 +91,9 @@ container:
   # If it's empty, act_runner will find an available docker host automatically.
   # If it's "-", act_runner will find an available docker host automatically, but the docker host won't be mounted to the job containers and service containers.
   # If it's not empty or "-", the specified docker host will be used. An error will be returned if it doesn't work.
+  # NOTE: the host Docker socket is mounted into jobs so workflows can build
+  # images. This gives every workflow root-equivalent access to the VM, so only
+  # run trusted workflows (keep Actions disabled for forks/untrusted users).
   docker_host: ""
   # Pull docker image(s) even if already present
   force_pull: false

@@ -15,6 +15,7 @@ services:
             - 4209:22
         networks:
             - caddy
+            - gitea-runner
         healthcheck:
             test: ["CMD-SHELL", "curl -f http://localhost:3000 || exit 1"]
             interval: 30s
@@ -44,7 +45,7 @@ services:
         image: gitea/act_runner
         container_name: gitea-runner
         networks:
-            - caddy
+            - gitea-runner
         env_file:
             - .env.runner
         restart: unless-stopped
@@ -70,3 +71,5 @@ volumes:
 networks:
     caddy:
         external: true
+    gitea-runner:
+        name: gitea-runner
