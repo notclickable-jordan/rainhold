@@ -161,19 +161,6 @@ notclickable.social, www.notclickable.social {
         }
 }
 
-calibre.notclickable.com {
-    forward_auth http://tinyauth:3000 {
-        uri /api/auth/caddy
-        copy_headers Remote-User Remote-Email Remote-Name Remote-Groups
-    }
-
-    tls {
-        dns cloudflare {{ cloudflare_ssl_api_token }}
-    }
-
-    reverse_proxy http://calibre:8083
-}
-
 starbase80.dev, www.starbase80.dev {
     redir https://github.com/notclickable-jordan/starbase-80
 }

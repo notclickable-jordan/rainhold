@@ -31,7 +31,6 @@ Follow these steps to set up your server environment.
 
 -   [Ansible](https://www.ansible.com)
 -   [Caddy Cloudflare DNS](https://github.com/notclickable-jordan/caddy-cloudflare-dns)
--   [Calibre](https://github.com/janeczku/calibre-web)
 -   [Cloudflare](https://cloudflare.com)
 -   [Debian](https://www.debian.org)
 -   [Docker](https://www.docker.com)
