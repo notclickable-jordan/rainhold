@@ -3,7 +3,7 @@
 # Purpose: Rotate credentials that are NOT automatically picked up by a normal
 # `ansible-playbook playbook.yml` run — Postgres users (password only applied
 # at first container init), the Cloudflare Tunnel token (only installed once),
-# the root password (normally guarded by an old-password check), and
+# the root password, and
 # optionally the Tailscale auth key (only redeemed once per node).
 #
 # Assumes host_vars/beacon.yml has ALREADY been updated with the new secret
