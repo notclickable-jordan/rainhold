@@ -1,13 +1,15 @@
 #!/bin/bash
 
 # Backup all named Docker volumes in the beacon stack into individual files
-set -e
+set -eE
 
 # Set the server name (change this if your server uses a different name)
 SERVER_NAME="rainhold-beacon"
 
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+
 # Source shared volumes variable
-. "$(dirname "$0")/volumes.sh"
+. "$SCRIPT_DIR/volumes.sh"
 
 EMAIL="admin@notclickable.com"
 DATE_SUFFIX="$(date '+%Y-%m-%d')"
@@ -18,8 +20,20 @@ SERVICE_COUNT=${#VOLUMES[@]}
 
 echo "Starting backup of Docker volumes"
 
+# Stack currently stopped for a consistent database backup, if any
+STOPPED_STACK=""
+
+start_stopped_stack() {
+  if [ -n "$STOPPED_STACK" ]; then
+    echo "Starting $STOPPED_STACK..."
+    (cd "$SCRIPT_DIR/docker/$STOPPED_STACK" && docker compose start)
+    STOPPED_STACK=""
+  fi
+}
+
 notify_failure() {
   local exit_code=$?
+  start_stopped_stack || true
   if [ -x /usr/local/bin/rainhold-ntfy-notify ]; then
     /usr/local/bin/rainhold-ntfy-notify "${SERVER_NAME} backup failed" high x "Backup failed with exit code ${exit_code}."
   fi
@@ -39,7 +53,17 @@ for entry in "${VOLUMES[@]}"; do
   VOLUME="${entry%%:*}"
   MOUNT_PATH="${entry#*:}"
   BACKUP_FILE="${VOLUME}.tgz"
-  
+  STACK="${VOLUME%%_*}"
+
+  if [ "$STACK" != "$STOPPED_STACK" ]; then
+    start_stopped_stack
+    if [[ " ${DB_STACKS[*]} " == *" $STACK "* ]]; then
+      echo "Stopping $STACK for a consistent database backup..."
+      STOPPED_STACK="$STACK"
+      (cd "$SCRIPT_DIR/docker/$STACK" && docker compose stop)
+    fi
+  fi
+
   echo "Backing up $VOLUME..."
   
   # Use the same tar command structure as the old backup script
@@ -48,6 +72,8 @@ for entry in "${VOLUMES[@]}"; do
     -v "$(pwd)/$BACKUP_FOLDER:/backup" \
     alpine:3.17.2 sh -c "tar -C $MOUNT_PATH -czf /backup/${BACKUP_FILE} ."
 done
+
+start_stopped_stack
 
 # Calculate elapsed time
 END_TIME=$(date +%s)

@@ -24,4 +24,8 @@ VOLUMES=(
   "podcastdn_db:/podcastdn/db"
 )
 
+# Stacks running Postgres. These are stopped while their volumes are archived
+# so the database files on disk are consistent.
+DB_STACKS=(gitea lemmy mastodon podcastdn)
+
 BACKUP_PATH="/mnt/backup/rainhold/beacon"
