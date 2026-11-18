@@ -49,6 +49,7 @@
   ansible.builtin.user:
     name: root
     password: "{{ linux_root_password_new }}"
+  no_log: true
 
 # --- Cloudflare Tunnel token ---
 # `cloudflared service install <token>` only runs once (guarded by
@@ -85,6 +86,7 @@
     cloudflared service install {{ cloudflared_token }}
   args:
     creates: /etc/systemd/system/cloudflared.service
+  no_log: true
 
 - name: Enable and start cloudflared with the rotated token
   ansible.builtin.systemd:
@@ -109,3 +111,4 @@
     tailscale up --authkey={{ tailscale_authkey }} --accept-dns=true
   when: rotate_tailscale | bool
   changed_when: true
+  no_log: true

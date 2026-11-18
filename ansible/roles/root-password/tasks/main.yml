@@ -7,8 +7,10 @@
   register: root_pw_check
   changed_when: false
   failed_when: "'auth_ok' not in root_pw_check.stdout"
+  no_log: true
 
 - name: Set new root password
   user:
     name: root
     password: "{{ linux_root_password_new }}"
+  no_log: true

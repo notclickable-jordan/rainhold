@@ -56,6 +56,7 @@
   when: not cloudflared_service.stat.exists
   args:
     creates: /etc/systemd/system/cloudflared.service
+  no_log: true
 
 - name: Enable and start cloudflared service
   systemd:
