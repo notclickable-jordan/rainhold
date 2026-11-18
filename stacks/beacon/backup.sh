@@ -11,7 +11,6 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 # Source shared volumes variable
 . "$SCRIPT_DIR/volumes.sh"
 
-EMAIL="admin@notclickable.com"
 DATE_SUFFIX="$(date '+%Y-%m-%d')"
 BACKUP_FOLDER="$DATE_SUFFIX"
 
@@ -120,5 +119,5 @@ MESSAGE_BODY="Backup completed on $HUMAN_DATE\nTime elapsed: $ELAPSED_STR\n\nLoc
 if [ -x /usr/local/bin/rainhold-ntfy-notify ]; then
   /usr/local/bin/rainhold-ntfy-notify "${SERVER_NAME} backup complete" default floppy_disk "$(printf "%b" "$MESSAGE_BODY")"
 else
-  echo -e "$MESSAGE_BODY" | mail -s "${SERVER_NAME} backup complete" "$EMAIL"
+  printf "%b" "$MESSAGE_BODY"
 fi
