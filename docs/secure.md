@@ -37,7 +37,7 @@ Check the fingerprint, answer `yes`, then exit.
 **3. Set the Mastodon database password.** Until now that database let any container in without a password, so the stored password may never have matched `mastodon_postgres_password`. After this change Mastodon has to log in with a password, so set it now while the old access still works:
 
 ```bash
-docker exec -it mastodon_db psql -U mastodon -d mastodon_production
+docker exec -it mastodon_db psql -U mastodon -d mastodon
 ```
 
 At the `psql` prompt, run the following and enter the exact `mastodon_postgres_password` value:
