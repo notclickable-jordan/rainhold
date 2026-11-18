@@ -12,8 +12,11 @@
   loop: "{{ rainhold_docker_dirs.files }}"
   register: compose_yml_stat
 
-- name: Restart docker service in each subdirectory
-  shell: docker compose down && docker compose up -d
+# --force-recreate (rather than down + up) still picks up changes to
+# bind-mounted config files such as the Caddyfile and lemmy.hjson, but
+# leaves a stack running if the new configuration fails to start.
+- name: Recreate docker services in each subdirectory
+  command: docker compose up -d --force-recreate --remove-orphans
   args:
     chdir: "{{ item.item.path }}"
   loop: "{{ compose_yml_stat.results }}"
