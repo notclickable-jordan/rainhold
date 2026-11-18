@@ -1,6 +1,6 @@
 services:
     docent:
-        image: ghcr.io/danmunz/docent:latest
+        image: ghcr.io/danmunz/docent:latest@sha256:ca933813b3e87553f76db74f542230e487734e080b46e16239af4d89adf49a13
         container_name: docent
         network_mode: host
         restart: unless-stopped

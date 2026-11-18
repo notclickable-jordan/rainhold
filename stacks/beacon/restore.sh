@@ -137,7 +137,7 @@ for i in "${!VOLUMES[@]}"; do
     RESTORE_OUTPUT=$(docker run --rm \
       --mount type=volume,source="$VOLUME",target="$MOUNT_PATH" \
       -v "$BACKUP_SOURCE:/backup:ro" \
-      alpine:3.22 sh -c "
+      alpine:3.22@sha256:49340b346798875b5592e5d420241f2f9cfba5f47e62ebb1446a1b34734e898f sh -c "
         rm -rf $MOUNT_PATH/* $MOUNT_PATH/.[!.]* $MOUNT_PATH/..?* 2>/dev/null || true
         tar -C $MOUNT_PATH -xzf /backup/$BACKUP_FILENAME
       " 2>&1) || RESTORE_EXIT_CODE=$?

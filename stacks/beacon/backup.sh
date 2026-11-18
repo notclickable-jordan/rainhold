@@ -69,7 +69,7 @@ for entry in "${VOLUMES[@]}"; do
   docker run --rm \
     --mount type=volume,source="$VOLUME",target="$MOUNT_PATH",readonly \
     -v "$(pwd)/$BACKUP_FOLDER:/backup" \
-    alpine:3.22 sh -c "tar -C $MOUNT_PATH -czf /backup/${BACKUP_FILE} ."
+    alpine:3.22@sha256:49340b346798875b5592e5d420241f2f9cfba5f47e62ebb1446a1b34734e898f sh -c "tar -C $MOUNT_PATH -czf /backup/${BACKUP_FILE} ."
 done
 
 start_stopped_stack

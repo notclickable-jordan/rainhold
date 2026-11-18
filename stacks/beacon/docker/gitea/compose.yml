@@ -1,6 +1,6 @@
 services:
     gitea:
-        image: docker.gitea.com/gitea:28.3.0
+        image: docker.gitea.com/gitea:28.3.0@sha256:8967bf9deaf3c5c4adae13519436dc1b20c646ac83fe37ae810c933a1045227d
         container_name: gitea
         env_file:
             - .env
@@ -28,7 +28,7 @@ services:
                     memory: 2g
 
     db:
-        image: docker.io/library/postgres:14
+        image: docker.io/library/postgres:14@sha256:c0e9c0e9bac7e4c1834b698217a03ee5c708de30d313c84a506972de0e24b059
         restart: unless-stopped
         container_name: gitea-db
         networks:
@@ -43,7 +43,7 @@ services:
                     memory: 512m
 
     runner:
-        image: gitea/act_runner
+        image: gitea/act_runner:latest@sha256:b5c35d6bdbb9bb25e531230bfc7cc663cb751406cbec90a2a891b85fea54de86
         container_name: gitea-runner
         networks:
             - gitea-runner

@@ -1,6 +1,6 @@
 services:
     app:
-        image: jordanroher/podcastdn
+        image: jordanroher/podcastdn:latest@sha256:ce7670a0bcd0fa5272aa2dfdb66501d97f57acdf35d1e7028df927eeef3cc325
         container_name: podcastdn
         env_file:
             - .env
@@ -15,7 +15,7 @@ services:
             - backend
 
     db:
-        image: postgres:16-alpine
+        image: postgres:16-alpine@sha256:81e77a4833487b8132fe4b00bedd39dc3f74b8641e387f19312a48f7de218c2e
         container_name: podcastdn_db
         env_file:
             - .env

@@ -1,6 +1,6 @@
 services:
     starbase-80:
-        image: jordanroher/starbase-80
+        image: jordanroher/starbase-80:latest@sha256:119fc5cf3e9c924d3b43169b6168173432ddbd36ad1aed50847d7daee6edf6e4
         container_name: starbase-80
         restart: unless-stopped
         networks:
