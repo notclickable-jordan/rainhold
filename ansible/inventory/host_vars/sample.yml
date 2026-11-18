@@ -78,9 +78,6 @@ lemmy_postgres_password: "your_lemmy_postgres_password_here"
 lemmy_postgres_db: "lemmy"
 lemmy_port: 4211
 
-# --- Backup ---
-backup_path: "/mnt/backup"
-
 # --- ntfy notifications ---
 rainhold_ntfy_url: "http://127.0.0.1:4217"
 rainhold_ntfy_topic: "rainhold"
