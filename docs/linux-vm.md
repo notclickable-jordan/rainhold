@@ -50,6 +50,7 @@ adduser strongbad sudo
 
 1. Open `ansible/inventory/hosts.yml`
 1. Update `ansible_host` to your Linux VM's IP address
+1. Ansible verifies SSH host keys, so connect once with `ssh strongbad@ip.address` and accept the host key before running it (repeat if you later change `ansible_host`, e.g. to the Tailscale IP)
 
 # Troubleshooting
 
