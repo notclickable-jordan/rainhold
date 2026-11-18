@@ -11,7 +11,7 @@
   template:
     src: caddyfile.j2
     dest: "{{ rainhold_dest }}/stacks/{{ rainhold_stack }}/docker/caddy/conf/Caddyfile"
-    mode: "0644"
+    mode: "0600"
     owner: root
     group: root
 
