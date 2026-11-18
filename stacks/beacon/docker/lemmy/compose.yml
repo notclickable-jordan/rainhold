@@ -88,7 +88,6 @@ services:
             - .env.postgres
         volumes:
             - postgres:/var/lib/postgresql/data
-            - ./postgresql.conf:/etc/postgresql.conf
         restart: unless-stopped
         logging: *default-logging
         networks:
