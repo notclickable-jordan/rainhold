@@ -4,14 +4,14 @@
 
 - name: Fetch Tailscale archive signing key
   ansible.builtin.get_url:
-    url: "https://pkgs.tailscale.com/stable/debian/bookworm.noarmor.gpg"
+    url: "https://pkgs.tailscale.com/stable/debian/{{ ansible_distribution_release }}.noarmor.gpg"
     dest: "/usr/share/keyrings/tailscale-archive-keyring.gpg"
     mode: "0644"
     force: true
 
 - name: Install Tailscale APT source list
   ansible.builtin.get_url:
-    url: "https://pkgs.tailscale.com/stable/debian/bookworm.tailscale-keyring.list"
+    url: "https://pkgs.tailscale.com/stable/debian/{{ ansible_distribution_release }}.tailscale-keyring.list"
     dest: "/etc/apt/sources.list.d/tailscale.list"
     mode: "0644"
     force: true
