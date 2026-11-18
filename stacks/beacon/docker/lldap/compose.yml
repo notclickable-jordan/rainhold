@@ -7,8 +7,6 @@ services:
             - lldap_data:/data
         env_file:
             - .env
-        ports:
-            - 389:3890
         networks:
             - caddy
         deploy:
