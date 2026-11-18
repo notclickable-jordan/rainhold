@@ -120,3 +120,6 @@ podcastdn_POSTGRES_PASSWORD: postgres123
 
 # --- Docent ---
 docent_tv_ip: 192.168.1.50
+
+# --- Pocket ID ---
+pocket_id_encryption_key: "abc123="
